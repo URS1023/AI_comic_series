@@ -1,0 +1,342 @@
+{
+  "version": 1,
+  "mode": "standalone-singles-only",
+  "storyboard": "STORYBOARD_VIDEO.json",
+  "jobs": [
+    {
+      "jobId": "keyframe-v2-s001",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s001"
+      ],
+      "output": "assets/generated/keyframes/v2-s001.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s002",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s002"
+      ],
+      "output": "assets/generated/keyframes/v2-s002.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s003",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s003"
+      ],
+      "output": "assets/generated/keyframes/v2-s003.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/teacher-wang.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s004",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s004"
+      ],
+      "output": "assets/generated/keyframes/v2-s004.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s005",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s005"
+      ],
+      "output": "assets/generated/keyframes/v2-s005.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s006",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s006"
+      ],
+      "output": "assets/generated/keyframes/v2-s006.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s007",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s007"
+      ],
+      "output": "assets/generated/keyframes/v2-s007.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/teacher-wang.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s008",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s008"
+      ],
+      "output": "assets/generated/keyframes/v2-s008.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/teacher-wang.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s009",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s009"
+      ],
+      "output": "assets/generated/keyframes/v2-s009.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/teacher-wang.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s010",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s010"
+      ],
+      "output": "assets/generated/keyframes/v2-s010.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s011",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s011"
+      ],
+      "output": "assets/generated/keyframes/v2-s011.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s012",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s012"
+      ],
+      "output": "assets/generated/keyframes/v2-s012.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s013",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s013"
+      ],
+      "output": "assets/generated/keyframes/v2-s013.png",
+      "references": [
+        "assets/generated/anchors/landlady.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s014",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s014"
+      ],
+      "output": "assets/generated/keyframes/v2-s014.png",
+      "references": [
+        "assets/generated/anchors/landlady.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s015",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s015"
+      ],
+      "output": "assets/generated/keyframes/v2-s015.png",
+      "references": [
+        "assets/generated/anchors/landlady.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s016",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s016"
+      ],
+      "output": "assets/generated/keyframes/v2-s016.png",
+      "references": [
+        "assets/generated/anchors/landlady.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s017",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s017"
+      ],
+      "output": "assets/generated/keyframes/v2-s017.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s018",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s018"
+      ],
+      "output": "assets/generated/keyframes/v2-s018.png",
+      "references": [
+        "assets/generated/anchors/riverside-girl.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s019",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s019"
+      ],
+      "output": "assets/generated/keyframes/v2-s019.png",
+      "references": [
+        "assets/generated/anchors/riverside-girl.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s020",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s020"
+      ],
+      "output": "assets/generated/keyframes/v2-s020.png",
+      "references": [
+        "assets/generated/anchors/riverside-girl.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s021",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s021"
+      ],
+      "output": "assets/generated/keyframes/v2-s021.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/riverside-girl.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s022",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s022"
+      ],
+      "output": "assets/generated/keyframes/v2-s022.png",
+      "references": [
+        "assets/generated/anchors/riverside-girl.png",
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s023",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s023"
+      ],
+      "output": "assets/generated/keyframes/v2-s023.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/riverside-girl.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s024",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s024"
+      ],
+      "output": "assets/generated/keyframes/v2-s024.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/riverside-girl.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s025",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s025"
+      ],
+      "output": "assets/generated/keyframes/v2-s025.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/riverside-girl.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s026",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s026"
+      ],
+      "output": "assets/generated/keyframes/v2-s026.png",
+      "references": [
+        "assets/generated/anchors/riverside-girl.png",
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s027",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s027"
+      ],
+      "output": "assets/generated/keyframes/v2-s027.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s028",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s028"
+      ],
+      "output": "assets/generated/keyframes/v2-s028.png",
+      "references": [
+        "assets/generated/anchors/chen-yan.png"
+      ]
+    },
+    {
+      "jobId": "keyframe-v2-s029",
+      "delivery": "single",
+      "sceneIds": [
+        "v2-s029"
+      ],
+      "output": "assets/generated/keyframes/v2-s029.png",
+      "references": [
+        "assets/generated/anchors/riverside-girl.png"
+      ]
+    }
+  ],
+  "coverage": {
+    "expectedScenes": 29,
+    "mappedScenes": 29,
+    "duplicates": 0,
+    "missing": 0
+  }
+}

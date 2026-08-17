@@ -71,11 +71,11 @@
     },
     "12": {
       "class_type": "FluxKontextMultiReferenceLatentMethod",
-      "inputs": { "conditioning": ["10", 0], "method": "index_timestep_zero" }
+      "inputs": { "conditioning": ["10", 0], "reference_latents_method": "index_timestep_zero" }
     },
     "13": {
       "class_type": "FluxKontextMultiReferenceLatentMethod",
-      "inputs": { "conditioning": ["11", 0], "method": "index_timestep_zero" }
+      "inputs": { "conditioning": ["11", 0], "reference_latents_method": "index_timestep_zero" }
     },
     "14": {
       "class_type": "VAEEncode",
@@ -106,4 +106,3 @@
     }
   }
 }
-

@@ -87,7 +87,6 @@ def main() -> int:
                     filename=str(item["filename"]),
                     revision=str(item["revision"]),
                     cache_dir=cache_dir,
-                    resume_download=True,
                 )
             )
             if cached.stat().st_size != expected_size:

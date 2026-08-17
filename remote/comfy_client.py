@@ -18,6 +18,7 @@ class ComfyClient:
         self.timeout_seconds = timeout_seconds
         self.session = requests.Session()
         self.client_id = uuid.uuid4().hex
+        self._object_info: dict[str, Any] | None = None
 
     def close(self) -> None:
         self.session.close()
@@ -31,12 +32,44 @@ class ComfyClient:
         return data
 
     def object_info(self) -> dict[str, Any]:
+        if self._object_info is not None:
+            return self._object_info
         response = self.session.get(f"{self.base_url}/object_info", timeout=self.timeout_seconds)
         response.raise_for_status()
         data = response.json()
         if not isinstance(data, dict):
             raise RuntimeError("ComfyUI object_info response is not an object")
+        self._object_info = data
         return data
+
+    def validate_prompt(self, prompt: dict[str, Any]) -> None:
+        """Fail before queueing when the pinned API graph drifts from real nodes."""
+
+        object_info = self.object_info()
+        errors: list[str] = []
+        for node_id, node in prompt.items():
+            class_type = str(node.get("class_type", ""))
+            schema = object_info.get(class_type)
+            if not isinstance(schema, dict):
+                errors.append(f"{node_id}: unknown class_type {class_type}")
+                continue
+            input_schema = schema.get("input", {})
+            if not isinstance(input_schema, dict):
+                errors.append(f"{node_id}: {class_type} has malformed input schema")
+                continue
+            required = input_schema.get("required", {})
+            optional = input_schema.get("optional", {})
+            hidden = input_schema.get("hidden", {})
+            allowed = set(required) | set(optional) | set(hidden)
+            actual = set(node.get("inputs", {}))
+            unknown = sorted(actual - allowed)
+            missing = sorted(set(required) - actual)
+            if unknown:
+                errors.append(f"{node_id}: {class_type} unknown inputs {unknown}")
+            if missing:
+                errors.append(f"{node_id}: {class_type} missing required inputs {missing}")
+        if errors:
+            raise RuntimeError("ComfyUI API schema mismatch:\n" + "\n".join(errors))
 
     def upload_image(self, path: Path, remote_name: str) -> str:
         with path.open("rb") as handle:
@@ -54,6 +87,7 @@ class ComfyClient:
         return f"{subfolder}/{data['name']}" if subfolder else str(data["name"])
 
     def submit(self, prompt: dict[str, Any]) -> str:
+        self.validate_prompt(prompt)
         response = self.session.post(
             f"{self.base_url}/prompt",
             json={"prompt": prompt, "client_id": self.client_id},

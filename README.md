@@ -90,17 +90,37 @@ npm run build
 # 四个身份锚点
 .\scripts\remote.ps1 remote generate anchors --wait
 .\scripts\remote.ps1 remote fetch generate-anchors
+.\.venv\Scripts\python.exe -m scripts.approve_assets anchors --reviewer "Codex visual QA" --confirm-visual-review
+
+# 同一已批准 IP 的双比例无字封面画面，再由本地添加精确中文标题
+.\scripts\remote.ps1 remote generate cover-drafts --wait
+.\scripts\remote.ps1 remote fetch generate-cover-drafts
+.\scripts\remote.ps1 remote generate covers --wait
+.\scripts\remote.ps1 remote fetch generate-covers
+.\.venv\Scripts\python.exe -m scripts.approve_assets covers --reviewer "Codex visual QA" --confirm-visual-review
+npm run build:covers
 
 # 锚点通过后，29 张身份保持关键帧
 .\scripts\remote.ps1 remote generate keyframes --wait
 .\scripts\remote.ps1 remote fetch generate-keyframes
+.\.venv\Scripts\python.exe -m scripts.approve_assets keyframes --reviewer "Codex visual QA" --confirm-visual-review
 
-# 关键帧通过后，29 个 Wan 2.2 I2V 视频镜头
+# 先生成跨角色、手机、暴雨、救援和结尾反应的 10 镜头代表样片
+.\scripts\remote.ps1 remote generate video-sample --wait --timeout 28800
+.\scripts\remote.ps1 remote fetch generate-video-sample
+.\.venv\Scripts\python.exe scripts\qa_generated_media.py --sample-only
+.\.venv\Scripts\python.exe -m scripts.approve_assets video-sample --reviewer "Codex visual QA" --confirm-visual-review
+
+# 代表样片通过率至少 90% 后，生成/复用全部 29 个 Wan 2.2 I2V 视频镜头
 .\scripts\remote.ps1 remote generate videos --wait --timeout 28800
 .\scripts\remote.ps1 remote fetch generate-videos
 ```
 
-每个输出都有 `.meta.json`：生成类型、尝试次数、输入指纹、SHA-256、大小和视频 probe。无变化重跑会复用；只有失败或被拒绝的镜头需要换 seed/提示词后重做。
+每个输出都有 `.meta.json`：Comfy prompt ID、工作流 SHA-256、生成类型、尝试次数、输入指纹、输出 SHA-256、大小和视频 probe。无变化重跑会复用；审核文件绑定已看过资产的实际哈希，审核后文件变化会阻止下游生成。代表样片被拒绝的镜头在全量阶段强制重生成，不会错误复用。
+
+`approve_assets` 的 `--confirm-visual-review` 不是自动验收开关：运行前必须打开完整接触表，并对高风险手部/手机/护栏/拉拽镜头查看原分辨率。可用 `--reject v2-s022:多余手掌` 明确拒绝；锚点或关键帧存在任何拒绝项时，下游门不会打开。
+
+若 Qwen 第一遍关键帧存在伪字、额外设备、红色引导线或可局部清除的手部伪影，在 `production/keyframe-revisions.json` 为该场景声明 `mode: cleanup` 和精确缺陷，再运行 `npm run build:storyboard` 与 keyframes 阶段。第二遍使用坏图作为 picture 1、批准锚点作为 picture 2/3，只移除点名缺陷并保持姿态、相机、灯光和构图；旧版本自动归档到 `assets/generated/rejected/`。
 
 暂停与恢复不会删除已通过输出：
 

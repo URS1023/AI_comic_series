@@ -85,7 +85,15 @@ def install_runtime(data_root: Path, comfy_commit: str) -> tuple[Path, Path, dic
             ]
         )
     run([*pip, "install", "-r", str(comfy / "requirements.txt")])
-    run([*pip, "install", "huggingface_hub[hf_xet]", "imageio-ffmpeg", "requests"])
+    run(
+        [
+            *pip,
+            "install",
+            "huggingface_hub[hf_xet]==1.27.0",
+            "imageio-ffmpeg",
+            "requests==2.34.2",
+        ]
+    )
 
     verification_code = """
 import json, torch

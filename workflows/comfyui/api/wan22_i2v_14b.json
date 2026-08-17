@@ -125,9 +125,8 @@
         "video": ["14", 0],
         "filename_prefix": "ai-comic/video",
         "format": "auto",
-        "codec": "auto"
+        "codec": { "codec": "auto" }
       }
     }
   }
 }
-

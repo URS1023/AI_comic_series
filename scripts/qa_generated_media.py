@@ -114,8 +114,14 @@ def contact_sheet(rows: list[tuple[str, Path]], target: Path, *, columns: int = 
     sheet.save(target, format="PNG", optimize=True)
 
 
-def verify(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
+def verify(project_root: Path = PROJECT_ROOT, *, sample_only: bool = False) -> dict[str, Any]:
     storyboard = json.loads((project_root / "STORYBOARD_VIDEO.json").read_text(encoding="utf-8"))
+    if sample_only:
+        profile = json.loads((project_root / "production" / "comfy-model-profile.json").read_text(encoding="utf-8"))
+        sample_ids = set(profile["gates"]["videoSampleIds"])
+        storyboard = [scene for scene in storyboard if scene["id"] in sample_ids]
+        if len(storyboard) != len(sample_ids):
+            raise RuntimeError("Representative video sample ids do not match the active storyboard")
     frame_dir = project_root / "qa" / "frames" / "generated"
     errors: list[str] = []
     results: list[dict[str, Any]] = []
@@ -193,8 +199,9 @@ def verify(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
         midframes.append((scene_id, middle))
         if scene["highRisk"]:
             high_risk.append((scene_id, middle))
-    complete_sheet = project_root / "qa" / "contact-sheets" / "generated-all-scenes.png"
-    risk_sheet = project_root / "qa" / "contact-sheets" / "generated-high-risk.png"
+    suffix = "video-sample" if sample_only else "all-scenes"
+    complete_sheet = project_root / "qa" / "contact-sheets" / f"generated-{suffix}.png"
+    risk_sheet = project_root / "qa" / "contact-sheets" / f"generated-{suffix}-high-risk.png"
     if midframes:
         contact_sheet(midframes, complete_sheet)
     if high_risk:
@@ -208,7 +215,8 @@ def verify(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
         "contactSheet": str(complete_sheet.relative_to(project_root)).replace("\\", "/"),
         "highRiskSheet": str(risk_sheet.relative_to(project_root)).replace("\\", "/"),
     }
-    output = project_root / "qa" / "generated-media-report.json"
+    output_name = "generated-video-sample-report.json" if sample_only else "generated-media-report.json"
+    output = project_root / "qa" / output_name
     output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return report
 
@@ -216,8 +224,9 @@ def verify(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--project", type=Path, default=PROJECT_ROOT)
+    parser.add_argument("--sample-only", action="store_true")
     args = parser.parse_args()
-    report = verify(args.project.resolve())
+    report = verify(args.project.resolve(), sample_only=args.sample_only)
     print(json.dumps({key: value for key, value in report.items() if key != "scenes"}, ensure_ascii=False, indent=2))
     return 0 if report["status"] == "passed" else 1
 

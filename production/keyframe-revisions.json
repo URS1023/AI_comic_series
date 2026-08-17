@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "revisions": {},
+  "example": {
+    "v2-s022": {
+      "mode": "cleanup",
+      "source": "assets/generated/keyframes/v2-s022.png",
+      "defects": [
+        "remove one duplicated hand-shaped mass under the sleeve",
+        "remove pseudo text on the uniform badge"
+      ],
+      "seedOffset": 10000
+    }
+  }
+}
+

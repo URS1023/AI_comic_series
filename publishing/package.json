@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "title": "高考回档：雨夜白月光",
+  "creationDeclaration": "本作品使用 AI 辅助完成角色与场景画面生成、图生视频、中文旁白、字幕和剪辑合成；所有镜头经过人工/智能代理逐镜身份、肢体、道具、运动与最终编码复核。故事改编与最终取舍由项目创作者负责。",
+  "category": "动漫 / 剧情 / 校园奇幻",
+  "tags": [
+    "AI漫剧",
+    "高考",
+    "时间回档",
+    "校园",
+    "雨夜",
+    "悬疑",
+    "国漫"
+  ],
+  "introduction": "高考只考了四百二十六分的陈言，醒来却回到了考试前三天。一次故意走错的路，让他撞见雨夜江边的同校女孩，也让躲在暗处的房东改变了追踪方向。第一集从一个荒诞的重来机会开始，在一句更荒诞的劝阻中停下。",
+  "episode": {
+    "id": "ep01",
+    "durationSeconds": 125.745,
+    "aspect": "16:9",
+    "resolution": "1920x1080",
+    "finalVideo": "renders/gaokao-rewind-ep01-r001.mp4",
+    "sha256": null,
+    "state": "pending-generation"
+  },
+  "covers": [
+    {
+      "id": "horizontal-4x3",
+      "artwork": "publishing/source/cover-art-horizontal.png",
+      "output": "publishing/cover-horizontal-4x3.png",
+      "width": 1600,
+      "height": 1200,
+      "state": "pending-anchor-approved-artwork"
+    },
+    {
+      "id": "vertical-3x4",
+      "artwork": "publishing/source/cover-art-vertical.png",
+      "output": "publishing/cover-vertical-3x4.png",
+      "width": 1200,
+      "height": 1600,
+      "state": "pending-anchor-approved-artwork"
+    }
+  ]
+}
+

@@ -16,6 +16,12 @@ if (Test-Path -LiteralPath $finalVideo) {
 
 Push-Location $projectRoot
 try {
+    $publishing = Get-Content -Raw -LiteralPath 'publishing\package.json' | ConvertFrom-Json
+    foreach ($cover in $publishing.covers) {
+        if ($cover.state -ne 'complete' -or -not (Test-Path -LiteralPath $cover.output)) {
+            throw "Publishing cover is not complete: $($cover.id)"
+        }
+    }
     & $python 'scripts\qa_generated_media.py'
     if ($LASTEXITCODE -ne 0) { throw 'Generated-media quality gate failed.' }
 
@@ -39,6 +45,18 @@ try {
 
     & $python 'scripts\qa_final_video.py' $finalVideo
     if ($LASTEXITCODE -ne 0) { throw 'Final encoded-video quality gate failed.' }
+    $hbgVerifier = Join-Path $env:USERPROFILE '.codex\skills\hbg-life-simulation\scripts\verify_final_video.ps1'
+    if (-not (Test-Path -LiteralPath $hbgVerifier)) {
+        throw "HBG final verifier is missing: $hbgVerifier"
+    }
+    $storyboard = Get-Content -Raw -LiteralPath 'STORYBOARD_VIDEO.json' | ConvertFrom-Json
+    $samples = @('0.5', '3.6', '6.2')
+    $samples += @($storyboard | Where-Object highRisk | ForEach-Object { [string][Math]::Round(([double]$_.start + [double]$_.end) / 2, 3) })
+    $samples += @([string][Math]::Round(([double]$storyboard[10].start + [double]$storyboard[10].end) / 2, 3), [string][Math]::Round(([double]$publishing.episode.durationSeconds - 0.8), 3))
+    & $hbgVerifier -Video $finalVideo -QaDir (Join-Path $projectRoot "qa\hbg-final-$Revision") -Samples $samples
+    if ($LASTEXITCODE -ne 0) { throw 'HBG Windows final verifier failed.' }
+    & $python 'scripts\finalize_release.py' $finalVideo
+    if ($LASTEXITCODE -ne 0) { throw 'Publishing package finalization failed.' }
 }
 finally {
     node 'scripts\build-composition.mjs' .
@@ -48,4 +66,3 @@ finally {
 }
 
 Write-Output "FINAL_VIDEO=$finalVideo"
-

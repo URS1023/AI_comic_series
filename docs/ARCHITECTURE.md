@@ -18,7 +18,9 @@
 - `STORYBOARD_BASE.json` — 25 semantic story actions.
 - `STORYBOARD_V2.json` — VTT-driven caption grouping.
 - `STORYBOARD_VIDEO.json` — final 29 all-video timeline.
-- `production/generation-queue.json` — 62 resumable generation jobs.
+- `production/generation-queue.json` — 66 resumable jobs: 4 anchors, 2 cover drafts, 2 identity-corrected cover artworks, 29 keyframes and 29 videos.
+- `assets/generated/prompts/SHEET_MAP.json` — 29 个独立关键帧任务与最终场景的一对一覆盖证明。
+- `production/*-approval.json` — 绑定实际 SHA-256 的锚点、关键帧和代表视频样片审核门。
 - `frame.md` / `HBG_STYLE.json` — visual and caption truth.
 - `ledger.json` — 29 seam vectors.
 - `index.html` — generated HyperFrames master composition.
@@ -63,6 +65,7 @@ The bootstrap trusts `torch.cuda.device_count()` from a verified ROCm build, not
 
 - Model download: Hugging Face cache resumes; target is materialized only after size and SHA match.
 - Generation: up to three bounded attempts; successful jobs land immediately and are never rolled back with failed siblings.
+- Review gates: keyframes require hash-bound anchor approval; video sample requires all keyframes approved; full video requires a 10-shot representative sample pass rate of at least 90%.
 - Local disconnect: remote jobs are detached and continue; status is read later.
 - Token expiration: Jupyter 401/403 triggers in-memory AMD refresh and one safe replay.
 - Stop: `production/STOP` prevents the next queued job while preserving all accepted outputs.

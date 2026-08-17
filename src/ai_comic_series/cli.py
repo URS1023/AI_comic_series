@@ -37,7 +37,10 @@ def _parser() -> argparse.ArgumentParser:
     models.add_argument("--timeout", type=float, default=14400)
 
     generate = actions.add_parser("generate", help="Run one resumable anchors/keyframes/videos stage")
-    generate.add_argument("stage", choices=["anchors", "keyframes", "videos"])
+    generate.add_argument(
+        "stage",
+        choices=["anchors", "cover-drafts", "covers", "keyframes", "video-sample", "videos"],
+    )
     generate.add_argument("--max-workers", type=int, default=8)
     generate.add_argument("--wait", action="store_true")
     generate.add_argument("--timeout", type=float, default=28800)

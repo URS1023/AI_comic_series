@@ -39,6 +39,8 @@ Run `npm run build:storyboard`. Only the changed job and downstream video should
 
 Never overwrite a bad attempt manually. Move it under `assets/generated/rejected/`, record the reason in its job metadata or QA ledger, change the job seed/prompt, rebuild `generation-queue.json`, and rerun the relevant stage. Accepted siblings remain reusable.
 
+For a Qwen keyframe with a locally removable defect, prefer the conservative two-pass route: add only that scene under `production/keyframe-revisions.json` with `mode: cleanup`, the current keyframe as `source`, a precise `defects` list and a seed offset. Rebuild the queue and rerun `keyframes`. The old keyframe becomes picture 1, approved character anchors become picture 2/3, and the prompt forbids changes outside the named defects. The remote worker archives the rejected prior output before landing the cleanup result.
+
 ## Change visual design
 
 - Brand/frame tokens: `frame.md`.
@@ -51,4 +53,3 @@ Do not duplicate caption constants in HTML or ASS; both builders read `HBG_STYLE
 ## Change models
 
 Never replace only a filename. Add a new named profile to `config/models.json` with official repository, immutable commit, exact file size and SHA-256. Preserve the old profile so a verified render stays reproducible.
-

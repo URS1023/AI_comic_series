@@ -17,12 +17,15 @@ def test_generation_queue_has_unique_outputs_and_all_video_final_stage() -> None
     assert isinstance(jobs, list)
 
     outputs = [job["output"] for job in jobs]
-    assert len(outputs) == len(set(outputs)) == 62
+    assert len(outputs) == len(set(outputs)) == 66
     video_jobs = [job for job in jobs if job["stage"] == "videos"]
     assert len(video_jobs) == 29
+    assert sum(job["representativeSample"] is True for job in video_jobs) == 10
     assert all(job["kind"] == "wan-i2v" for job in video_jobs)
     assert all(str(job["output"]).endswith(".mp4") for job in video_jobs)
     assert all(str(job["references"][0]).endswith(".png") for job in video_jobs)
+    assert len([job for job in jobs if job["stage"] == "cover-drafts"]) == 2
+    assert len([job for job in jobs if job["stage"] == "covers"]) == 2
 
 
 def test_storyboard_final_assets_are_video_only() -> None:
@@ -58,3 +61,23 @@ def test_api_workflows_have_real_output_nodes() -> None:
         prompt = document["prompt"]
         assert isinstance(prompt, dict)
         assert any(node["class_type"] == output_type for node in prompt.values())
+
+    qwen_edit = load_json("workflows/comfyui/api/qwen_image_edit_2511.json")["prompt"]
+    assert qwen_edit["12"]["inputs"]["reference_latents_method"] == "index_timestep_zero"
+    assert qwen_edit["13"]["inputs"]["reference_latents_method"] == "index_timestep_zero"
+    wan = load_json("workflows/comfyui/api/wan22_i2v_14b.json")["prompt"]
+    assert wan["15"]["inputs"]["codec"] == {"codec": "auto"}
+
+
+def test_sheet_map_covers_every_keyframe_once() -> None:
+    sheet_map = load_json("assets/generated/prompts/SHEET_MAP.json")
+    jobs = sheet_map["jobs"]
+    assert isinstance(jobs, list)
+    scene_ids = [scene_id for job in jobs for scene_id in job["sceneIds"]]
+    assert len(scene_ids) == len(set(scene_ids)) == 29
+    assert sheet_map["coverage"] == {
+        "expectedScenes": 29,
+        "mappedScenes": 29,
+        "duplicates": 0,
+        "missing": 0,
+    }

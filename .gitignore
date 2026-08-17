@@ -21,6 +21,7 @@ secrets/
 # User-provided long-form source remains local; the repository tracks its hash
 # and derived episode script without redistributing the full text publicly.
 /SCRIPT_SOURCE.md
+/publishing/source/*.png
 
 # Generated or downloaded heavy media
 assets/audio/generated/

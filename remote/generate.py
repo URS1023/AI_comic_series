@@ -17,15 +17,23 @@ import time
 from pathlib import Path
 from typing import Any
 
-from comfy_client import ComfyClient
-from runtime_common import atomic_json
+try:
+    from .comfy_client import ComfyClient
+    from .runtime_common import atomic_json
+except ImportError:  # Script execution on the remote node.
+    from comfy_client import ComfyClient
+    from runtime_common import atomic_json
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--status", required=True)
     parser.add_argument("--queue", required=True)
-    parser.add_argument("--stage", choices=["anchors", "keyframes", "videos"], required=True)
+    parser.add_argument(
+        "--stage",
+        choices=["anchors", "cover-drafts", "covers", "keyframes", "video-sample", "videos"],
+        required=True,
+    )
     parser.add_argument("--max-workers", type=int, default=8)
     parser.add_argument("--inside-venv", action="store_true")
     return parser.parse_args()
@@ -95,6 +103,68 @@ class GenerationWorker:
         self.lock = threading.Lock()
         self.completed: list[dict[str, object]] = []
         self.failed: list[dict[str, object]] = []
+        self.force_regenerate_ids: set[str] = set()
+
+    def _approval(self, filename: str) -> dict[str, Any]:
+        path = self.project_root / "production" / filename
+        if not path.is_file():
+            raise RuntimeError(f"Required review gate is missing: production/{filename}")
+        value = json.loads(path.read_text(encoding="utf-8"))
+        if value.get("state") != "approved":
+            raise RuntimeError(f"Review gate is not approved: production/{filename}")
+        return value
+
+    def _verify_approval_assets(self, approval: dict[str, Any], required_paths: set[str]) -> None:
+        entries = approval.get("assets", [])
+        by_path = {str(entry.get("path")): entry for entry in entries if isinstance(entry, dict)}
+        missing = sorted(required_paths - set(by_path))
+        if missing:
+            raise RuntimeError(f"Approval omits required assets: {missing}")
+        for relative in sorted(required_paths):
+            path = self._asset(relative)
+            if not path.is_file():
+                raise FileNotFoundError(f"Approved remote asset is missing: {relative}")
+            expected = str(by_path[relative].get("sha256", ""))
+            actual = sha256(path)
+            if expected != actual:
+                raise RuntimeError(f"Approved asset changed after review: {relative} ({actual} != {expected})")
+
+    def enforce_review_gates(self, jobs: list[dict[str, Any]]) -> None:
+        if self.stage in {"anchors", "cover-drafts"}:
+            return
+        if self.stage in {"keyframes", "covers"}:
+            approval = self._approval("anchor-approval.json")
+            required = {str(path) for job in jobs for path in job.get("references", []) if "/anchors/" in str(path)}
+            self._verify_approval_assets(approval, required)
+            return
+        keyframe_approval = self._approval("keyframe-approval.json")
+        keyframes = {str(path) for job in jobs for path in job.get("references", [])}
+        self._verify_approval_assets(keyframe_approval, keyframes)
+        if self.stage == "videos":
+            sample_approval = self._approval("video-sample-approval.json")
+            expected_scene_ids = {
+                str(job["id"]).removeprefix("video-") for job in jobs if job.get("representativeSample") is True
+            }
+            if not expected_scene_ids:
+                raise RuntimeError("Full video queue has no representative sample configuration")
+            rejected_scene_ids = set(sample_approval.get("rejectedSceneIds", []))
+            approval_ids = {
+                str(entry.get("id")) for entry in sample_approval.get("assets", []) if isinstance(entry, dict)
+            }
+            if approval_ids != expected_scene_ids:
+                raise RuntimeError("Representative video approval does not cover the configured sample exactly")
+            computed_pass_rate = (len(expected_scene_ids) - len(rejected_scene_ids)) / len(expected_scene_ids)
+            if abs(float(sample_approval.get("passRate", 0)) - computed_pass_rate) > 1e-9:
+                raise RuntimeError("Representative video approval pass rate is inconsistent with rejected ids")
+            if computed_pass_rate < 0.9:
+                raise RuntimeError("Representative video sample pass rate is below 90%")
+            accepted_paths = {
+                str(entry["path"])
+                for entry in sample_approval.get("assets", [])
+                if isinstance(entry, dict) and str(entry.get("id")) not in rejected_scene_ids
+            }
+            self._verify_approval_assets(sample_approval, accepted_paths)
+            self.force_regenerate_ids = {f"video-{scene_id}" for scene_id in rejected_scene_ids}
 
     def write_status(self, state: str, phase: str, **details: object) -> None:
         with self.lock:
@@ -204,6 +274,8 @@ class GenerationWorker:
         return hasher.hexdigest()
 
     def _reusable(self, job: dict[str, Any], fingerprint: str) -> bool:
+        if str(job["id"]) in self.force_regenerate_ids:
+            return False
         target = self._asset(str(job["output"]))
         metadata = target.with_suffix(target.suffix + ".meta.json")
         if not target.is_file() or not metadata.is_file() or target.stat().st_size == 0:
@@ -238,6 +310,19 @@ class GenerationWorker:
         if descriptor is None:
             raise RuntimeError(f"ComfyUI history contains no supported media output: {files}")
         target = self._asset(str(job["output"]))
+        if target.is_file():
+            previous_sha = sha256(target)
+            rejected = self.assets_root / "assets" / "generated" / "rejected"
+            rejected.mkdir(parents=True, exist_ok=True)
+            archived = rejected / f"{target.stem}-{previous_sha[:12]}{target.suffix}"
+            if not archived.exists():
+                shutil.copy2(target, archived)
+                previous_metadata = target.with_suffix(target.suffix + ".meta.json")
+                if previous_metadata.is_file():
+                    shutil.copy2(
+                        previous_metadata,
+                        archived.with_suffix(archived.suffix + ".meta.json"),
+                    )
         temporary = target.with_suffix(".download" + Path(descriptor["filename"]).suffix)
         client.download(descriptor, temporary)
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -254,7 +339,12 @@ class GenerationWorker:
                 os.replace(temporary, target)
             probe = video_probe(target, self.ffprobe)
         else:
-            normalize_image(temporary, target)
+            normalize_image(
+                temporary,
+                target,
+                width=int(job.get("targetWidth", 1920)),
+                height=int(job.get("targetHeight", 1080)),
+            )
             temporary.unlink()
         digest = sha256(target)
         metadata = {
@@ -324,9 +414,13 @@ class GenerationWorker:
             client.close()
 
     def run(self, jobs: list[dict[str, Any]], max_workers: int) -> int:
-        selected = [job for job in jobs if job.get("stage") == self.stage]
+        if self.stage == "video-sample":
+            selected = [job for job in jobs if job.get("stage") == "videos" and job.get("representativeSample") is True]
+        else:
+            selected = [job for job in jobs if job.get("stage") == self.stage]
         if not selected:
             raise RuntimeError(f"Queue contains no jobs for stage {self.stage}")
+        self.enforce_review_gates(selected)
         self.write_status("running", "generate", total=len(selected), ports=self.ports)
         workers = max(1, min(max_workers, len(self.ports), len(selected)))
         with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:

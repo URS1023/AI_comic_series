@@ -2,12 +2,17 @@
   "version": 1,
   "generatedFrom": [
     "production/characters.json",
+    "production/comfy-model-profile.json",
+    "production/keyframe-revisions.json",
     "STORYBOARD_VIDEO.json"
   ],
   "policy": "production/quality-policy.json",
   "counts": {
     "anchors": 4,
+    "coverDrafts": 2,
+    "covers": 2,
     "keyframes": 29,
+    "videoSample": 10,
     "videos": 29
   },
   "jobs": [
@@ -68,11 +73,79 @@
       "timeoutSeconds": 3600
     },
     {
+      "id": "cover-draft-horizontal",
+      "stage": "cover-drafts",
+      "kind": "qwen-t2i",
+      "seed": 415001,
+      "width": 1328,
+      "height": 992,
+      "targetWidth": 1600,
+      "targetHeight": 1200,
+      "prompt": "No-text 4:3 horizontal comic cover draft. Exactly two people: Chen Yan dominates the foreground in his fixed white-and-navy school uniform and black backpack; the riverside girl is a smaller distant secondary figure under rain beside a safe riverside railing. Blue-black storm, sodium-orange streetlight and one restrained lightning rim. Deliberate clean negative space in the lower-left for local typography. Non-graphic suspense, no self-harm pose. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality.",
+      "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student",
+      "references": [],
+      "output": "publishing/source/cover-draft-horizontal.png",
+      "maxAttempts": 3,
+      "timeoutSeconds": 3600
+    },
+    {
+      "id": "cover-draft-vertical",
+      "stage": "cover-drafts",
+      "kind": "qwen-t2i",
+      "seed": 415002,
+      "width": 768,
+      "height": 1024,
+      "targetWidth": 1200,
+      "targetHeight": 1600,
+      "prompt": "No-text 3:4 vertical comic cover draft. Exactly two people: Chen Yan fills the upper-right foreground in his fixed white-and-navy school uniform and black backpack; the riverside girl is a smaller distant secondary figure below, safely inside a rain-soaked riverside railing. Blue-black storm, sodium-orange streetlight and one restrained lightning rim. Deliberate clean negative space in the lower-left for local typography. Non-graphic suspense, no self-harm pose. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality.",
+      "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student",
+      "references": [],
+      "output": "publishing/source/cover-draft-vertical.png",
+      "maxAttempts": 3,
+      "timeoutSeconds": 3600
+    },
+    {
+      "id": "cover-art-horizontal",
+      "stage": "covers",
+      "kind": "qwen-edit",
+      "seed": 425001,
+      "targetWidth": 1600,
+      "targetHeight": 1200,
+      "prompt": "Use picture 1 only for the 4:3 composition and negative space. Replace its foreground boy with the exact Chen Yan identity from picture 2 and its distant girl with the exact riverside-girl identity from picture 3. Preserve their immutable faces, ages, hairstyles and school uniforms. Keep the rain-blue and sodium-orange cinematic Chinese webtoon look. Remove all text, letters, numbers, logos, watermarks and guide marks.",
+      "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student",
+      "references": [
+        "publishing/source/cover-draft-horizontal.png",
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/riverside-girl.png"
+      ],
+      "output": "publishing/source/cover-art-horizontal.png",
+      "maxAttempts": 3,
+      "timeoutSeconds": 3600
+    },
+    {
+      "id": "cover-art-vertical",
+      "stage": "covers",
+      "kind": "qwen-edit",
+      "seed": 425002,
+      "targetWidth": 1200,
+      "targetHeight": 1600,
+      "prompt": "Use picture 1 only for the 3:4 vertical composition and negative space. Replace its foreground boy with the exact Chen Yan identity from picture 2 and its distant girl with the exact riverside-girl identity from picture 3. Preserve their immutable faces, ages, hairstyles and school uniforms. Keep the rain-blue and sodium-orange cinematic Chinese webtoon look. Remove all text, letters, numbers, logos, watermarks and guide marks.",
+      "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student",
+      "references": [
+        "publishing/source/cover-draft-vertical.png",
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/riverside-girl.png"
+      ],
+      "output": "publishing/source/cover-art-vertical.png",
+      "maxAttempts": 3,
+      "timeoutSeconds": 3600
+    },
+    {
       "id": "keyframe-v2-s001",
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420001,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 陈言坐在昏暗出租屋书桌前盯着电脑屏幕，屏幕光映亮他难以置信的脸；屏幕内容留空供后期叠加分数。 Shot: over-shoulder close. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 陈言坐在昏暗出租屋书桌前盯着电脑屏幕，屏幕光映亮他难以置信的脸；屏幕内容留空供后期叠加分数。 Shot: over-shoulder close. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png"
@@ -80,6 +153,7 @@
       "output": "assets/generated/keyframes/v2-s001.png",
       "sourceSceneId": "s001",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -88,7 +162,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420002,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 出租屋中的雨滴、翻飞纸张和陈言的轮廓沿时间逆向拉回，空间被克制的倒放残影吞没。 Shot: wide symbolic. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 出租屋中的雨滴、翻飞纸张和陈言的轮廓沿时间逆向拉回，空间被克制的倒放残影吞没。 Shot: wide symbolic. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png"
@@ -96,6 +170,7 @@
       "output": "assets/generated/keyframes/v2-s002.png",
       "sourceSceneId": "s002",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -104,7 +179,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420003,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan; reference image 2 is teacher-wang. Create one new cinematic 16:9 story frame with exactly 2 visible person(s), and no one else. 十三中办公室中景，王老师隔着深木桌训话，陈言站在桌前刚刚恢复意识。 Shot: two-shot medium. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan; reference image 2 is teacher-wang. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 2 visible person(s), and no one else. 十三中办公室中景，王老师隔着深木桌训话，陈言站在桌前刚刚恢复意识。 Shot: two-shot medium. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png",
@@ -113,6 +188,7 @@
       "output": "assets/generated/keyframes/v2-s003.png",
       "sourceSceneId": "s003",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -121,7 +197,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420004,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 陈言的面部近景，背景办公室轻微虚化，他从困惑转为震惊，眼睛扫过熟悉环境。 Shot: close. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 陈言的面部近景，背景办公室轻微虚化，他从困惑转为震惊，眼睛扫过熟悉环境。 Shot: close. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png"
@@ -129,6 +205,7 @@
       "output": "assets/generated/keyframes/v2-s004.png",
       "sourceSceneId": "s004",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -137,7 +214,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420005,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 陈言侧面半身，面前只有抽象的半透明冷白光面板轮廓，不含任何文字，光线反射在瞳孔和脸颊。 Shot: medium profile. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 陈言侧面半身，面前只有抽象的半透明冷白光面板轮廓，不含任何文字，光线反射在瞳孔和脸颊。 Shot: medium profile. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png"
@@ -145,6 +222,7 @@
       "output": "assets/generated/keyframes/v2-s005.png",
       "sourceSceneId": "s005",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -153,7 +231,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420006,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 陈言瞳孔与无字系统光面板的极近细节，冷白光沿面板分区依次点亮，所有分数文字留给后期 HTML 叠加。 Shot: extreme close insert. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 陈言瞳孔与无字系统光面板的极近细节，冷白光沿面板分区依次点亮，所有分数文字留给后期 HTML 叠加。 Shot: extreme close insert. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png"
@@ -161,6 +239,7 @@
       "output": "assets/generated/keyframes/v2-s006.png",
       "sourceSceneId": "s005",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -169,7 +248,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420007,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan; reference image 2 is teacher-wang. Create one new cinematic 16:9 story frame with exactly 2 visible person(s), and no one else. 办公室过肩镜头，陈言忽然抬眼看向王老师，表情从震惊转成带一点坏笑的镇定。 Shot: over-shoulder. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan; reference image 2 is teacher-wang. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 2 visible person(s), and no one else. 办公室过肩镜头，陈言忽然抬眼看向王老师，表情从震惊转成带一点坏笑的镇定。 Shot: over-shoulder. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png",
@@ -178,6 +257,7 @@
       "output": "assets/generated/keyframes/v2-s007.png",
       "sourceSceneId": "s006",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -186,7 +266,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420008,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan; reference image 2 is teacher-wang. Create one new cinematic 16:9 story frame with exactly 2 visible person(s), and no one else. 办公室双人中景，王老师心虚地摆手让陈言离开，陈言双手插兜转身，动作关系清楚。 Shot: two-shot medium. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan; reference image 2 is teacher-wang. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 2 visible person(s), and no one else. 办公室双人中景，王老师心虚地摆手让陈言离开，陈言双手插兜转身，动作关系清楚。 Shot: two-shot medium. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png",
@@ -195,6 +275,7 @@
       "output": "assets/generated/keyframes/v2-s008.png",
       "sourceSceneId": "s008",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -203,7 +284,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420009,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan; reference image 2 is teacher-wang. Create one new cinematic 16:9 story frame with exactly 2 visible person(s), and no one else. 办公室门口侧面中景，陈言双手插兜带着得逞的轻松表情走出门，王老师仍在桌后心虚回避视线。 Shot: medium exit. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan; reference image 2 is teacher-wang. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 2 visible person(s), and no one else. 办公室门口侧面中景，陈言双手插兜带着得逞的轻松表情走出门，王老师仍在桌后心虚回避视线。 Shot: medium exit. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png",
@@ -212,6 +293,7 @@
       "output": "assets/generated/keyframes/v2-s009.png",
       "sourceSceneId": "s008",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -220,7 +302,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420010,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 十三中校门夜景宽镜头，陈言背着书包独自走出，暖黄路灯与湿热空气建立夜晚空间。 Shot: wide establishing. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 十三中校门夜景宽镜头，陈言背着书包独自走出，暖黄路灯与湿热空气建立夜晚空间。 Shot: wide establishing. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png"
@@ -228,6 +310,7 @@
       "output": "assets/generated/keyframes/v2-s010.png",
       "sourceSceneId": "s009",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -236,7 +319,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420011,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 高位宽镜头，陈言站在十字路口中央犹豫，左侧近路明亮熟悉，右侧通向较暗的江边。 Shot: wide overhead. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 高位宽镜头，陈言站在十字路口中央犹豫，左侧近路明亮熟悉，右侧通向较暗的江边。 Shot: wide overhead. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png"
@@ -244,6 +327,7 @@
       "output": "assets/generated/keyframes/v2-s011.png",
       "sourceSceneId": "s010",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -252,7 +336,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420012,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 街道路口侧面中景，陈言刚向左迈步便突然拧身转向右侧奔跑，背景车灯掠过但没有车辆贴近。 Shot: medium action. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 街道路口侧面中景，陈言刚向左迈步便突然拧身转向右侧奔跑，背景车灯掠过但没有车辆贴近。 Shot: medium action. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png"
@@ -260,6 +344,7 @@
       "output": "assets/generated/keyframes/v2-s012.png",
       "sourceSceneId": "s011",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -268,7 +353,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420013,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is landlady. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 路边暖色路灯下，房东小姐从阴影与围栏后安静走出，望向陈言消失的右侧街角。 Shot: full medium. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is landlady. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 路边暖色路灯下，房东小姐从阴影与围栏后安静走出，望向陈言消失的右侧街角。 Shot: full medium. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/landlady.png"
@@ -276,6 +361,7 @@
       "output": "assets/generated/keyframes/v2-s013.png",
       "sourceSceneId": "s012",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -284,7 +370,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420014,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is landlady. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 房东小姐在暖黄路灯下安静站定，嘴角带温柔但难以读懂的弧度，目光始终追随陈言离开的方向。 Shot: close portrait. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is landlady. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 房东小姐在暖黄路灯下安静站定，嘴角带温柔但难以读懂的弧度，目光始终追随陈言离开的方向。 Shot: close portrait. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/landlady.png"
@@ -292,6 +378,7 @@
       "output": "assets/generated/keyframes/v2-s014.png",
       "sourceSceneId": "s012",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -300,7 +387,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420015,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is landlady. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 房东小姐胸口以上近景，她用一只手自然握住深灰手机，屏幕朝向她，屏幕内容留空供后期叠加定位红点。 Shot: close prop. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is landlady. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 房东小姐胸口以上近景，她用一只手自然握住深灰手机，屏幕朝向她，屏幕内容留空供后期叠加定位红点。 Shot: close prop. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/landlady.png"
@@ -308,6 +395,7 @@
       "output": "assets/generated/keyframes/v2-s015.png",
       "sourceSceneId": "s013",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -316,7 +404,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420016,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is landlady. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 房东小姐桃花眼与深灰手机同框近景，空白屏幕冷光映在她脸上，她的目光从屏幕移向街角。 Shot: close reaction. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is landlady. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 房东小姐桃花眼与深灰手机同框近景，空白屏幕冷光映在她脸上，她的目光从屏幕移向街角。 Shot: close reaction. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/landlady.png"
@@ -324,6 +412,7 @@
       "output": "assets/generated/keyframes/v2-s016.png",
       "sourceSceneId": "s013",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -332,7 +421,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420017,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 江边道路宽镜头，陈言用书包遮住头在突来的暴雨中奔跑，路灯光被雨幕拉成长线。 Shot: wide tracking. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 江边道路宽镜头，陈言用书包遮住头在突来的暴雨中奔跑，路灯光被雨幕拉成长线。 Shot: wide tracking. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png"
@@ -340,6 +429,7 @@
       "output": "assets/generated/keyframes/v2-s017.png",
       "sourceSceneId": "s014",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -348,7 +438,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420018,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is riverside-girl. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 江边远景，江边女孩背对镜头站在金属护栏内侧的低台阶上，暗色江面与橙黄路灯形成巨大空白。 Shot: extreme wide. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is riverside-girl. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 江边远景，江边女孩背对镜头站在金属护栏内侧的低台阶上，暗色江面与橙黄路灯形成巨大空白。 Shot: extreme wide. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/riverside-girl.png"
@@ -356,6 +446,7 @@
       "output": "assets/generated/keyframes/v2-s018.png",
       "sourceSceneId": "s015",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -364,7 +455,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420019,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is riverside-girl. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 闪电照亮江边女孩湿透但不暴露的十三中校服，她在护栏内侧低台阶上缓慢向外挪步，陈言尚未进入画面。 Shot: wide reveal. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is riverside-girl. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 闪电照亮江边女孩湿透但不暴露的十三中校服，她在护栏内侧低台阶上缓慢向外挪步，陈言尚未进入画面。 Shot: wide reveal. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/riverside-girl.png"
@@ -372,6 +463,7 @@
       "output": "assets/generated/keyframes/v2-s019.png",
       "sourceSceneId": "s017",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -380,7 +472,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420020,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is riverside-girl. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 女孩侧后方中远景，她谨慎跨上护栏下缘并失去安全重心，动作非图形化、无伤口，江面在下方。 Shot: medium rear. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is riverside-girl. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 女孩侧后方中远景，她谨慎跨上护栏下缘并失去安全重心，动作非图形化、无伤口，江面在下方。 Shot: medium rear. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/riverside-girl.png"
@@ -388,6 +480,7 @@
       "output": "assets/generated/keyframes/v2-s020.png",
       "sourceSceneId": "s017",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -396,7 +489,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420021,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan; reference image 2 is riverside-girl. Create one new cinematic 16:9 story frame with exactly 2 visible person(s), and no one else. 陈言从雨幕中冲近护栏，保持三米安全距离对女孩大喊，女孩受惊回头，两人全身关系清楚。 Shot: two-shot wide. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan; reference image 2 is riverside-girl. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 2 visible person(s), and no one else. 陈言从雨幕中冲近护栏，保持三米安全距离对女孩大喊，女孩受惊回头，两人全身关系清楚。 Shot: two-shot wide. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png",
@@ -405,6 +498,7 @@
       "output": "assets/generated/keyframes/v2-s021.png",
       "sourceSceneId": "s018",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -413,7 +507,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420022,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is riverside-girl; reference image 2 is chen-yan. Create one new cinematic 16:9 story frame with exactly 2 visible person(s), and no one else. 连续救援动作的中近景：女孩在湿滑护栏边失去重心，陈言冲到她身后并用一只手抓住肩背处校服布料。 Shot: medium action. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is riverside-girl; reference image 2 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 2 visible person(s), and no one else. 连续救援动作的中近景：女孩在湿滑护栏边失去重心，陈言冲到她身后并用一只手抓住肩背处校服布料。 Shot: medium action. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/riverside-girl.png",
@@ -422,6 +516,7 @@
       "output": "assets/generated/keyframes/v2-s022.png",
       "sourceSceneId": "s020",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -430,7 +525,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420023,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan; reference image 2 is riverside-girl. Create one new cinematic 16:9 story frame with exactly 2 visible person(s), and no one else. 江边侧面宽镜头，陈言把女孩从护栏方向拽回，两人失去平衡倒向安全一侧的湿地面，动作不暴露。 Shot: wide action. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan; reference image 2 is riverside-girl. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 2 visible person(s), and no one else. 江边侧面宽镜头，陈言把女孩从护栏方向拽回，两人失去平衡倒向安全一侧的湿地面，动作不暴露。 Shot: wide action. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png",
@@ -439,6 +534,7 @@
       "output": "assets/generated/keyframes/v2-s023.png",
       "sourceSceneId": "s021",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -447,7 +543,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420024,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan; reference image 2 is riverside-girl. Create one new cinematic 16:9 story frame with exactly 2 visible person(s), and no one else. 雨中双人中景，女孩从陈言身边慌乱起身整理衣摆，陈言仍坐在湿地面抬头确认她没事。 Shot: two-shot medium. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan; reference image 2 is riverside-girl. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 2 visible person(s), and no one else. 雨中双人中景，女孩从陈言身边慌乱起身整理衣摆，陈言仍坐在湿地面抬头确认她没事。 Shot: two-shot medium. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png",
@@ -456,6 +552,7 @@
       "output": "assets/generated/keyframes/v2-s024.png",
       "sourceSceneId": "s022",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -464,7 +561,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420025,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan; reference image 2 is riverside-girl. Create one new cinematic 16:9 story frame with exactly 2 visible person(s), and no one else. 雨中双人中景，陈言已经从地面站起，向女孩指向远离护栏的街道方向，语气克制地邀请她去附近躲雨。 Shot: two-shot medium. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan; reference image 2 is riverside-girl. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 2 visible person(s), and no one else. 雨中双人中景，陈言已经从地面站起，向女孩指向远离护栏的街道方向，语气克制地邀请她去附近躲雨。 Shot: two-shot medium. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png",
@@ -473,6 +570,7 @@
       "output": "assets/generated/keyframes/v2-s025.png",
       "sourceSceneId": "s022",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -481,7 +579,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420026,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is riverside-girl; reference image 2 is chen-yan. Create one new cinematic 16:9 story frame with exactly 2 visible person(s), and no one else. 雨中侧面中远景，女孩拒绝后重新走向护栏，陈言在她身后站起，二人之间保留明显距离。 Shot: two-shot wide. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is riverside-girl; reference image 2 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 2 visible person(s), and no one else. 雨中侧面中远景，女孩拒绝后重新走向护栏，陈言在她身后站起，二人之间保留明显距离。 Shot: two-shot wide. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/riverside-girl.png",
@@ -490,6 +588,7 @@
       "output": "assets/generated/keyframes/v2-s026.png",
       "sourceSceneId": "s023",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -498,7 +597,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420027,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 陈言胸口以上近景，雨水顺脸颊流下，他抹掉脸上的雨，忽然抬眼喊住女孩。 Shot: close hero. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 陈言胸口以上近景，雨水顺脸颊流下，他抹掉脸上的雨，忽然抬眼喊住女孩。 Shot: close hero. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png"
@@ -506,6 +605,7 @@
       "output": "assets/generated/keyframes/v2-s027.png",
       "sourceSceneId": "s024",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -514,7 +614,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420028,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is chen-yan. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 陈言胸口以上近景，雨水顺着脸颊流下，他抹掉雨水后用反常平静的语气喊住女孩。 Shot: close hero. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is chen-yan. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 陈言胸口以上近景，雨水顺着脸颊流下，他抹掉雨水后用反常平静的语气喊住女孩。 Shot: close hero. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/chen-yan.png"
@@ -522,6 +622,7 @@
       "output": "assets/generated/keyframes/v2-s028.png",
       "sourceSceneId": "s024",
       "highRisk": true,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -530,7 +631,7 @@
       "stage": "keyframes",
       "kind": "qwen-edit",
       "seed": 420029,
-      "prompt": "Use the supplied identity references exactly: reference image 1 is riverside-girl. Create one new cinematic 16:9 story frame with exactly 1 visible person(s), and no one else. 白蓝闪电中的江边女孩侧脸近景，她的脚步停住，湿发间露出震惊的灰棕眼睛，缓慢回头看向陈言。 Shot: reaction close. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
+      "prompt": "Edit the supplied identity references into one new cinematic 16:9 story frame: reference image 1 is riverside-girl. Change only the setting, pose, action, expression and camera needed for this scene; keep the referenced identity and clothing. Show exactly 1 visible person(s), and no one else. 白蓝闪电中的江边女孩侧脸近景，她的脚步停住，湿发间露出震惊的灰棕眼睛，缓慢回头看向陈言。 Shot: reaction close. Preserve every referenced face, age, hair growth pattern, recognition mark, body type and wardrobe from the identity anchor. Use the recurring location geometry and weather from CHARACTERS.md. Style: polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality. Keep every hand, limb, phone, railing, shoe and support point physically plausible. All screens, papers, uniforms and signs must remain completely blank; exact text will be added locally.",
       "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student, wrong participant count, extra lookalike protagonist, impossible railing, floating body, reversed phone, transparent or sexualized school uniform",
       "references": [
         "assets/generated/anchors/riverside-girl.png"
@@ -538,6 +639,7 @@
       "output": "assets/generated/keyframes/v2-s029.png",
       "sourceSceneId": "s025",
       "highRisk": false,
+      "revision": null,
       "maxAttempts": 3,
       "timeoutSeconds": 3600
     },
@@ -546,7 +648,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430001,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 陈言轻微眨眼、呼吸停顿、视线锁住屏幕，屏幕冷光自然闪动；相机极缓慢靠近。 Keep exactly 1 visible person(s): chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 陈言轻微眨眼、呼吸停顿、视线锁住屏幕，屏幕冷光自然闪动；相机极缓慢靠近。 只出现 1 人（chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s001.png"
@@ -560,6 +662,7 @@
         "caption-0001"
       ],
       "highRisk": false,
+      "representativeSample": true,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -568,7 +671,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430002,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 纸张和雨滴明确向上倒退，陈言衣角被逆向风带动，镜头快速后拉但人物身份不变。 Keep exactly 1 visible person(s): chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 纸张和雨滴明确向上倒退，陈言衣角被逆向风带动，镜头快速后拉但人物身份不变。 只出现 1 人（chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s002.png"
@@ -582,6 +685,7 @@
         "caption-0002"
       ],
       "highRisk": false,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -590,7 +694,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430003,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 王老师只用一只手自然敲桌一次后收回，嘴部轻微训话；陈言眨眼并抬头，禁止新增人物或手掌。 Keep exactly 2 visible person(s): chen-yan, teacher-wang; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 王老师只用一只手自然敲桌一次后收回，嘴部轻微训话；陈言眨眼并抬头，禁止新增人物或手掌。 只出现 2 人（chen-yan, teacher-wang），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s003.png"
@@ -604,6 +708,7 @@
         "caption-0003"
       ],
       "highRisk": true,
+      "representativeSample": true,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -612,7 +717,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430004,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 眼神先失焦后迅速清醒，轻微吸气，相机沿视线方向小幅环绕，面部和发型保持锁定。 Keep exactly 1 visible person(s): chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 眼神先失焦后迅速清醒，轻微吸气，相机沿视线方向小幅环绕，面部和发型保持锁定。 只出现 1 人（chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s004.png"
@@ -626,6 +731,7 @@
         "caption-0004"
       ],
       "highRisk": false,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -634,7 +740,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430005,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 无字光面板从微弱到稳定，冷光扫过陈言面部，他的视线顺着面板上下移动；相机保持稳定。 Keep exactly 1 visible person(s): chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 无字光面板从微弱到稳定，冷光扫过陈言面部，他的视线顺着面板上下移动；相机保持稳定。 只出现 1 人（chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s005.png"
@@ -649,6 +755,7 @@
         "caption-0006"
       ],
       "highRisk": false,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -657,7 +764,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430006,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 陈言瞳孔沿三处无字信息区依次移动，面板光线分段扫过但不生成任何文字；相机缓慢侧移。 Keep exactly 1 visible person(s): chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 陈言瞳孔沿三处无字信息区依次移动，面板光线分段扫过但不生成任何文字；相机缓慢侧移。 只出现 1 人（chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s006.png"
@@ -672,6 +779,7 @@
         "caption-0008"
       ],
       "highRisk": false,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -680,7 +788,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430007,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 陈言抬眼并轻微开口，王老师背影保持自然静止，镜头小幅向陈言推进。 Keep exactly 2 visible person(s): chen-yan, teacher-wang; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 陈言抬眼并轻微开口，王老师背影保持自然静止，镜头小幅向陈言推进。 只出现 2 人（chen-yan, teacher-wang），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s007.png"
@@ -694,6 +802,7 @@
         "caption-0009"
       ],
       "highRisk": false,
+      "representativeSample": true,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -702,7 +811,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430008,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 王老师单手摆动一次，陈言自然转肩迈步离开；每人两臂两手，禁止肢体融合。 Keep exactly 2 visible person(s): chen-yan, teacher-wang; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 王老师单手摆动一次，陈言自然转肩迈步离开；每人两臂两手，禁止肢体融合。 只出现 2 人（chen-yan, teacher-wang），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s008.png"
@@ -717,6 +826,7 @@
         "caption-0011"
       ],
       "highRisk": true,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -725,7 +835,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430009,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 陈言自然走出画面，双手始终在裤兜中；王老师低头回避，人物数量和服装保持固定。 Keep exactly 2 visible person(s): chen-yan, teacher-wang; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 陈言自然走出画面，双手始终在裤兜中；王老师低头回避，人物数量和服装保持固定。 只出现 2 人（chen-yan, teacher-wang），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s009.png"
@@ -739,6 +849,7 @@
         "caption-0012"
       ],
       "highRisk": true,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -747,7 +858,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430010,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 陈言以自然步速向镜头右前方走，书包轻晃，树叶和远处灯光有克制动态；镜头平稳横移。 Keep exactly 1 visible person(s): chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 陈言以自然步速向镜头右前方走，书包轻晃，树叶和远处灯光有克制动态；镜头平稳横移。 只出现 1 人（chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s010.png"
@@ -761,6 +872,7 @@
         "caption-0013"
       ],
       "highRisk": false,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -769,7 +881,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430011,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 绿灯与路面反射轻微变化，陈言先看左再看右，衣角被夜风推动；相机缓慢下降。 Keep exactly 1 visible person(s): chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 绿灯与路面反射轻微变化，陈言先看左再看右，衣角被夜风推动；相机缓慢下降。 只出现 1 人（chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s011.png"
@@ -783,6 +895,7 @@
         "caption-0014"
       ],
       "highRisk": false,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -791,7 +904,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430012,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 陈言完成一次清晰的转身起跑，脚步与重心合理，书包随惯性摆动；镜头跟随向右。 Keep exactly 1 visible person(s): chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 陈言完成一次清晰的转身起跑，脚步与重心合理，书包随惯性摆动；镜头跟随向右。 只出现 1 人（chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s012.png"
@@ -807,6 +920,7 @@
         "caption-0017"
       ],
       "highRisk": false,
+      "representativeSample": true,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -815,7 +929,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430013,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 房东小姐向前走两步后停下，长发和裙摆有真实惯性，视线转向右侧；相机从围栏后轻轻探出。 Keep exactly 1 visible person(s): landlady; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 房东小姐向前走两步后停下，长发和裙摆有真实惯性，视线转向右侧；相机从围栏后轻轻探出。 只出现 1 人（landlady），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s013.png"
@@ -830,6 +944,7 @@
         "caption-0019"
       ],
       "highRisk": false,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -838,7 +953,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430014,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 她的视线慢慢转向右侧并轻微眨眼，长发受夜风轻动；脸型、吊坠和黑裙保持锁定。 Keep exactly 1 visible person(s): landlady; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 她的视线慢慢转向右侧并轻微眨眼，长发受夜风轻动；脸型、吊坠和黑裙保持锁定。 只出现 1 人（landlady），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s014.png"
@@ -852,6 +967,7 @@
         "caption-0020"
       ],
       "highRisk": false,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -860,7 +976,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430015,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 她的拇指只轻点屏幕一次，眼睛明确看向屏幕，手机正反面与摄像头方向稳定，禁止多手多指。 Keep exactly 1 visible person(s): landlady; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 她的拇指只轻点屏幕一次，眼睛明确看向屏幕，手机正反面与摄像头方向稳定，禁止多手多指。 只出现 1 人（landlady），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s015.png"
@@ -874,6 +990,7 @@
         "caption-0021"
       ],
       "highRisk": true,
+      "representativeSample": true,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -882,7 +999,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430016,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 她只眯眼一次并从屏幕抬眸，握手机的手指和手机正反面保持正确，禁止新增手或文字。 Keep exactly 1 visible person(s): landlady; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 她只眯眼一次并从屏幕抬眸，握手机的手指和手机正反面保持正确，禁止新增手或文字。 只出现 1 人（landlady），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s016.png"
@@ -896,6 +1013,7 @@
         "caption-0022"
       ],
       "highRisk": true,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -904,7 +1022,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430017,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 密集雨滴、路面积水飞溅和陈言奔跑动作都连续真实，书包保持完整，相机平稳侧向跟拍。 Keep exactly 1 visible person(s): chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 密集雨滴、路面积水飞溅和陈言奔跑动作都连续真实，书包保持完整，相机平稳侧向跟拍。 只出现 1 人（chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s017.png"
@@ -919,6 +1037,7 @@
         "caption-0024"
       ],
       "highRisk": false,
+      "representativeSample": true,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -927,7 +1046,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430018,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 雨和江面有连续运动，女孩只被风吹动头发和校服下摆，身体保持在护栏内侧低台阶；镜头缓慢靠近。 Keep exactly 1 visible person(s): riverside-girl; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 雨和江面有连续运动，女孩只被风吹动头发和校服下摆，身体保持在护栏内侧低台阶；镜头缓慢靠近。 只出现 1 人（riverside-girl），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s018.png"
@@ -941,6 +1060,7 @@
         "caption-0025"
       ],
       "highRisk": false,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -949,7 +1069,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430019,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 一次闪电由暗到亮再恢复，女孩缓慢挪动一只脚并停住，双脚和护栏接触合理，雨势连续。 Keep exactly 1 visible person(s): riverside-girl; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 一次闪电由暗到亮再恢复，女孩缓慢挪动一只脚并停住，双脚和护栏接触合理，雨势连续。 只出现 1 人（riverside-girl），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s019.png"
@@ -964,6 +1084,7 @@
         "caption-0027"
       ],
       "highRisk": true,
+      "representativeSample": true,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -972,7 +1093,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430020,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 女孩只完成一个缓慢跨步并停住，双脚和护栏接触合理，双手结构清楚，不展示坠落或伤害。 Keep exactly 1 visible person(s): riverside-girl; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 女孩只完成一个缓慢跨步并停住，双脚和护栏接触合理，双手结构清楚，不展示坠落或伤害。 只出现 1 人（riverside-girl），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s020.png"
@@ -986,6 +1107,7 @@
         "caption-0028"
       ],
       "highRisk": true,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -994,7 +1116,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430021,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 陈言减速停下并开口，女孩快速回头但脚仍在护栏附近；雨和衣物动态连续，禁止第三人。 Keep exactly 2 visible person(s): chen-yan, riverside-girl; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 陈言减速停下并开口，女孩快速回头但脚仍在护栏附近；雨和衣物动态连续，禁止第三人。 只出现 2 人（chen-yan, riverside-girl），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s021.png"
@@ -1008,6 +1130,7 @@
         "caption-0029"
       ],
       "highRisk": false,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -1016,7 +1139,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430022,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 女孩只滑半步，陈言的一只完整五指手准确抓住校服肩背并开始后拉；每人两臂两腿，禁止融合或额外肢体。 Keep exactly 2 visible person(s): riverside-girl, chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 女孩只滑半步，陈言的一只完整五指手准确抓住校服肩背并开始后拉；每人两臂两腿，禁止融合或额外肢体。 只出现 2 人（riverside-girl, chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s022.png"
@@ -1031,6 +1154,7 @@
         "caption-0031"
       ],
       "highRisk": true,
+      "representativeSample": true,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -1039,7 +1163,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430023,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 两人沿同一受力方向倒向远离江面的地面，四肢数量固定、身体不融合，落地动作受控且无伤害特写。 Keep exactly 2 visible person(s): chen-yan, riverside-girl; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 两人沿同一受力方向倒向远离江面的地面，四肢数量固定、身体不融合，落地动作受控且无伤害特写。 只出现 2 人（chen-yan, riverside-girl），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s023.png"
@@ -1054,6 +1178,7 @@
         "caption-0033"
       ],
       "highRisk": true,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -1062,7 +1187,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430024,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 女孩用正常起身动作站稳并只整理一次衣摆，陈言撑地坐起；手脚清晰、校服不暴露、身份不漂移。 Keep exactly 2 visible person(s): chen-yan, riverside-girl; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 女孩用正常起身动作站稳并只整理一次衣摆，陈言撑地坐起；手脚清晰、校服不暴露、身份不漂移。 只出现 2 人（chen-yan, riverside-girl），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s024.png"
@@ -1077,6 +1202,7 @@
         "caption-0035"
       ],
       "highRisk": true,
+      "representativeSample": true,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -1085,7 +1211,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430025,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 陈言只用一只手做简短指向动作后收回，女孩低头听着；手指和肢体结构稳定，保持安全距离。 Keep exactly 2 visible person(s): chen-yan, riverside-girl; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 陈言只用一只手做简短指向动作后收回，女孩低头听着；手指和肢体结构稳定，保持安全距离。 只出现 2 人（chen-yan, riverside-girl），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s025.png"
@@ -1099,6 +1225,7 @@
         "caption-0036"
       ],
       "highRisk": true,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -1107,7 +1234,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430026,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 女孩向护栏走两步，陈言站起并保持观察，雨水和头发自然摆动；镜头缓慢横移。 Keep exactly 2 visible person(s): riverside-girl, chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 女孩向护栏走两步，陈言站起并保持观察，雨水和头发自然摆动；镜头缓慢横移。 只出现 2 人（riverside-girl, chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s026.png"
@@ -1121,6 +1248,7 @@
         "caption-0037"
       ],
       "highRisk": false,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -1129,7 +1257,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430027,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 陈言用一只完整的手抹过脸后放下，目光从焦急转为反常平静并开口，脸部身份保持锁定。 Keep exactly 1 visible person(s): chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 陈言用一只完整的手抹过脸后放下，目光从焦急转为反常平静并开口，脸部身份保持锁定。 只出现 1 人（chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s027.png"
@@ -1143,6 +1271,7 @@
         "caption-0038"
       ],
       "highRisk": true,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -1151,7 +1280,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430028,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 陈言只用一只完整的手抹过脸后放下，眼神坚定并开口，雨水持续，面部身份绝不变化。 Keep exactly 1 visible person(s): chen-yan; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 陈言只用一只完整的手抹过脸后放下，眼神坚定并开口，雨水持续，面部身份绝不变化。 只出现 1 人（chen-yan），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s028.png"
@@ -1166,6 +1295,7 @@
         "caption-0040"
       ],
       "highRisk": true,
+      "representativeSample": false,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     },
@@ -1174,7 +1304,7 @@
       "stage": "videos",
       "kind": "wan-i2v",
       "seed": 430029,
-      "prompt": "Animate the supplied frame into a continuous cinematic shot; do not merely zoom, pan or hold the still image. 闪电照亮侧脸，女孩从麻木转为震惊并缓慢回头；湿发、眼睛、校服和护栏位置都保持稳定，结尾停在她的目光上。 Keep exactly 1 visible person(s): riverside-girl; no other person may appear. Lock facial identity, age, hairstyle, recognition marks, body proportions, uniform and all first-frame geometry. Natural real-time body physics, rain, cloth, hair, eye and environmental motion. Preserve the polished Chinese webtoon line style and refined cel shading in every frame. The final frame must remain a valid continuation of the first frame with no new object, text or identity drift.",
+      "prompt": "真实连续国漫镜头，不是静态推拉、平移或定格。 闪电照亮侧脸，女孩从麻木转为震惊并缓慢回头；湿发、眼睛、校服和护栏位置都保持稳定，结尾停在她的目光上。 只出现 1 人（riverside-girl），锁定脸、年龄、发型、服装和首帧构图。 动作、雨、头发和衣物符合实时物理；全程保持精致半写实国漫画风，不新增物体或文字。",
       "negativePrompt": "static frame, frozen image, Ken Burns movement, slideshow, identity drift, face morph, age drift, wardrobe drift, extra person, duplicate body, extra limb, fused hand, detached finger, rubber motion, camera shake, micro jitter, edge warping, melting background, new object, reversed phone, impossible railing or gravity, letters, Chinese characters, numbers, subtitle, logo, watermark, red guide mark",
       "references": [
         "assets/generated/keyframes/v2-s029.png"
@@ -1189,6 +1319,7 @@
         "caption-0042"
       ],
       "highRisk": false,
+      "representativeSample": true,
       "maxAttempts": 3,
       "timeoutSeconds": 7200
     }
