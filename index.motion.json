@@ -1,0 +1,14 @@
+{
+  "duration": 125.745,
+  "maxStaticSec": 6,
+  "assertions": [
+    { "kind": "appearsBy", "selector": "#chapter-card", "bySec": 8.6 },
+    { "kind": "appearsBy", "selector": "#score-card", "bySec": 9.1 },
+    { "kind": "appearsBy", "selector": "#system-panel", "bySec": 24.8 },
+    { "kind": "staysInFrame", "selector": "#score-card" },
+    { "kind": "staysInFrame", "selector": "#system-panel" },
+    { "kind": "staysInFrame", "selector": ".caption-inner" },
+    { "kind": "keepsMoving", "withinSelector": "#root", "maxStaticSec": 6 }
+  ]
+}
+

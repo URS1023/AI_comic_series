@@ -1,0 +1,32 @@
+[project]
+id = "gaokao-rewind-rainy-night"
+title = "高考回档：雨夜白月光"
+episode = "ep01"
+
+[remote]
+base_url = "https://developer.amd.com.cn/radeon/instances/u-4389-46ab5765"
+remote_root = "ai-comic-series"
+# Leave blank to choose the largest writable non-system mount with at least
+# 100 GiB free. Set an absolute remote path after the first probe if desired.
+data_root = ""
+kernel_name = "python3"
+request_timeout_seconds = 30
+execution_timeout_seconds = 120
+
+[video]
+width = 1920
+height = 1080
+fps = 30
+generation_width = 1280
+generation_height = 720
+generation_fps = 16
+clip_seconds = 5
+primary_model_profile = "wan22-i2v-14b-quality"
+smoke_model_profile = "wan22-ti2v-5b-smoke"
+
+[render]
+video_codec = "libx264"
+audio_codec = "aac"
+pixel_format = "yuv420p"
+audio_sample_rate = 48000
+

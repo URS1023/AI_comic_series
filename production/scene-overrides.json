@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "storyboardInput": "STORYBOARD_V2.json",
+  "scenes": {
+    "v2-s001": { "sourceSceneId": "s001" },
+    "v2-s002": { "sourceSceneId": "s002" },
+    "v2-s003": { "sourceSceneId": "s003" },
+    "v2-s004": { "sourceSceneId": "s004" },
+    "v2-s005": { "sourceSceneId": "s005" },
+    "v2-s006": {
+      "sourceSceneId": "s005",
+      "description": "陈言瞳孔与无字系统光面板的极近细节，冷白光沿面板分区依次点亮，所有分数文字留给后期 HTML 叠加。",
+      "shot": "extreme close insert",
+      "motionTarget": "陈言瞳孔沿三处无字信息区依次移动，面板光线分段扫过但不生成任何文字；相机缓慢侧移。"
+    },
+    "v2-s007": { "sourceSceneId": "s006" },
+    "v2-s008": { "sourceSceneId": "s008" },
+    "v2-s009": {
+      "sourceSceneId": "s008",
+      "description": "办公室门口侧面中景，陈言双手插兜带着得逞的轻松表情走出门，王老师仍在桌后心虚回避视线。",
+      "participants": { "count": 2, "allowed": ["chen-yan", "teacher-wang"] },
+      "shot": "medium exit",
+      "motionTarget": "陈言自然走出画面，双手始终在裤兜中；王老师低头回避，人物数量和服装保持固定。"
+    },
+    "v2-s010": { "sourceSceneId": "s009" },
+    "v2-s011": { "sourceSceneId": "s010" },
+    "v2-s012": { "sourceSceneId": "s011" },
+    "v2-s013": { "sourceSceneId": "s012" },
+    "v2-s014": {
+      "sourceSceneId": "s012",
+      "description": "房东小姐在暖黄路灯下安静站定，嘴角带温柔但难以读懂的弧度，目光始终追随陈言离开的方向。",
+      "shot": "close portrait",
+      "motionTarget": "她的视线慢慢转向右侧并轻微眨眼，长发受夜风轻动；脸型、吊坠和黑裙保持锁定。"
+    },
+    "v2-s015": { "sourceSceneId": "s013" },
+    "v2-s016": {
+      "sourceSceneId": "s013",
+      "description": "房东小姐桃花眼与深灰手机同框近景，空白屏幕冷光映在她脸上，她的目光从屏幕移向街角。",
+      "shot": "close reaction",
+      "motionTarget": "她只眯眼一次并从屏幕抬眸，握手机的手指和手机正反面保持正确，禁止新增手或文字。"
+    },
+    "v2-s017": { "sourceSceneId": "s014" },
+    "v2-s018": { "sourceSceneId": "s015" },
+    "v2-s019": {
+      "sourceSceneId": "s017",
+      "description": "闪电照亮江边女孩湿透但不暴露的十三中校服，她在护栏内侧低台阶上缓慢向外挪步，陈言尚未进入画面。",
+      "participants": { "count": 1, "allowed": ["riverside-girl"] },
+      "shot": "wide reveal",
+      "motionTarget": "一次闪电由暗到亮再恢复，女孩缓慢挪动一只脚并停住，双脚和护栏接触合理，雨势连续。"
+    },
+    "v2-s020": { "sourceSceneId": "s017" },
+    "v2-s021": { "sourceSceneId": "s018" },
+    "v2-s022": {
+      "sourceSceneId": "s020",
+      "description": "连续救援动作的中近景：女孩在湿滑护栏边失去重心，陈言冲到她身后并用一只手抓住肩背处校服布料。",
+      "participants": { "count": 2, "allowed": ["riverside-girl", "chen-yan"] },
+      "shot": "medium action",
+      "motionTarget": "女孩只滑半步，陈言的一只完整五指手准确抓住校服肩背并开始后拉；每人两臂两腿，禁止融合或额外肢体。"
+    },
+    "v2-s023": { "sourceSceneId": "s021" },
+    "v2-s024": { "sourceSceneId": "s022" },
+    "v2-s025": {
+      "sourceSceneId": "s022",
+      "description": "雨中双人中景，陈言已经从地面站起，向女孩指向远离护栏的街道方向，语气克制地邀请她去附近躲雨。",
+      "participants": { "count": 2, "allowed": ["chen-yan", "riverside-girl"] },
+      "shot": "two-shot medium",
+      "motionTarget": "陈言只用一只手做简短指向动作后收回，女孩低头听着；手指和肢体结构稳定，保持安全距离。"
+    },
+    "v2-s026": { "sourceSceneId": "s023" },
+    "v2-s027": {
+      "sourceSceneId": "s024",
+      "description": "陈言胸口以上近景，雨水顺脸颊流下，他抹掉脸上的雨，忽然抬眼喊住女孩。",
+      "participants": { "count": 1, "allowed": ["chen-yan"] },
+      "shot": "close hero",
+      "motionTarget": "陈言用一只完整的手抹过脸后放下，目光从焦急转为反常平静并开口，脸部身份保持锁定。"
+    },
+    "v2-s028": { "sourceSceneId": "s024" },
+    "v2-s029": {
+      "sourceSceneId": "s025",
+      "description": "白蓝闪电中的江边女孩侧脸近景，她的脚步停住，湿发间露出震惊的灰棕眼睛，缓慢回头看向陈言。",
+      "participants": { "count": 1, "allowed": ["riverside-girl"] },
+      "shot": "reaction close",
+      "motionTarget": "闪电照亮侧脸，女孩从麻木转为震惊并缓慢回头；湿发、眼睛、校服和护栏位置都保持稳定，结尾停在她的目光上。"
+    }
+  }
+}
+

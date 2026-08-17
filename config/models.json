@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "comfyui": {
+    "repository": "https://github.com/Comfy-Org/ComfyUI.git",
+    "commit": "7d39997e9f3897d8a50506bdc5f86dce844e0223"
+  },
+  "profiles": {
+    "wan22-i2v-14b-quality": {
+      "purpose": "Final-quality image-to-video generation without Lightning LoRA",
+      "files": [
+        {
+          "repo": "Comfy-Org/Wan_2.2_ComfyUI_Repackaged",
+          "revision": "c4f60d30c55a624e35427060fdd217579a6c1d77",
+          "filename": "split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+          "target": "diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+          "bytes": 14294742832,
+          "sha256": "6122e79d55e0f235698d11d657f3b196c5273c830da00b2b013c5a048d5e6a42"
+        },
+        {
+          "repo": "Comfy-Org/Wan_2.2_ComfyUI_Repackaged",
+          "revision": "c4f60d30c55a624e35427060fdd217579a6c1d77",
+          "filename": "split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+          "target": "diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+          "bytes": 14294742832,
+          "sha256": "5471a457b6ac404202a5fbe6c11595a3d5641fc766b00f38763f72303fffc21e"
+        },
+        {
+          "repo": "Comfy-Org/Wan_2.2_ComfyUI_Repackaged",
+          "revision": "c4f60d30c55a624e35427060fdd217579a6c1d77",
+          "filename": "split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "target": "text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "bytes": 6735906897,
+          "sha256": "c3355d30191f1f066b26d93fba017ae9809dce6c627dda5f6a66eaa651204f68"
+        },
+        {
+          "repo": "Comfy-Org/Wan_2.2_ComfyUI_Repackaged",
+          "revision": "c4f60d30c55a624e35427060fdd217579a6c1d77",
+          "filename": "split_files/vae/wan_2.1_vae.safetensors",
+          "target": "vae/wan_2.1_vae.safetensors",
+          "bytes": 253815318,
+          "sha256": "2fc39d31359a4b0a64f55876d8ff7fa8d780956ae2cb13463b0223e15148976b"
+        }
+      ]
+    },
+    "wan22-ti2v-5b-smoke": {
+      "purpose": "Fast ROCm and ComfyUI smoke test; not the default final renderer",
+      "files": [
+        {
+          "repo": "Comfy-Org/Wan_2.2_ComfyUI_Repackaged",
+          "revision": "c4f60d30c55a624e35427060fdd217579a6c1d77",
+          "filename": "split_files/diffusion_models/wan2.2_ti2v_5B_fp16.safetensors",
+          "target": "diffusion_models/wan2.2_ti2v_5B_fp16.safetensors",
+          "bytes": 9999658848,
+          "sha256": "456f901338bd9eadbded3828b819109a9b68e8a525ca5cf8d0049a69fcfeca1e"
+        },
+        {
+          "repo": "Comfy-Org/Wan_2.2_ComfyUI_Repackaged",
+          "revision": "c4f60d30c55a624e35427060fdd217579a6c1d77",
+          "filename": "split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "target": "text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "bytes": 6735906897,
+          "sha256": "c3355d30191f1f066b26d93fba017ae9809dce6c627dda5f6a66eaa651204f68"
+        },
+        {
+          "repo": "Comfy-Org/Wan_2.2_ComfyUI_Repackaged",
+          "revision": "c4f60d30c55a624e35427060fdd217579a6c1d77",
+          "filename": "split_files/vae/wan2.2_vae.safetensors",
+          "target": "vae/wan2.2_vae.safetensors",
+          "bytes": 1409400960,
+          "sha256": "e40321bd36b9709991dae2530eb4ac303dd168276980d3e9bc4b6e2b75fed156"
+        }
+      ]
+    },
+    "qwen-image-production": {
+      "purpose": "Qwen-Image-2512 text-to-image anchors plus Qwen-Image-Edit-2511 identity-preserving scene keyframes; no Lightning LoRA",
+      "files": [
+        {
+          "repo": "Comfy-Org/Qwen-Image_ComfyUI",
+          "revision": "7beb7b647f04469fbe64ba8adc2bb0d7e5e9f73f",
+          "filename": "split_files/diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors",
+          "target": "diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors",
+          "bytes": 20430679144,
+          "sha256": "5dc80554d5d83390046a2f4a94ece06afb7700bf7b0aaf8bde9769793875876b"
+        },
+        {
+          "repo": "Comfy-Org/Qwen-Image-Edit_ComfyUI",
+          "revision": "984166f60a9b1fcede5e9b9287b7a7aebc050010",
+          "filename": "split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors",
+          "target": "diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors",
+          "bytes": 20533762817,
+          "sha256": "c9fdc158e46d3b61ef75f21ae866ca2fe808bf4a53643120d1c1e87c19280a4e"
+        },
+        {
+          "repo": "Comfy-Org/Qwen-Image_ComfyUI",
+          "revision": "7beb7b647f04469fbe64ba8adc2bb0d7e5e9f73f",
+          "filename": "split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
+          "target": "text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
+          "bytes": 9384670680,
+          "sha256": "cb5636d852a0ea6a9075ab1bef496c0db7aef13c02350571e388aea959c5c0b4"
+        },
+        {
+          "repo": "Comfy-Org/Qwen-Image_ComfyUI",
+          "revision": "7beb7b647f04469fbe64ba8adc2bb0d7e5e9f73f",
+          "filename": "split_files/vae/qwen_image_vae.safetensors",
+          "target": "vae/qwen_image_vae.safetensors",
+          "bytes": 253806246,
+          "sha256": "a70580f0213e67967ee9c95f05bb400e8fb08307e017a924bf3441223e023d1f"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,54 @@
+# Local Python / Node environments
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+node_modules/
+
+# Secrets must never enter version control
+.env
+.env.*
+!.env.example
+*.cookie
+*.token
+secrets/
+.local/
+
+# User-provided long-form source remains local; the repository tracks its hash
+# and derived episode script without redistributing the full text publicly.
+/SCRIPT_SOURCE.md
+
+# Generated or downloaded heavy media
+assets/audio/generated/
+assets/generated/keyframes/
+assets/generated/video/
+assets/generated/rejected/
+models/
+cache/
+renders/
+output/
+.media/audio/
+assets/audio/bgm/source.mp3
+assets/audio/sfx/rain-source.wav
+assets/audio/narration-full.wav
+qa/frames/
+qa/contact-sheets/
+production/status.json
+production/STOP
+
+# Keep directory contracts in Git
+!assets/generated/keyframes/.gitkeep
+!assets/generated/video/.gitkeep
+!assets/generated/rejected/.gitkeep
+!renders/.gitkeep
+!qa/frames/.gitkeep
+!qa/contact-sheets/.gitkeep
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.swp

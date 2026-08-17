@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "orientation": "landscape",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "videoBitrate": "8M"
+  },
+  "captions": {
+    "fontFamily": "Noto Sans SC",
+    "fontSize": 48,
+    "fontWeight": 700,
+    "lineHeight": 1.35,
+    "letterSpacingEm": 0.035,
+    "textColor": "#F5F2EF",
+    "backgroundRgba": "rgba(20,15,13,0.78)",
+    "assBoxColor": "&H380C0D10",
+    "boxPadding": 12,
+    "htmlPadding": "13px 28px 16px",
+    "borderRadius": 12,
+    "bottom": 58,
+    "maxWidth": 1540
+  },
+  "opening": {
+    "approvedVideo": "qa/opening-approved.mp4",
+    "previewDuration": 20,
+    "flashScaleMin": 1,
+    "flashScaleMax": 1.2,
+    "selectedScaleStart": 1,
+    "selectedScaleEnd": 1.15,
+    "minimumFlashMotionDelta": 0.5,
+    "minimumSelectedMotionDelta": 0.5,
+    "layout": {
+      "leadWidth": 1500,
+      "leadFontSize": 72,
+      "flashLabelWidth": 1380,
+      "flashLabelFontSize": 56,
+      "titleCardWidth": 1400,
+      "primaryTitleFontSize": 76,
+      "secondaryTitleFontSize": 62,
+      "titleTopPercent": 57
+    }
+  },
+  "chapters": {
+    "fontFamily": "Noto Sans SC",
+    "left": 84,
+    "top": 72,
+    "maxWidth": 1100,
+    "kickerFontSize": 24,
+    "titleFontSize": 48,
+    "textColor": "#FFF8EF",
+    "accentColor": "#EF5360",
+    "backgroundRgba": "rgba(22,16,14,0.82)",
+    "assBoxColor": "&H3514100E",
+    "boxPadding": 8
+  },
+  "audio": {
+    "bgmVolume": 0.22
+  }
+}

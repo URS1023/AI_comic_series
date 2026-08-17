@@ -1,0 +1,13 @@
+{
+  "revision": "v2",
+  "storyboard": "STORYBOARD_V2.json",
+  "toleranceSeconds": 0.12,
+  "bodyStart": 8.145,
+  "sceneCount": 29,
+  "captionCount": 42,
+  "captionsCoveredExactlyOnce": 42,
+  "maxAbsoluteSceneStartDeltaSeconds": 0.1,
+  "meanAbsoluteSceneStartDeltaSeconds": 0.0034,
+  "errors": [],
+  "passed": true
+}

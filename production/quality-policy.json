@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "finalTimelineRequiresVideo": true,
+  "allowStillMotionInFinal": false,
+  "minimumRepresentativeVideoPassRate": 0.9,
+  "minimumClipSeconds": 2.5,
+  "maximumClipSeconds": 6.5,
+  "requiredChecks": [
+    "identity",
+    "age",
+    "hair",
+    "wardrobe",
+    "participant-count",
+    "limb-count",
+    "hands",
+    "prop-orientation",
+    "first-frame-match",
+    "last-frame-integrity",
+    "camera-stability",
+    "no-new-object",
+    "no-rendered-text",
+    "no-watermark"
+  ],
+  "hardReject": [
+    "identity-drift",
+    "extra-person",
+    "extra-limb",
+    "fused-hand",
+    "reversed-phone",
+    "rubber-motion",
+    "camera-shake",
+    "edge-warp",
+    "readable-generated-text",
+    "watermark",
+    "sexualized-student",
+    "static-image-disguised-as-video"
+  ],
+  "retry": {
+    "maximumAttemptsPerScene": 3,
+    "preserveAcceptedAttempts": true,
+    "regenerateOnlyRejectedScenes": true
+  }
+}
+

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "style": "polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality",
+  "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student",
+  "characters": {
+    "chen-yan": {
+      "seed": 410001,
+      "output": "assets/generated/anchors/chen-yan.png",
+      "prompt": "Exactly one person: Chen Yan, an 18-year-old Chinese male high-school senior, slim but healthy, about 177 cm. Narrow oval face, straight thick eyebrows, deep-brown almond eyes, a tiny subtle mole just below the outer corner of his left eye, straight nose with softly rounded tip, slightly thin upper lip, faint asymmetric smile whose right corner rises first, upper ear rims turning outward very slightly. Short black textured hair with exactly two recognizable front locks sweeping to his right, clean nape, no facial hair, no glasses, no jewelry. White short-sleeve Chinese high-school uniform shirt with navy piping only at collar and sleeve cuffs, small blank color-block badge shape on left chest with no letters, navy straight-leg trousers, white sneakers with deep-blue panels, plain black two-strap backpack. Quiet old public-school corridor in southern China at night, cream walls and dark green metal windows without signs. Cinematic 16:9 landscape, three-quarter full-body view, both complete five-finger hands visible and relaxed, face large enough to inspect, neutral standing pose, alert slightly irreverent expression. Warm sodium corridor light with faint cool window rim. No other person and no multi-panel sheet."
+    },
+    "teacher-wang": {
+      "seed": 410002,
+      "output": "assets/generated/anchors/teacher-wang.png",
+      "prompt": "Exactly one person: Teacher Wang, a 42-year-old Chinese male public-high-school homeroom teacher. Slightly square round face, mildly receding hairline, short black hair with a little grey, thick short eyebrows, brown eyes behind narrow rectangular black-frame glasses, wider nose wings, faint stubble shadow at chin. Average height, mildly overweight, slightly forward shoulders. Light-blue short-sleeve shirt, dark-grey trousers, black belt, no tie and no jacket. He stands beside a deep wood teacher desk in an old southern-Chinese public-school office at night, green metal filing cabinet and cream wall behind him, all papers blank. Cinematic 16:9 landscape, three-quarter full-body identity anchor, both hands clearly visible with five fingers, skeptical but not villainous expression, cool fluorescent light with warm desk bounce. No other person, no duplicate, no multi-panel sheet."
+    },
+    "landlady": {
+      "seed": 410003,
+      "output": "assets/generated/anchors/landlady.png",
+      "prompt": "Exactly one adult person: Chen Yan's 25-year-old Chinese landlady, tall and slender with adult proportions, about 170 cm. Refined long oval face, narrow upturned peach-blossom eyes with deep-brown irises, soft arched brows, high narrow nose bridge, clearly shaped lips, tiny mole above the right collarbone. Waist-length black hair with subtle waves and center part, no bangs. Minimal black long-sleeve knee-length dress, low black shoes, fine silver chain with a small round pendant; restrained, non-revealing and not sexualized. She stands under a warm streetlamp beside a roadside fence at night, quietly watching an empty street corner. Cinematic 16:9 landscape, three-quarter full-body identity anchor, both complete hands visible, one hand relaxed and one holding a plain dark-grey phone by its edges with the screen facing inward, gentle expression with unreadable control beneath it. No other person, no red eyes, no weapon, no multi-panel sheet."
+    },
+    "riverside-girl": {
+      "seed": 410004,
+      "output": "assets/generated/anchors/riverside-girl.png",
+      "prompt": "Exactly one person: an 18-year-old Chinese female high-school senior, slim but healthy, about 164 cm. Small softly rounded oval face, grey-brown large eyes, calm thin eyebrows with a tiny natural gap near the end of her left eyebrow, small nose tip, pale natural lips. Chest-length straight black hair with a 3-to-7 side part. White short-sleeve Chinese school-uniform top with navy collar piping, navy knee-length pleated skirt, white socks, deep-blue sports shoes; modest, opaque, non-revealing and never sexualized. She stands safely several steps away from a riverside railing under an awning after rain, hands fully visible at her sides, distant restrained expression. Cinematic 16:9 landscape, three-quarter full-body identity anchor, face large enough to inspect, orange streetlight and cool rain-blue rim. No injury, no blood, no self-harm action, no other person, no multi-panel sheet."
+    }
+  }
+}
+

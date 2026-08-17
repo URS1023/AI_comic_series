@@ -1,0 +1,16 @@
+{
+  "name": "ai_comic_series",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:storyboard": "node scripts/build-video-storyboard.mjs . && node scripts/build-production-docs.mjs . && node scripts/build-generation-queue.mjs .",
+    "build:composition": "node scripts/build-composition.mjs . && node scripts/stamp-seams.mjs . && node scripts/compact-generated-html.mjs index.html",
+    "build:captions": ".venv/Scripts/python.exe scripts/build_ass_captions.py",
+    "build:opening": ".venv/Scripts/python.exe scripts/build_opening.py",
+    "build": "npm run build:storyboard && npm run build:composition",
+    "dev": "npx --yes hyperframes@0.7.109 preview",
+    "check": "npx --yes hyperframes@0.7.109 check",
+    "render": "npx --yes hyperframes@0.7.109 render",
+    "publish": "npx --yes hyperframes@0.7.109 publish"
+  }
+}

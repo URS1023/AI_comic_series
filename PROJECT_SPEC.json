@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "title": "高考回档：雨夜白月光",
+  "titleLines": ["高考回档", "雨夜白月光"],
+  "storyboardFile": "STORYBOARD_VIDEO.json",
+  "source": {
+    "mode": "episode-adaptation-from-verbatim-series-source",
+    "openingSentence": "今天体验的人生副本是高考回档：雨夜白月光。",
+    "corrections": [],
+    "chapters": [
+      {
+        "title": "回档前三天",
+        "cue": "高考出分那晚"
+      }
+    ]
+  },
+  "narration": {
+    "voice": "zh-CN-YunjianNeural",
+    "bodyRate": "+0%",
+    "leadRate": "+0%",
+    "revealRate": "+0%",
+    "pitch": "+0Hz",
+    "leadText": "今天体验的人生副本是……",
+    "revealText": "高考回档：雨夜白月光。",
+    "leadStart": 0.05,
+    "flashGapAfterLead": 0.02,
+    "flashDuration": 1.667,
+    "revealHold": 0.14,
+    "bodyGap": 0.22,
+    "captionMaxChars": 18,
+    "captionMinChars": 6,
+    "captionMinDuration": 0.55
+  },
+  "opening": {
+    "leadDisplayText": "今天体验的人生副本是……",
+    "flashMedia": "assets/opening/flash.mp4",
+    "finalImage": "assets/generated/anchors/chen-yan.png",
+    "flashLives": [
+      { "asset": "assets/opening/life-01.mp4", "label": "一周目｜高考四百二十六" },
+      { "asset": "assets/opening/life-02.mp4", "label": "二周目｜雨夜救人" },
+      { "asset": "assets/opening/life-03.mp4", "label": "三周目｜病娇房东" },
+      { "asset": "assets/opening/life-04.mp4", "label": "四周目｜青梅真心" },
+      { "asset": "assets/opening/life-05.mp4", "label": "五周目｜试题改变" },
+      { "asset": "assets/opening/life-06.mp4", "label": "六周目｜挑战满分" },
+      { "asset": "assets/opening/life-07.mp4", "label": "七周目｜摆烂青春" },
+      { "asset": "assets/opening/life-08.mp4", "label": "八周目｜全校本科" },
+      { "asset": "assets/opening/life-09.mp4", "label": "N周目｜谁又掉点" }
+    ]
+  },
+  "audio": {
+    "bgmSource": "assets/audio/bgm/source.mp3",
+    "bgmLooped": "assets/audio/bgm/looped.m4a",
+    "narrationOutput": "assets/audio/narration.m4a",
+    "rainAmbience": "assets/audio/sfx/rain-ambience.m4a",
+    "ratchetClick": "assets/audio/sfx/ratchet-click.mp3",
+    "rewindWhoosh": "assets/audio/sfx/rewind-whoosh.mp3"
+  },
+  "ageStages": {
+    "1": "chen-yan-age-18"
+  },
+  "visual": {
+    "defaultParticipants": {
+      "count": 1,
+      "allowed": ["chen-yan"]
+    },
+    "promptIdentity": "陈言，十八岁中国男高中生，清瘦但健康，窄椭圆脸，平直浓眉，深棕色杏眼，左眼尾下方一颗很淡的小痣，黑色短碎发，额前两束固定向右，白色短袖十三中校服衬衫配藏青领边、藏青长裤和黑色双肩书包。",
+    "promptStyle": "polished Chinese webtoon, grounded seinen manga, bold clean black ink contour, realistic anatomy, detailed lived-in environment, subtle halftone paper texture, cinematic lighting, restrained colors, no rendered text"
+  }
+}

@@ -1,0 +1,866 @@
+[
+  {
+    "id": "v2-s001",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 8.145,
+    "end": 12.382,
+    "duration": 4.237,
+    "cue": "高考出分那晚，陈言盯着四百二十六分",
+    "narrationText": "高考出分那晚，陈言盯着四百二十六分",
+    "description": "陈言坐在昏暗出租屋书桌前盯着电脑屏幕，屏幕光映亮他难以置信的脸；屏幕内容留空供后期叠加分数。",
+    "sourceCaptionIds": [
+      "caption-0001"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "over-shoulder close",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s001.mp4",
+    "sourceSceneId": "s001",
+    "sourceImage": "assets/generated/keyframes/v2-s001.png",
+    "motionTarget": "陈言轻微眨眼、呼吸停顿、视线锁住屏幕，屏幕冷光自然闪动；相机极缓慢靠近。"
+  },
+  {
+    "id": "v2-s002",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 12.382,
+    "end": 15.895,
+    "duration": 3.513,
+    "cue": "下一秒，世界就像被人按下倒放键",
+    "narrationText": "下一秒，世界就像被人按下倒放键",
+    "description": "出租屋中的雨滴、翻飞纸张和陈言的轮廓沿时间逆向拉回，空间被克制的倒放残影吞没。",
+    "sourceCaptionIds": [
+      "caption-0002"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "wide symbolic",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s002.mp4",
+    "sourceSceneId": "s002",
+    "sourceImage": "assets/generated/keyframes/v2-s002.png",
+    "motionTarget": "纸张和雨滴明确向上倒退，陈言衣角被逆向风带动，镜头快速后拉但人物身份不变。"
+  },
+  {
+    "id": "v2-s003",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 15.895,
+    "end": 20.032,
+    "duration": 4.137,
+    "cue": "再睁眼，班主任王老师正拍着桌子训他",
+    "narrationText": "再睁眼，班主任王老师正拍着桌子训他",
+    "description": "十三中办公室中景，王老师隔着深木桌训话，陈言站在桌前刚刚恢复意识。",
+    "sourceCaptionIds": [
+      "caption-0003"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "teacher-wang"
+      ]
+    },
+    "shot": "two-shot medium",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s003.mp4",
+    "sourceSceneId": "s003",
+    "sourceImage": "assets/generated/keyframes/v2-s003.png",
+    "motionTarget": "王老师只用一只手自然敲桌一次后收回，嘴部轻微训话；陈言眨眼并抬头，禁止新增人物或手掌。"
+  },
+  {
+    "id": "v2-s004",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 20.032,
+    "end": 24.182,
+    "duration": 4.15,
+    "cue": "这里是高考前三天，他明明经历过这一幕",
+    "narrationText": "这里是高考前三天，他明明经历过这一幕",
+    "description": "陈言的面部近景，背景办公室轻微虚化，他从困惑转为震惊，眼睛扫过熟悉环境。",
+    "sourceCaptionIds": [
+      "caption-0004"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "close",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s004.mp4",
+    "sourceSceneId": "s004",
+    "sourceImage": "assets/generated/keyframes/v2-s004.png",
+    "motionTarget": "眼神先失焦后迅速清醒，轻微吸气，相机沿视线方向小幅环绕，面部和发型保持锁定。"
+  },
+  {
+    "id": "v2-s005",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 24.182,
+    "end": 28.207,
+    "duration": 4.025,
+    "cue": "半透明的系统面板浮在眼前，四百二十六分",
+    "narrationText": "半透明的系统面板浮在眼前，四百二十六分",
+    "description": "陈言侧面半身，面前只有抽象的半透明冷白光面板轮廓，不含任何文字，光线反射在瞳孔和脸颊。",
+    "sourceCaptionIds": [
+      "caption-0005",
+      "caption-0006"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "medium profile",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s005.mp4",
+    "sourceSceneId": "s005",
+    "sourceImage": "assets/generated/keyframes/v2-s005.png",
+    "motionTarget": "无字光面板从微弱到稳定，冷光扫过陈言面部，他的视线顺着面板上下移动；相机保持稳定。"
+  },
+  {
+    "id": "v2-s006",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 28.207,
+    "end": 32.232,
+    "duration": 4.025,
+    "cue": "距离满分差三百二十四分，回档点是三天前",
+    "narrationText": "距离满分差三百二十四分，回档点是三天前",
+    "description": "陈言瞳孔与无字系统光面板的极近细节，冷白光沿面板分区依次点亮，所有分数文字留给后期 HTML 叠加。",
+    "sourceCaptionIds": [
+      "caption-0007",
+      "caption-0008"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "extreme close insert",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s006.mp4",
+    "sourceSceneId": "s005",
+    "sourceImage": "assets/generated/keyframes/v2-s006.png",
+    "motionTarget": "陈言瞳孔沿三处无字信息区依次移动，面板光线分段扫过但不生成任何文字；相机缓慢侧移。"
+  },
+  {
+    "id": "v2-s007",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 32.232,
+    "end": 37.307,
+    "duration": 5.075,
+    "cue": "陈言脱口而出：王老师，明天千万别去洗脚城",
+    "narrationText": "陈言脱口而出：王老师，明天千万别去洗脚城",
+    "description": "办公室过肩镜头，陈言忽然抬眼看向王老师，表情从震惊转成带一点坏笑的镇定。",
+    "sourceCaptionIds": [
+      "caption-0009"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "teacher-wang"
+      ]
+    },
+    "shot": "over-shoulder",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s007.mp4",
+    "sourceSceneId": "s006",
+    "sourceImage": "assets/generated/keyframes/v2-s007.png",
+    "motionTarget": "陈言抬眼并轻微开口，王老师背影保持自然静止，镜头小幅向陈言推进。"
+  },
+  {
+    "id": "v2-s008",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 37.307,
+    "end": 41.682,
+    "duration": 4.375,
+    "cue": "王老师脸色瞬间变了，心虚地把他赶出办公室",
+    "narrationText": "王老师脸色瞬间变了，心虚地把他赶出办公室",
+    "description": "办公室双人中景，王老师心虚地摆手让陈言离开，陈言双手插兜转身，动作关系清楚。",
+    "sourceCaptionIds": [
+      "caption-0010",
+      "caption-0011"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "teacher-wang"
+      ]
+    },
+    "shot": "two-shot medium",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s008.mp4",
+    "sourceSceneId": "s008",
+    "sourceImage": "assets/generated/keyframes/v2-s008.png",
+    "motionTarget": "王老师单手摆动一次，陈言自然转肩迈步离开；每人两臂两手，禁止肢体融合。"
+  },
+  {
+    "id": "v2-s009",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 41.682,
+    "end": 45.095,
+    "duration": 3.413,
+    "cue": "陈言双手插兜，顺利逃过叫家长",
+    "narrationText": "陈言双手插兜，顺利逃过叫家长",
+    "description": "办公室门口侧面中景，陈言双手插兜带着得逞的轻松表情走出门，王老师仍在桌后心虚回避视线。",
+    "sourceCaptionIds": [
+      "caption-0012"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "teacher-wang"
+      ]
+    },
+    "shot": "medium exit",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s009.mp4",
+    "sourceSceneId": "s008",
+    "sourceImage": "assets/generated/keyframes/v2-s009.png",
+    "motionTarget": "陈言自然走出画面，双手始终在裤兜中；王老师低头回避，人物数量和服装保持固定。"
+  },
+  {
+    "id": "v2-s010",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 45.095,
+    "end": 49.257,
+    "duration": 4.162,
+    "cue": "他走出校门，夜里的十字路口亮着绿灯",
+    "narrationText": "他走出校门，夜里的十字路口亮着绿灯",
+    "description": "十三中校门夜景宽镜头，陈言背着书包独自走出，暖黄路灯与湿热空气建立夜晚空间。",
+    "sourceCaptionIds": [
+      "caption-0013"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "wide establishing",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s010.mp4",
+    "sourceSceneId": "s009",
+    "sourceImage": "assets/generated/keyframes/v2-s010.png",
+    "motionTarget": "陈言以自然步速向镜头右前方走，书包轻晃，树叶和远处灯光有克制动态；镜头平稳横移。"
+  },
+  {
+    "id": "v2-s011",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 49.257,
+    "end": 53.332,
+    "duration": 4.075,
+    "cue": "左边是熟悉近路，右边像一条没打开的支线",
+    "narrationText": "左边是熟悉近路，右边像一条没打开的支线",
+    "description": "高位宽镜头，陈言站在十字路口中央犹豫，左侧近路明亮熟悉，右侧通向较暗的江边。",
+    "sourceCaptionIds": [
+      "caption-0014"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "wide overhead",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s011.mp4",
+    "sourceSceneId": "s010",
+    "sourceImage": "assets/generated/keyframes/v2-s011.png",
+    "motionTarget": "绿灯与路面反射轻微变化，陈言先看左再看右，衣角被夜风推动；相机缓慢下降。"
+  },
+  {
+    "id": "v2-s012",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 53.332,
+    "end": 58.65,
+    "duration": 5.318,
+    "cue": "一声汽笛响起，陈言刚迈向左边，忽然转身跑向右边",
+    "narrationText": "一声汽笛响起，陈言刚迈向左边，忽然转身跑向右边",
+    "description": "街道路口侧面中景，陈言刚向左迈步便突然拧身转向右侧奔跑，背景车灯掠过但没有车辆贴近。",
+    "sourceCaptionIds": [
+      "caption-0015",
+      "caption-0016",
+      "caption-0017"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "medium action",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s012.mp4",
+    "sourceSceneId": "s011",
+    "sourceImage": "assets/generated/keyframes/v2-s012.png",
+    "motionTarget": "陈言完成一次清晰的转身起跑，脚步与重心合理，书包随惯性摆动；镜头跟随向右。"
+  },
+  {
+    "id": "v2-s013",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 58.65,
+    "end": 62.97,
+    "duration": 4.32,
+    "cue": "看我出其不意，黑裙女人从围栏后走出来",
+    "narrationText": "看我出其不意，黑裙女人从围栏后走出来",
+    "description": "路边暖色路灯下，房东小姐从阴影与围栏后安静走出，望向陈言消失的右侧街角。",
+    "sourceCaptionIds": [
+      "caption-0018",
+      "caption-0019"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "landlady"
+      ]
+    },
+    "shot": "full medium",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s013.mp4",
+    "sourceSceneId": "s012",
+    "sourceImage": "assets/generated/keyframes/v2-s013.png",
+    "motionTarget": "房东小姐向前走两步后停下，长发和裙摆有真实惯性，视线转向右侧；相机从围栏后轻轻探出。"
+  },
+  {
+    "id": "v2-s014",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 62.97,
+    "end": 67.132,
+    "duration": 4.162,
+    "cue": "她是陈言的房东，把尾随解释成贴身保护",
+    "narrationText": "她是陈言的房东，把尾随解释成贴身保护",
+    "description": "房东小姐在暖黄路灯下安静站定，嘴角带温柔但难以读懂的弧度，目光始终追随陈言离开的方向。",
+    "sourceCaptionIds": [
+      "caption-0020"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "landlady"
+      ]
+    },
+    "shot": "close portrait",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s014.mp4",
+    "sourceSceneId": "s012",
+    "sourceImage": "assets/generated/keyframes/v2-s014.png",
+    "motionTarget": "她的视线慢慢转向右侧并轻微眨眼，长发受夜风轻动；脸型、吊坠和黑裙保持锁定。"
+  },
+  {
+    "id": "v2-s015",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 67.132,
+    "end": 69.335,
+    "duration": 2.203,
+    "cue": "她看着手机上的红点",
+    "narrationText": "她看着手机上的红点",
+    "description": "房东小姐胸口以上近景，她用一只手自然握住深灰手机，屏幕朝向她，屏幕内容留空供后期叠加定位红点。",
+    "sourceCaptionIds": [
+      "caption-0021"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "landlady"
+      ]
+    },
+    "shot": "close prop",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s015.mp4",
+    "sourceSceneId": "s013",
+    "sourceImage": "assets/generated/keyframes/v2-s015.png",
+    "motionTarget": "她的拇指只轻点屏幕一次，眼睛明确看向屏幕，手机正反面与摄像头方向稳定，禁止多手多指。"
+  },
+  {
+    "id": "v2-s016",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 69.335,
+    "end": 73.495,
+    "duration": 4.16,
+    "cue": "桃花眼微微眯起：突然换路线，你要去哪儿",
+    "narrationText": "桃花眼微微眯起：突然换路线，你要去哪儿",
+    "description": "房东小姐桃花眼与深灰手机同框近景，空白屏幕冷光映在她脸上，她的目光从屏幕移向街角。",
+    "sourceCaptionIds": [
+      "caption-0022"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "landlady"
+      ]
+    },
+    "shot": "close reaction",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s016.mp4",
+    "sourceSceneId": "s013",
+    "sourceImage": "assets/generated/keyframes/v2-s016.png",
+    "motionTarget": "她只眯眼一次并从屏幕抬眸，握手机的手指和手机正反面保持正确，禁止新增手或文字。"
+  },
+  {
+    "id": "v2-s017",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 73.495,
+    "end": 77.206,
+    "duration": 3.711,
+    "cue": "暴雨突然砸下来，陈言顶着书包奔跑",
+    "narrationText": "暴雨突然砸下来，陈言顶着书包奔跑",
+    "description": "江边道路宽镜头，陈言用书包遮住头在突来的暴雨中奔跑，路灯光被雨幕拉成长线。",
+    "sourceCaptionIds": [
+      "caption-0023",
+      "caption-0024"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "wide tracking",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s017.mp4",
+    "sourceSceneId": "s014",
+    "sourceImage": "assets/generated/keyframes/v2-s017.png",
+    "motionTarget": "密集雨滴、路面积水飞溅和陈言奔跑动作都连续真实，书包保持完整，相机平稳侧向跟拍。"
+  },
+  {
+    "id": "v2-s018",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 77.206,
+    "end": 80.695,
+    "duration": 3.489,
+    "cue": "却看见护栏上站着一个纤瘦的女孩",
+    "narrationText": "却看见护栏上站着一个纤瘦的女孩",
+    "description": "江边远景，江边女孩背对镜头站在金属护栏内侧的低台阶上，暗色江面与橙黄路灯形成巨大空白。",
+    "sourceCaptionIds": [
+      "caption-0025"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "riverside-girl"
+      ]
+    },
+    "shot": "extreme wide",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s018.mp4",
+    "sourceSceneId": "s015",
+    "sourceImage": "assets/generated/keyframes/v2-s018.png",
+    "motionTarget": "雨和江面有连续运动，女孩只被风吹动头发和校服下摆，身体保持在护栏内侧低台阶；镜头缓慢靠近。"
+  },
+  {
+    "id": "v2-s019",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 80.695,
+    "end": 86.158,
+    "duration": 5.463,
+    "cue": "闪电照亮她的十三中校服，女孩又向护栏外挪了一步",
+    "narrationText": "闪电照亮她的十三中校服，女孩又向护栏外挪了一步",
+    "description": "闪电照亮江边女孩湿透但不暴露的十三中校服，她在护栏内侧低台阶上缓慢向外挪步，陈言尚未进入画面。",
+    "sourceCaptionIds": [
+      "caption-0026",
+      "caption-0027"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "riverside-girl"
+      ]
+    },
+    "shot": "wide reveal",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s019.mp4",
+    "sourceSceneId": "s017",
+    "sourceImage": "assets/generated/keyframes/v2-s019.png",
+    "motionTarget": "一次闪电由暗到亮再恢复，女孩缓慢挪动一只脚并停住，双脚和护栏接触合理，雨势连续。"
+  },
+  {
+    "id": "v2-s020",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 86.158,
+    "end": 88.645,
+    "duration": 2.487,
+    "cue": "半个身子已经悬在江面上",
+    "narrationText": "半个身子已经悬在江面上",
+    "description": "女孩侧后方中远景，她谨慎跨上护栏下缘并失去安全重心，动作非图形化、无伤口，江面在下方。",
+    "sourceCaptionIds": [
+      "caption-0028"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "riverside-girl"
+      ]
+    },
+    "shot": "medium rear",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s020.mp4",
+    "sourceSceneId": "s017",
+    "sourceImage": "assets/generated/keyframes/v2-s020.png",
+    "motionTarget": "女孩只完成一个缓慢跨步并停住，双脚和护栏接触合理，双手结构清楚，不展示坠落或伤害。"
+  },
+  {
+    "id": "v2-s021",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 88.645,
+    "end": 93.32,
+    "duration": 4.675,
+    "cue": "陈言冲她喊：别跳啊，这里水浅，淹不死人",
+    "narrationText": "陈言冲她喊：别跳啊，这里水浅，淹不死人",
+    "description": "陈言从雨幕中冲近护栏，保持三米安全距离对女孩大喊，女孩受惊回头，两人全身关系清楚。",
+    "sourceCaptionIds": [
+      "caption-0029"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "riverside-girl"
+      ]
+    },
+    "shot": "two-shot wide",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s021.mp4",
+    "sourceSceneId": "s018",
+    "sourceImage": "assets/generated/keyframes/v2-s021.png",
+    "motionTarget": "陈言减速停下并开口，女孩快速回头但脚仍在护栏附近；雨和衣物动态连续，禁止第三人。"
+  },
+  {
+    "id": "v2-s022",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 93.32,
+    "end": 98.586,
+    "duration": 5.266,
+    "cue": "女孩被吓得脚下一滑，陈言冲过去，一把抓住她的衣服",
+    "narrationText": "女孩被吓得脚下一滑，陈言冲过去，一把抓住她的衣服",
+    "description": "连续救援动作的中近景：女孩在湿滑护栏边失去重心，陈言冲到她身后并用一只手抓住肩背处校服布料。",
+    "sourceCaptionIds": [
+      "caption-0030",
+      "caption-0031"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "riverside-girl",
+        "chen-yan"
+      ]
+    },
+    "shot": "medium action",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s022.mp4",
+    "sourceSceneId": "s020",
+    "sourceImage": "assets/generated/keyframes/v2-s022.png",
+    "motionTarget": "女孩只滑半步，陈言的一只完整五指手准确抓住校服肩背并开始后拉；每人两臂两腿，禁止融合或额外肢体。"
+  },
+  {
+    "id": "v2-s023",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 98.586,
+    "end": 103.37,
+    "duration": 4.784,
+    "cue": "用尽力气往回一拽，两个人一起摔回湿漉漉的地面",
+    "narrationText": "用尽力气往回一拽，两个人一起摔回湿漉漉的地面",
+    "description": "江边侧面宽镜头，陈言把女孩从护栏方向拽回，两人失去平衡倒向安全一侧的湿地面，动作不暴露。",
+    "sourceCaptionIds": [
+      "caption-0032",
+      "caption-0033"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "riverside-girl"
+      ]
+    },
+    "shot": "wide action",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s023.mp4",
+    "sourceSceneId": "s021",
+    "sourceImage": "assets/generated/keyframes/v2-s023.png",
+    "motionTarget": "两人沿同一受力方向倒向远离江面的地面，四肢数量固定、身体不融合，落地动作受控且无伤害特写。"
+  },
+  {
+    "id": "v2-s024",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 103.37,
+    "end": 107.907,
+    "duration": 4.537,
+    "cue": "女孩慌乱地站起身，雨水和长发遮住了她的脸",
+    "narrationText": "女孩慌乱地站起身，雨水和长发遮住了她的脸",
+    "description": "雨中双人中景，女孩从陈言身边慌乱起身整理衣摆，陈言仍坐在湿地面抬头确认她没事。",
+    "sourceCaptionIds": [
+      "caption-0034",
+      "caption-0035"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "riverside-girl"
+      ]
+    },
+    "shot": "two-shot medium",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s024.mp4",
+    "sourceSceneId": "s022",
+    "sourceImage": "assets/generated/keyframes/v2-s024.png",
+    "motionTarget": "女孩用正常起身动作站稳并只整理一次衣摆，陈言撑地坐起；手脚清晰、校服不暴露、身份不漂移。"
+  },
+  {
+    "id": "v2-s025",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 107.907,
+    "end": 110.432,
+    "duration": 2.525,
+    "cue": "陈言邀请她去附近躲雨",
+    "narrationText": "陈言邀请她去附近躲雨",
+    "description": "雨中双人中景，陈言已经从地面站起，向女孩指向远离护栏的街道方向，语气克制地邀请她去附近躲雨。",
+    "sourceCaptionIds": [
+      "caption-0036"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "riverside-girl"
+      ]
+    },
+    "shot": "two-shot medium",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s025.mp4",
+    "sourceSceneId": "s022",
+    "sourceImage": "assets/generated/keyframes/v2-s025.png",
+    "motionTarget": "陈言只用一只手做简短指向动作后收回，女孩低头听着；手指和肢体结构稳定，保持安全距离。"
+  },
+  {
+    "id": "v2-s026",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 110.432,
+    "end": 114.22,
+    "duration": 3.788,
+    "cue": "女孩轻声道谢，却又转身走向护栏",
+    "narrationText": "女孩轻声道谢，却又转身走向护栏",
+    "description": "雨中侧面中远景，女孩拒绝后重新走向护栏，陈言在她身后站起，二人之间保留明显距离。",
+    "sourceCaptionIds": [
+      "caption-0037"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "riverside-girl",
+        "chen-yan"
+      ]
+    },
+    "shot": "two-shot wide",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s026.mp4",
+    "sourceSceneId": "s023",
+    "sourceImage": "assets/generated/keyframes/v2-s026.png",
+    "motionTarget": "女孩向护栏走两步，陈言站起并保持观察，雨水和头发自然摆动；镜头缓慢横移。"
+  },
+  {
+    "id": "v2-s027",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 114.22,
+    "end": 117.567,
+    "duration": 3.347,
+    "cue": "陈言抹掉脸上的雨，忽然喊道：等等",
+    "narrationText": "陈言抹掉脸上的雨，忽然喊道：等等",
+    "description": "陈言胸口以上近景，雨水顺脸颊流下，他抹掉脸上的雨，忽然抬眼喊住女孩。",
+    "sourceCaptionIds": [
+      "caption-0038"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "close hero",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s027.mp4",
+    "sourceSceneId": "s024",
+    "sourceImage": "assets/generated/keyframes/v2-s027.png",
+    "motionTarget": "陈言用一只完整的手抹过脸后放下，目光从焦急转为反常平静并开口，脸部身份保持锁定。"
+  },
+  {
+    "id": "v2-s028",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 117.567,
+    "end": 121.632,
+    "duration": 4.065,
+    "cue": "我知道一个更好的跳水点，跳下去立马死",
+    "narrationText": "我知道一个更好的跳水点，跳下去立马死",
+    "description": "陈言胸口以上近景，雨水顺着脸颊流下，他抹掉雨水后用反常平静的语气喊住女孩。",
+    "sourceCaptionIds": [
+      "caption-0039",
+      "caption-0040"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "close hero",
+    "motion": "source-video",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s028.mp4",
+    "sourceSceneId": "s024",
+    "sourceImage": "assets/generated/keyframes/v2-s028.png",
+    "motionTarget": "陈言只用一只完整的手抹过脸后放下，眼神坚定并开口，雨水持续，面部身份绝不变化。"
+  },
+  {
+    "id": "v2-s029",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "start": 121.632,
+    "end": 125.745,
+    "duration": 4.113,
+    "cue": "又一道闪电劈下，女孩停住了",
+    "narrationText": "又一道闪电劈下，女孩停住了",
+    "description": "白蓝闪电中的江边女孩侧脸近景，她的脚步停住，湿发间露出震惊的灰棕眼睛，缓慢回头看向陈言。",
+    "sourceCaptionIds": [
+      "caption-0041",
+      "caption-0042"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "riverside-girl"
+      ]
+    },
+    "shot": "reaction close",
+    "motion": "source-video",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/video/v2-s029.mp4",
+    "sourceSceneId": "s025",
+    "sourceImage": "assets/generated/keyframes/v2-s029.png",
+    "motionTarget": "闪电照亮侧脸，女孩从麻木转为震惊并缓慢回头；湿发、眼睛、校服和护栏位置都保持稳定，结尾停在她的目光上。"
+  }
+]

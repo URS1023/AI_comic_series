@@ -1,0 +1,402 @@
+{
+  "provider": "Edge TTS",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+0%",
+  "pitch": "+0Hz",
+  "syncMode": "full-body-vtt-master",
+  "openingDuration": 8.145,
+  "opening": {
+    "previewVideo": "qa/opening-approved.mp4",
+    "lead": {
+      "text": "今天体验的人生副本是……",
+      "path": "assets/audio/opening/lead-natural.mp3",
+      "rate": "+0%",
+      "start": 0.05,
+      "duration": 2.88,
+      "end": 2.9299999999999997
+    },
+    "flash": {
+      "video": "assets/opening/flash.mp4",
+      "audio": "assets/opening/flash.mp4",
+      "start": 2.9499999999999997,
+      "duration": 1.667,
+      "end": 4.617
+    },
+    "reveal": {
+      "text": "高考回档：雨夜白月光。",
+      "path": "assets/audio/opening/reveal-natural.mp3",
+      "rate": "+0%",
+      "start": 4.757,
+      "duration": 3.168,
+      "end": 7.925
+    },
+    "bodyStart": 8.145
+  },
+  "body": {
+    "text": "高考出分那晚，陈言盯着四百二十六分。下一秒，世界就像被人按下倒放键。再睁眼，班主任王老师正拍着桌子训他。这里是高考前三天，他明明经历过这一幕。半透明的系统面板浮在眼前：四百二十六分，距离满分差三百二十四分，回档点是三天前。陈言脱口而出：“王老师，明天千万别去洗脚城。”王老师脸色瞬间变了，心虚地把他赶出办公室。陈言双手插兜，顺利逃过叫家长。他走出校门，夜里的十字路口亮着绿灯。左边是熟悉近路，右边像一条没打开的支线。一声汽笛响起，陈言刚迈向左边，忽然转身跑向右边：“看我出其不意。”黑裙女人从围栏后走出来。她是陈言的房东，把尾随解释成贴身保护。她看着手机上的红点，桃花眼微微眯起：“突然换路线，你要去哪儿？”暴雨突然砸下来。陈言顶着书包奔跑，却看见护栏上站着一个纤瘦的女孩。闪电照亮她的十三中校服。女孩又向护栏外挪了一步，半个身子已经悬在江面上。陈言冲她喊：“别跳啊，这里水浅，淹不死人！”女孩被吓得脚下一滑。陈言冲过去，一把抓住她的衣服，用尽力气往回一拽。两个人一起摔回湿漉漉的地面。女孩慌乱地站起身，雨水和长发遮住了她的脸。陈言邀请她去附近躲雨。女孩轻声道谢，却又转身走向护栏。陈言抹掉脸上的雨，忽然喊道：“等等，我知道一个更好的跳水点，跳下去立马死。”又一道闪电劈下。女孩停住了。",
+    "path": "assets/audio/narration.m4a",
+    "sourcePath": "assets/audio/narration-full.mp3",
+    "vtt": "assets/audio/narration-full.vtt",
+    "duration": 117.6
+  },
+  "bgm": {
+    "path": "assets/audio/bgm/looped.m4a"
+  },
+  "chapters": [
+    {
+      "id": "ch01",
+      "chapter": 1,
+      "title": "回档前三天",
+      "text": "高考出分那晚，陈言盯着四百二十六分。下一秒，世界就像被人按下倒放键。再睁眼，班主任王老师正拍着桌子训他。这里是高考前三天，他明明经历过这一幕。半透明的系统面板浮在眼前：四百二十六分，距离满分差三百二十四分，回档点是三天前。陈言脱口而出：“王老师，明天千万别去洗脚城。”王老师脸色瞬间变了，心虚地把他赶出办公室。陈言双手插兜，顺利逃过叫家长。他走出校门，夜里的十字路口亮着绿灯。左边是熟悉近路，右边像一条没打开的支线。一声汽笛响起，陈言刚迈向左边，忽然转身跑向右边：“看我出其不意。”黑裙女人从围栏后走出来。她是陈言的房东，把尾随解释成贴身保护。她看着手机上的红点，桃花眼微微眯起：“突然换路线，你要去哪儿？”暴雨突然砸下来。陈言顶着书包奔跑，却看见护栏上站着一个纤瘦的女孩。闪电照亮她的十三中校服。女孩又向护栏外挪了一步，半个身子已经悬在江面上。陈言冲她喊：“别跳啊，这里水浅，淹不死人！”女孩被吓得脚下一滑。陈言冲过去，一把抓住她的衣服，用尽力气往回一拽。两个人一起摔回湿漉漉的地面。女孩慌乱地站起身，雨水和长发遮住了她的脸。陈言邀请她去附近躲雨。女孩轻声道谢，却又转身走向护栏。陈言抹掉脸上的雨，忽然喊道：“等等，我知道一个更好的跳水点，跳下去立马死。”又一道闪电劈下。女孩停住了。",
+      "start": 8.145,
+      "end": 125.745,
+      "duration": 117.6
+    }
+  ],
+  "captions": [
+    {
+      "id": "caption-0001",
+      "start": 0.1,
+      "end": 4.237,
+      "duration": 4.137,
+      "text": "高考出分那晚，陈言盯着四百二十六分",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0002",
+      "start": 4.237,
+      "end": 7.75,
+      "duration": 3.513,
+      "text": "下一秒，世界就像被人按下倒放键",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0003",
+      "start": 7.75,
+      "end": 11.887,
+      "duration": 4.137,
+      "text": "再睁眼，班主任王老师正拍着桌子训他",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0004",
+      "start": 11.887,
+      "end": 16.037,
+      "duration": 4.15,
+      "text": "这里是高考前三天，他明明经历过这一幕",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0005",
+      "start": 16.037,
+      "end": 18.72,
+      "duration": 2.683,
+      "text": "半透明的系统面板浮在眼前",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0006",
+      "start": 18.72,
+      "end": 20.062,
+      "duration": 1.342,
+      "text": "四百二十六分",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0007",
+      "start": 20.062,
+      "end": 22.522,
+      "duration": 2.46,
+      "text": "距离满分差三百二十四分",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0008",
+      "start": 22.522,
+      "end": 24.087,
+      "duration": 1.565,
+      "text": "回档点是三天前",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0009",
+      "start": 24.087,
+      "end": 29.162,
+      "duration": 5.075,
+      "text": "陈言脱口而出：王老师，明天千万别去洗脚城",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0010",
+      "start": 29.162,
+      "end": 31.234,
+      "duration": 2.072,
+      "text": "王老师脸色瞬间变了",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0011",
+      "start": 31.234,
+      "end": 33.537,
+      "duration": 2.303,
+      "text": "心虚地把他赶出办公室",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0012",
+      "start": 33.537,
+      "end": 36.95,
+      "duration": 3.413,
+      "text": "陈言双手插兜，顺利逃过叫家长",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0013",
+      "start": 36.95,
+      "end": 41.112,
+      "duration": 4.162,
+      "text": "他走出校门，夜里的十字路口亮着绿灯",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0014",
+      "start": 41.112,
+      "end": 45.187,
+      "duration": 4.075,
+      "text": "左边是熟悉近路，右边像一条没打开的支线",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0015",
+      "start": 45.187,
+      "end": 46.707,
+      "duration": 1.52,
+      "text": "一声汽笛响起",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0016",
+      "start": 46.707,
+      "end": 48.479,
+      "duration": 1.773,
+      "text": "陈言刚迈向左边",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0017",
+      "start": 48.479,
+      "end": 50.505,
+      "duration": 2.026,
+      "text": "忽然转身跑向右边",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0018",
+      "start": 50.505,
+      "end": 52.025,
+      "duration": 1.52,
+      "text": "看我出其不意",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0019",
+      "start": 52.025,
+      "end": 54.825,
+      "duration": 2.8,
+      "text": "黑裙女人从围栏后走出来",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0020",
+      "start": 54.825,
+      "end": 58.987,
+      "duration": 4.162,
+      "text": "她是陈言的房东，把尾随解释成贴身保护",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0021",
+      "start": 58.987,
+      "end": 61.19,
+      "duration": 2.203,
+      "text": "她看着手机上的红点",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0022",
+      "start": 61.19,
+      "end": 65.35,
+      "duration": 4.16,
+      "text": "桃花眼微微眯起：突然换路线，你要去哪儿",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0023",
+      "start": 65.35,
+      "end": 67.2,
+      "duration": 1.85,
+      "text": "暴雨突然砸下来",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0024",
+      "start": 67.2,
+      "end": 69.061,
+      "duration": 1.861,
+      "text": "陈言顶着书包奔跑",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0025",
+      "start": 69.061,
+      "end": 72.55,
+      "duration": 3.489,
+      "text": "却看见护栏上站着一个纤瘦的女孩",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0026",
+      "start": 72.55,
+      "end": 75.525,
+      "duration": 2.975,
+      "text": "闪电照亮她的十三中校服",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0027",
+      "start": 75.525,
+      "end": 78.013,
+      "duration": 2.487,
+      "text": "女孩又向护栏外挪了一步",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0028",
+      "start": 78.013,
+      "end": 80.5,
+      "duration": 2.487,
+      "text": "半个身子已经悬在江面上",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0029",
+      "start": 80.5,
+      "end": 85.175,
+      "duration": 4.675,
+      "text": "陈言冲她喊：别跳啊，这里水浅，淹不死人",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0030",
+      "start": 85.175,
+      "end": 87.462,
+      "duration": 2.287,
+      "text": "女孩被吓得脚下一滑",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0031",
+      "start": 87.462,
+      "end": 90.441,
+      "duration": 2.979,
+      "text": "陈言冲过去，一把抓住她的衣服",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0032",
+      "start": 90.441,
+      "end": 92.275,
+      "duration": 1.834,
+      "text": "用尽力气往回一拽",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0033",
+      "start": 92.275,
+      "end": 95.225,
+      "duration": 2.95,
+      "text": "两个人一起摔回湿漉漉的地面",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0034",
+      "start": 95.225,
+      "end": 97.135,
+      "duration": 1.91,
+      "text": "女孩慌乱地站起身",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0035",
+      "start": 97.135,
+      "end": 99.762,
+      "duration": 2.627,
+      "text": "雨水和长发遮住了她的脸",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0036",
+      "start": 99.762,
+      "end": 102.287,
+      "duration": 2.525,
+      "text": "陈言邀请她去附近躲雨",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0037",
+      "start": 102.287,
+      "end": 106.075,
+      "duration": 3.788,
+      "text": "女孩轻声道谢，却又转身走向护栏",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0038",
+      "start": 106.075,
+      "end": 109.422,
+      "duration": 3.347,
+      "text": "陈言抹掉脸上的雨，忽然喊道：等等",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0039",
+      "start": 109.422,
+      "end": 112.052,
+      "duration": 2.63,
+      "text": "我知道一个更好的跳水点",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0040",
+      "start": 112.052,
+      "end": 113.487,
+      "duration": 1.435,
+      "text": "跳下去立马死",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0041",
+      "start": 113.487,
+      "end": 115.587,
+      "duration": 2.1,
+      "text": "又一道闪电劈下",
+      "allowShort": false
+    },
+    {
+      "id": "caption-0042",
+      "start": 115.587,
+      "end": 117.537,
+      "duration": 1.95,
+      "text": "女孩停住了",
+      "allowShort": true
+    }
+  ],
+  "captionAudit": {
+    "minChars": 6,
+    "maxChars": 18,
+    "minDuration": 0.55,
+    "defects": 0
+  },
+  "narrationDuration": 117.6,
+  "totalDuration": 125.74499999999999
+}

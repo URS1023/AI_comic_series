@@ -1,0 +1,752 @@
+[
+  {
+    "id": "v2-s001",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "高考出分那晚，陈言盯着四百二十六分",
+    "narrationText": "高考出分那晚，陈言盯着四百二十六分",
+    "description": "旁白同步画面：高考出分那晚，陈言盯着四百二十六分",
+    "sourceCaptionIds": [
+      "caption-0001"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "medium",
+    "motion": "stable-push",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s001.png",
+    "sourceSceneId": "s001",
+    "cueTime": 0
+  },
+  {
+    "id": "v2-s002",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "下一秒，世界就像被人按下倒放键",
+    "narrationText": "下一秒，世界就像被人按下倒放键",
+    "description": "旁白同步画面：下一秒，世界就像被人按下倒放键",
+    "sourceCaptionIds": [
+      "caption-0002"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "close",
+    "motion": "stable-pan-left",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s002.png",
+    "sourceSceneId": "s002",
+    "cueTime": 4.237
+  },
+  {
+    "id": "v2-s003",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "再睁眼，班主任王老师正拍着桌子训他",
+    "narrationText": "再睁眼，班主任王老师正拍着桌子训他",
+    "description": "旁白同步画面：再睁眼，班主任王老师正拍着桌子训他",
+    "sourceCaptionIds": [
+      "caption-0003"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "teacher-wang"
+      ]
+    },
+    "shot": "wide",
+    "motion": "stable-pull",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s003.png",
+    "sourceSceneId": "s003",
+    "cueTime": 7.75
+  },
+  {
+    "id": "v2-s004",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "这里是高考前三天，他明明经历过这一幕",
+    "narrationText": "这里是高考前三天，他明明经历过这一幕",
+    "description": "旁白同步画面：这里是高考前三天，他明明经历过这一幕",
+    "sourceCaptionIds": [
+      "caption-0004"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "detail",
+    "motion": "stable-pan-right",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s004.png",
+    "sourceSceneId": "s004",
+    "cueTime": 11.887
+  },
+  {
+    "id": "v2-s005",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "半透明的系统面板浮在眼前，四百二十六分",
+    "narrationText": "半透明的系统面板浮在眼前，四百二十六分",
+    "description": "旁白同步画面：半透明的系统面板浮在眼前，四百二十六分",
+    "sourceCaptionIds": [
+      "caption-0005",
+      "caption-0006"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "over-shoulder",
+    "motion": "stable-hold",
+    "highRisk": false,
+    "dynamicEffect": "living-ink",
+    "asset": "assets/generated/v2/scenes/v2-s005.png",
+    "sourceSceneId": "s005",
+    "cueTime": 16.037
+  },
+  {
+    "id": "v2-s006",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "距离满分差三百二十四分，回档点是三天前",
+    "narrationText": "距离满分差三百二十四分，回档点是三天前",
+    "description": "旁白同步画面：距离满分差三百二十四分，回档点是三天前",
+    "sourceCaptionIds": [
+      "caption-0007",
+      "caption-0008"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "medium",
+    "motion": "stable-push",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s006.png",
+    "sourceSceneId": "s005",
+    "cueTime": 20.062
+  },
+  {
+    "id": "v2-s007",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "陈言脱口而出：王老师，明天千万别去洗脚城",
+    "narrationText": "陈言脱口而出：王老师，明天千万别去洗脚城",
+    "description": "旁白同步画面：陈言脱口而出：王老师，明天千万别去洗脚城",
+    "sourceCaptionIds": [
+      "caption-0009"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "teacher-wang",
+        "chen-yan"
+      ]
+    },
+    "shot": "close",
+    "motion": "stable-pan-left",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s007.png",
+    "sourceSceneId": "s007",
+    "cueTime": 24.087
+  },
+  {
+    "id": "v2-s008",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "王老师脸色瞬间变了，心虚地把他赶出办公室",
+    "narrationText": "王老师脸色瞬间变了，心虚地把他赶出办公室",
+    "description": "旁白同步画面：王老师脸色瞬间变了，心虚地把他赶出办公室",
+    "sourceCaptionIds": [
+      "caption-0010",
+      "caption-0011"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "teacher-wang"
+      ]
+    },
+    "shot": "wide",
+    "motion": "stable-pull",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s008.png",
+    "sourceSceneId": "s008",
+    "cueTime": 29.162
+  },
+  {
+    "id": "v2-s009",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "陈言双手插兜，顺利逃过叫家长",
+    "narrationText": "陈言双手插兜，顺利逃过叫家长",
+    "description": "旁白同步画面：陈言双手插兜，顺利逃过叫家长",
+    "sourceCaptionIds": [
+      "caption-0012"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "teacher-wang"
+      ]
+    },
+    "shot": "detail",
+    "motion": "stable-pan-right",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s009.png",
+    "sourceSceneId": "s008",
+    "cueTime": 33.537
+  },
+  {
+    "id": "v2-s010",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "他走出校门，夜里的十字路口亮着绿灯",
+    "narrationText": "他走出校门，夜里的十字路口亮着绿灯",
+    "description": "旁白同步画面：他走出校门，夜里的十字路口亮着绿灯",
+    "sourceCaptionIds": [
+      "caption-0013"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "over-shoulder",
+    "motion": "stable-hold",
+    "highRisk": false,
+    "dynamicEffect": "light-pulse",
+    "asset": "assets/generated/v2/scenes/v2-s010.png",
+    "sourceSceneId": "s010",
+    "cueTime": 36.95
+  },
+  {
+    "id": "v2-s011",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "左边是熟悉近路，右边像一条没打开的支线",
+    "narrationText": "左边是熟悉近路，右边像一条没打开的支线",
+    "description": "旁白同步画面：左边是熟悉近路，右边像一条没打开的支线",
+    "sourceCaptionIds": [
+      "caption-0014"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "medium",
+    "motion": "stable-push",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s011.png",
+    "sourceSceneId": "s010",
+    "cueTime": 41.112
+  },
+  {
+    "id": "v2-s012",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "一声汽笛响起，陈言刚迈向左边，忽然转身跑向右边",
+    "narrationText": "一声汽笛响起，陈言刚迈向左边，忽然转身跑向右边",
+    "description": "旁白同步画面：一声汽笛响起，陈言刚迈向左边，忽然转身跑向右边",
+    "sourceCaptionIds": [
+      "caption-0015",
+      "caption-0016",
+      "caption-0017"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "close",
+    "motion": "stable-pan-left",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s012.png",
+    "sourceSceneId": "s011",
+    "cueTime": 45.187
+  },
+  {
+    "id": "v2-s013",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "看我出其不意，黑裙女人从围栏后走出来",
+    "narrationText": "看我出其不意，黑裙女人从围栏后走出来",
+    "description": "旁白同步画面：看我出其不意，黑裙女人从围栏后走出来",
+    "sourceCaptionIds": [
+      "caption-0018",
+      "caption-0019"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "landlady"
+      ]
+    },
+    "shot": "wide",
+    "motion": "stable-pull",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s013.png",
+    "sourceSceneId": "s012",
+    "cueTime": 50.505
+  },
+  {
+    "id": "v2-s014",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "她是陈言的房东，把尾随解释成贴身保护",
+    "narrationText": "她是陈言的房东，把尾随解释成贴身保护",
+    "description": "旁白同步画面：她是陈言的房东，把尾随解释成贴身保护",
+    "sourceCaptionIds": [
+      "caption-0020"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "landlady"
+      ]
+    },
+    "shot": "detail",
+    "motion": "stable-pan-right",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s014.png",
+    "sourceSceneId": "s012",
+    "cueTime": 54.825
+  },
+  {
+    "id": "v2-s015",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "她看着手机上的红点",
+    "narrationText": "她看着手机上的红点",
+    "description": "旁白同步画面：她看着手机上的红点",
+    "sourceCaptionIds": [
+      "caption-0021"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "landlady"
+      ]
+    },
+    "shot": "over-shoulder",
+    "motion": "stable-hold",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s015.png",
+    "sourceSceneId": "s013",
+    "cueTime": 58.987
+  },
+  {
+    "id": "v2-s016",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "桃花眼微微眯起：突然换路线，你要去哪儿",
+    "narrationText": "桃花眼微微眯起：突然换路线，你要去哪儿",
+    "description": "旁白同步画面：桃花眼微微眯起：突然换路线，你要去哪儿",
+    "sourceCaptionIds": [
+      "caption-0022"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "landlady"
+      ]
+    },
+    "shot": "medium",
+    "motion": "stable-push",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s016.png",
+    "sourceSceneId": "s013",
+    "cueTime": 61.19
+  },
+  {
+    "id": "v2-s017",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "暴雨突然砸下来，陈言顶着书包奔跑",
+    "narrationText": "暴雨突然砸下来，陈言顶着书包奔跑",
+    "description": "旁白同步画面：暴雨突然砸下来，陈言顶着书包奔跑",
+    "sourceCaptionIds": [
+      "caption-0023",
+      "caption-0024"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "close",
+    "motion": "stable-pan-left",
+    "highRisk": false,
+    "dynamicEffect": "light-pulse",
+    "asset": "assets/generated/v2/scenes/v2-s017.png",
+    "sourceSceneId": "s014",
+    "cueTime": 65.35
+  },
+  {
+    "id": "v2-s018",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "却看见护栏上站着一个纤瘦的女孩",
+    "narrationText": "却看见护栏上站着一个纤瘦的女孩",
+    "description": "旁白同步画面：却看见护栏上站着一个纤瘦的女孩",
+    "sourceCaptionIds": [
+      "caption-0025"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "riverside-girl"
+      ]
+    },
+    "shot": "wide",
+    "motion": "stable-pull",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s018.png",
+    "sourceSceneId": "s015",
+    "cueTime": 69.061
+  },
+  {
+    "id": "v2-s019",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "闪电照亮她的十三中校服，女孩又向护栏外挪了一步",
+    "narrationText": "闪电照亮她的十三中校服，女孩又向护栏外挪了一步",
+    "description": "旁白同步画面：闪电照亮她的十三中校服，女孩又向护栏外挪了一步",
+    "sourceCaptionIds": [
+      "caption-0026",
+      "caption-0027"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "riverside-girl",
+        "chen-yan"
+      ]
+    },
+    "shot": "detail",
+    "motion": "stable-pan-right",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s019.png",
+    "sourceSceneId": "s016",
+    "cueTime": 72.55
+  },
+  {
+    "id": "v2-s020",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "半个身子已经悬在江面上",
+    "narrationText": "半个身子已经悬在江面上",
+    "description": "旁白同步画面：半个身子已经悬在江面上",
+    "sourceCaptionIds": [
+      "caption-0028"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "riverside-girl"
+      ]
+    },
+    "shot": "over-shoulder",
+    "motion": "stable-hold",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s020.png",
+    "sourceSceneId": "s017",
+    "cueTime": 78.013
+  },
+  {
+    "id": "v2-s021",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "陈言冲她喊：别跳啊，这里水浅，淹不死人",
+    "narrationText": "陈言冲她喊：别跳啊，这里水浅，淹不死人",
+    "description": "旁白同步画面：陈言冲她喊：别跳啊，这里水浅，淹不死人",
+    "sourceCaptionIds": [
+      "caption-0029"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "riverside-girl"
+      ]
+    },
+    "shot": "medium",
+    "motion": "stable-push",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s021.png",
+    "sourceSceneId": "s018",
+    "cueTime": 80.5
+  },
+  {
+    "id": "v2-s022",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "女孩被吓得脚下一滑，陈言冲过去，一把抓住她的衣服",
+    "narrationText": "女孩被吓得脚下一滑，陈言冲过去，一把抓住她的衣服",
+    "description": "旁白同步画面：女孩被吓得脚下一滑，陈言冲过去，一把抓住她的衣服",
+    "sourceCaptionIds": [
+      "caption-0030",
+      "caption-0031"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "riverside-girl",
+        "chen-yan"
+      ]
+    },
+    "shot": "close",
+    "motion": "stable-pan-left",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s022.png",
+    "sourceSceneId": "s019",
+    "cueTime": 85.175
+  },
+  {
+    "id": "v2-s023",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "用尽力气往回一拽，两个人一起摔回湿漉漉的地面",
+    "narrationText": "用尽力气往回一拽，两个人一起摔回湿漉漉的地面",
+    "description": "旁白同步画面：用尽力气往回一拽，两个人一起摔回湿漉漉的地面",
+    "sourceCaptionIds": [
+      "caption-0032",
+      "caption-0033"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "riverside-girl"
+      ]
+    },
+    "shot": "wide",
+    "motion": "stable-pull",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s023.png",
+    "sourceSceneId": "s021",
+    "cueTime": 90.441
+  },
+  {
+    "id": "v2-s024",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "女孩慌乱地站起身，雨水和长发遮住了她的脸",
+    "narrationText": "女孩慌乱地站起身，雨水和长发遮住了她的脸",
+    "description": "旁白同步画面：女孩慌乱地站起身，雨水和长发遮住了她的脸",
+    "sourceCaptionIds": [
+      "caption-0034",
+      "caption-0035"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "riverside-girl"
+      ]
+    },
+    "shot": "detail",
+    "motion": "stable-pan-right",
+    "highRisk": true,
+    "dynamicEffect": "light-pulse",
+    "asset": "assets/generated/v2/scenes/v2-s024.png",
+    "sourceSceneId": "s022",
+    "cueTime": 95.225
+  },
+  {
+    "id": "v2-s025",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "陈言邀请她去附近躲雨",
+    "narrationText": "陈言邀请她去附近躲雨",
+    "description": "旁白同步画面：陈言邀请她去附近躲雨",
+    "sourceCaptionIds": [
+      "caption-0036"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "chen-yan",
+        "riverside-girl"
+      ]
+    },
+    "shot": "over-shoulder",
+    "motion": "stable-hold",
+    "highRisk": true,
+    "dynamicEffect": "light-pulse",
+    "asset": "assets/generated/v2/scenes/v2-s025.png",
+    "sourceSceneId": "s022",
+    "cueTime": 99.762
+  },
+  {
+    "id": "v2-s026",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "女孩轻声道谢，却又转身走向护栏",
+    "narrationText": "女孩轻声道谢，却又转身走向护栏",
+    "description": "旁白同步画面：女孩轻声道谢，却又转身走向护栏",
+    "sourceCaptionIds": [
+      "caption-0037"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "riverside-girl",
+        "chen-yan"
+      ]
+    },
+    "shot": "medium",
+    "motion": "stable-push",
+    "highRisk": false,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s026.png",
+    "sourceSceneId": "s023",
+    "cueTime": 102.287
+  },
+  {
+    "id": "v2-s027",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "陈言抹掉脸上的雨，忽然喊道：等等",
+    "narrationText": "陈言抹掉脸上的雨，忽然喊道：等等",
+    "description": "旁白同步画面：陈言抹掉脸上的雨，忽然喊道：等等",
+    "sourceCaptionIds": [
+      "caption-0038"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 2,
+      "allowed": [
+        "riverside-girl",
+        "chen-yan"
+      ]
+    },
+    "shot": "close",
+    "motion": "stable-pan-left",
+    "highRisk": false,
+    "dynamicEffect": "light-pulse",
+    "asset": "assets/generated/v2/scenes/v2-s027.png",
+    "sourceSceneId": "s023",
+    "cueTime": 106.075
+  },
+  {
+    "id": "v2-s028",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "我知道一个更好的跳水点，跳下去立马死",
+    "narrationText": "我知道一个更好的跳水点，跳下去立马死",
+    "description": "旁白同步画面：我知道一个更好的跳水点，跳下去立马死",
+    "sourceCaptionIds": [
+      "caption-0039",
+      "caption-0040"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "wide",
+    "motion": "stable-pull",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s028.png",
+    "sourceSceneId": "s024",
+    "cueTime": 109.422
+  },
+  {
+    "id": "v2-s029",
+    "chapter": 1,
+    "chapterTitle": "回档前三天",
+    "cue": "又一道闪电劈下，女孩停住了",
+    "narrationText": "又一道闪电劈下，女孩停住了",
+    "description": "旁白同步画面：又一道闪电劈下，女孩停住了",
+    "sourceCaptionIds": [
+      "caption-0041",
+      "caption-0042"
+    ],
+    "ageStage": "chen-yan-age-18",
+    "participants": {
+      "count": 1,
+      "allowed": [
+        "chen-yan"
+      ]
+    },
+    "shot": "detail",
+    "motion": "stable-pan-right",
+    "highRisk": true,
+    "dynamicEffect": null,
+    "asset": "assets/generated/v2/scenes/v2-s029.png",
+    "sourceSceneId": "s024",
+    "cueTime": 113.487
+  }
+]

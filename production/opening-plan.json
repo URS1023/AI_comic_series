@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "leadScene": "v2-s001",
+  "flashScenes": [
+    "v2-s001",
+    "v2-s003",
+    "v2-s005",
+    "v2-s010",
+    "v2-s013",
+    "v2-s017",
+    "v2-s019",
+    "v2-s023",
+    "v2-s029"
+  ],
+  "revealScene": "v2-s019",
+  "previewRevision": "r001",
+  "previewPath": "qa/opening-preview-r001.mp4",
+  "approvedPath": "qa/opening-approved.mp4"
+}
+

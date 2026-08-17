@@ -1,0 +1,448 @@
+{
+  "fps": 30,
+  "seams": [
+    {
+      "id": "opening→v2-s001",
+      "cut": 8.145,
+      "technique": "zoom-through forward",
+      "exit": {
+        "selector": "#el-opening",
+        "axis": "z",
+        "dir": 1
+      },
+      "entry": {
+        "selector": "#el-v2-s001",
+        "axis": "z",
+        "dir": 1,
+        "scanRoot": "#el-v2-s001"
+      },
+      "blur": 18
+    },
+    {
+      "id": "v2-s001→v2-s002",
+      "cut": 12.382,
+      "technique": "zoom-through forward",
+      "exit": {
+        "selector": "#el-v2-s001",
+        "axis": "z",
+        "dir": 1
+      },
+      "entry": {
+        "selector": "#el-v2-s002",
+        "axis": "z",
+        "dir": 1,
+        "scanRoot": "#el-v2-s002"
+      },
+      "blur": 18
+    },
+    {
+      "id": "v2-s002→v2-s003",
+      "cut": 15.895,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s002",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s003",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s003→v2-s004",
+      "cut": 20.032,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s003",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s004",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s004→v2-s005",
+      "cut": 24.182,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s004",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s005",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s005→v2-s006",
+      "cut": 28.207,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s005",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s006",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s006→v2-s007",
+      "cut": 32.232,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s006",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s007",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s007→v2-s008",
+      "cut": 37.307,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s007",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s008",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s008→v2-s009",
+      "cut": 41.682,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s008",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s009",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s009→v2-s010",
+      "cut": 45.095,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s009",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s010",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s010→v2-s011",
+      "cut": 49.257,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s010",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s011",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s011→v2-s012",
+      "cut": 53.332,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s011",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s012",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s012→v2-s013",
+      "cut": 58.65,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s012",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s013",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s013→v2-s014",
+      "cut": 62.97,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s013",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s014",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s014→v2-s015",
+      "cut": 67.132,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s014",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s015",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s015→v2-s016",
+      "cut": 69.335,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s015",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s016",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s016→v2-s017",
+      "cut": 73.495,
+      "technique": "zoom-through forward",
+      "exit": {
+        "selector": "#el-v2-s016",
+        "axis": "z",
+        "dir": 1
+      },
+      "entry": {
+        "selector": "#el-v2-s017",
+        "axis": "z",
+        "dir": 1,
+        "scanRoot": "#el-v2-s017"
+      },
+      "blur": 18
+    },
+    {
+      "id": "v2-s017→v2-s018",
+      "cut": 77.206,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s017",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s018",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s018→v2-s019",
+      "cut": 80.695,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s018",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s019",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s019→v2-s020",
+      "cut": 86.158,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s019",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s020",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s020→v2-s021",
+      "cut": 88.645,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s020",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s021",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s021→v2-s022",
+      "cut": 93.32,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s021",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s022",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s022→v2-s023",
+      "cut": 98.586,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s022",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s023",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s023→v2-s024",
+      "cut": 103.37,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s023",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s024",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s024→v2-s025",
+      "cut": 107.907,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s024",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s025",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s025→v2-s026",
+      "cut": 110.432,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s025",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s026",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s026→v2-s027",
+      "cut": 114.22,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s026",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s027",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s027→v2-s028",
+      "cut": 117.567,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#el-v2-s027",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s028",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "v2-s028→v2-s029",
+      "cut": 121.632,
+      "technique": "inverse zoom-through",
+      "exit": {
+        "selector": "#el-v2-s028",
+        "axis": "z",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#el-v2-s029",
+        "axis": "z",
+        "dir": -1,
+        "scanRoot": "#el-v2-s029"
+      },
+      "blur": 18
+    }
+  ]
+}
