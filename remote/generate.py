@@ -112,13 +112,16 @@ class GenerationWorker:
                 },
             )
 
-    def _load_template(self, job: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+    def _template_path(self, job: dict[str, Any]) -> Path:
         template_name = {
             "qwen-t2i": "qwen_image_2512_t2i.json",
             "qwen-edit": "qwen_image_edit_2511.json",
             "wan-i2v": "wan22_i2v_14b.json",
         }[str(job["kind"])]
-        document = json.loads((self.workflow_root / template_name).read_text(encoding="utf-8"))
+        return self.workflow_root / template_name
+
+    def _load_template(self, job: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+        document = json.loads(self._template_path(job).read_text(encoding="utf-8"))
         return copy.deepcopy(document["prompt"]), document["bindings"]
 
     def _asset(self, relative: str) -> Path:
@@ -194,6 +197,7 @@ class GenerationWorker:
 
     def _fingerprint(self, job: dict[str, Any]) -> str:
         hasher = hashlib.sha256(json.dumps(job, ensure_ascii=False, sort_keys=True).encode("utf-8"))
+        hasher.update(sha256(self._template_path(job)).encode("ascii"))
         for relative in job.get("references", []):
             path = self._asset(str(relative))
             hasher.update(sha256(path).encode("ascii"))
@@ -217,6 +221,7 @@ class GenerationWorker:
         record: dict[str, Any],
         fingerprint: str,
         attempt: int,
+        prompt_id: str,
     ) -> dict[str, object]:
         files = client.output_files(record)
         wanted = ".mp4" if job["kind"] == "wan-i2v" else ".png"
@@ -256,7 +261,9 @@ class GenerationWorker:
             "job": job["id"],
             "kind": job["kind"],
             "attempt": attempt,
+            "promptId": prompt_id,
             "fingerprint": fingerprint,
+            "workflowSha256": sha256(self._template_path(job)),
             "sha256": digest,
             "bytes": target.stat().st_size,
             "probe": probe,
@@ -307,7 +314,7 @@ class GenerationWorker:
                     prompt, _ = self._prepare_prompt(client, job, attempt)
                     prompt_id = client.submit(prompt)
                     record = client.wait(prompt_id, float(job.get("timeoutSeconds", 7200)))
-                    return self._materialize(client, job, record, fingerprint, attempt)
+                    return self._materialize(client, job, record, fingerprint, attempt, prompt_id)
                 except Exception as error:
                     last_error = error
                     time.sleep(min(20, attempt * 5))

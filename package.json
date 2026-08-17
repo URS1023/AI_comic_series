@@ -7,6 +7,8 @@
     "build:composition": "node scripts/build-composition.mjs . && node scripts/stamp-seams.mjs . && node scripts/compact-generated-html.mjs index.html",
     "build:captions": ".venv/Scripts/python.exe scripts/build_ass_captions.py",
     "build:opening": ".venv/Scripts/python.exe scripts/build_opening.py",
+    "qa:generated": ".venv/Scripts/python.exe scripts/qa_generated_media.py",
+    "qa:final": ".venv/Scripts/python.exe scripts/qa_final_video.py",
     "build": "npm run build:storyboard && npm run build:composition",
     "dev": "npx --yes hyperframes@0.7.109 preview",
     "check": "npx --yes hyperframes@0.7.109 check",

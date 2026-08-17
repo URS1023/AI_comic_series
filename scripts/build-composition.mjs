@@ -5,6 +5,7 @@ import path from "node:path";
 
 const root = path.resolve(process.argv[2] ?? ".");
 const strictAssets = process.argv.includes("--strict-assets");
+const htmlCaptions = !process.argv.includes("--no-html-captions");
 const storyboard = JSON.parse(fs.readFileSync(path.join(root, "STORYBOARD_VIDEO.json"), "utf8"));
 const audio = JSON.parse(fs.readFileSync(path.join(root, "audio_meta.json"), "utf8"));
 const style = JSON.parse(fs.readFileSync(path.join(root, "HBG_STYLE.json"), "utf8"));
@@ -53,7 +54,8 @@ const sceneHtml = [
   ),
 ].join("\n");
 
-const captionsHtml = audio.captions
+const captionsHtml = htmlCaptions
+  ? audio.captions
   .map((item, index) => {
     const start = Number(audio.opening.bodyStart) + Number(item.start);
     return (
@@ -61,7 +63,8 @@ const captionsHtml = audio.captions
       `<div id="${item.id}-inner" class="caption-inner">${escapeHtml(item.text)}</div></div>`
     );
   })
-  .join("\n");
+  .join("\n")
+  : "";
 
 const systemStart = Number(storyboard[4].start) + 0.2;
 const systemEnd = Number(storyboard[5].end) - 0.15;
@@ -254,12 +257,14 @@ const htmlWithStyles = `<!doctype html>
       tl.fromTo("#system-panel", { x: 120, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.42, ease: "power4.out", immediateRender: false }, ${number(systemStart)});
       tl.fromTo("#system-panel .system-row", { y: 48, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.18, stagger: 0.075, ease: "power4.out", immediateRender: false }, ${number(systemStart + 0.16)});
       tl.fromTo("#chapter-card", { y: 62, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.28, ease: "power4.out", immediateRender: false }, ${number(firstChapterStart)});
-      ${audio.captions
+      ${htmlCaptions
+        ? audio.captions
         .map((item) => {
           const start = Number(audio.opening.bodyStart) + Number(item.start);
           return `tl.fromTo("#${item.id}-inner", { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.16, ease: "power4.out", immediateRender: false }, ${number(start)});`;
         })
-        .join("\n      ")}
+        .join("\n      ")
+        : ""}
       tl.fromTo("#final-shade", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.7, ease: "power2.in", immediateRender: false }, ${number(finalFadeStart)});
     </script>
   </body>
@@ -284,6 +289,7 @@ console.log(
       duration,
       scenes: storyboard.length,
       captions: audio.captions.length,
+      htmlCaptions,
       missingAssets: missing,
       strictAssets,
     },
