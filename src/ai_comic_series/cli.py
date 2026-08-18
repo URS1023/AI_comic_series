@@ -8,8 +8,8 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
-from ai_comic_series.auth import refresh_amd_credentials
 from ai_comic_series.config import RemoteCredentials, load_project_settings
+from ai_comic_series.curl_import import apply_imported_target, parse_copy_as_curl, read_curl_stdin
 from ai_comic_series.exceptions import ComicSeriesError
 from ai_comic_series.jupyter import JupyterClient
 from ai_comic_series.remote_manager import RemoteManager
@@ -20,6 +20,11 @@ __all__ = ["main"]
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="comicctl", description="AI comic-series production control plane")
     parser.add_argument("--config", type=Path, default=Path("config/project.toml"))
+    parser.add_argument(
+        "--curl-stdin",
+        action="store_true",
+        help="Import a complete browser Copy-as-cURL request from stdin and preflight it",
+    )
     subcommands = parser.add_subparsers(dest="area", required=True)
     remote = subcommands.add_parser("remote", help="Control the AMD Jupyter/ComfyUI execution node")
     actions = remote.add_subparsers(dest="action", required=True)
@@ -39,7 +44,15 @@ def _parser() -> argparse.ArgumentParser:
     generate = actions.add_parser("generate", help="Run one resumable anchors/keyframes/videos stage")
     generate.add_argument(
         "stage",
-        choices=["anchors", "cover-drafts", "covers", "keyframes", "video-sample", "videos"],
+        choices=[
+            "anchors",
+            "cover-drafts",
+            "covers",
+            "keyframes",
+            "motion-keyframes",
+            "video-sample",
+            "videos",
+        ],
     )
     generate.add_argument("--max-workers", type=int, default=8)
     generate.add_argument("--wait", action="store_true")
@@ -63,9 +76,19 @@ def _print(value: object) -> None:
 
 def _run_remote(args: argparse.Namespace) -> int:
     settings = load_project_settings(args.config)
-    credentials = RemoteCredentials.from_environment()
-    credentials = refresh_amd_credentials(settings.remote, credentials, required=False)
+    preflight_url: str | None = None
+    preflight_headers: tuple[tuple[str, str], ...] = ()
+    if args.curl_stdin:
+        imported = parse_copy_as_curl(read_curl_stdin(sys.stdin))
+        settings = apply_imported_target(settings, imported)
+        credentials = imported.credentials
+        preflight_url = imported.request_url
+        preflight_headers = imported.extra_headers
+    else:
+        credentials = RemoteCredentials.from_environment()
     with JupyterClient(settings.remote, credentials) as client:
+        if preflight_url:
+            client.preflight_exact_get(preflight_url, preflight_headers)
         manager = RemoteManager(settings, client)
         if args.action == "sync":
             _print({"uploaded": manager.sync_bundle()})

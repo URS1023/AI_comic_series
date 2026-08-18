@@ -11,7 +11,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s001.png",
       "references": [
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/rental-room.png"
       ]
     },
     {
@@ -22,7 +23,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s002.png",
       "references": [
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/rental-room.png"
       ]
     },
     {
@@ -34,7 +36,8 @@
       "output": "assets/generated/keyframes/v2-s003.png",
       "references": [
         "assets/generated/anchors/chen-yan.png",
-        "assets/generated/anchors/teacher-wang.png"
+        "assets/generated/anchors/teacher-wang.png",
+        "assets/generated/anchors/locations/school-office.png"
       ]
     },
     {
@@ -45,7 +48,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s004.png",
       "references": [
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/school-office.png"
       ]
     },
     {
@@ -56,7 +60,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s005.png",
       "references": [
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/school-office.png"
       ]
     },
     {
@@ -67,7 +72,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s006.png",
       "references": [
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/school-office.png"
       ]
     },
     {
@@ -79,7 +85,8 @@
       "output": "assets/generated/keyframes/v2-s007.png",
       "references": [
         "assets/generated/anchors/chen-yan.png",
-        "assets/generated/anchors/teacher-wang.png"
+        "assets/generated/anchors/teacher-wang.png",
+        "assets/generated/anchors/locations/school-office.png"
       ]
     },
     {
@@ -91,7 +98,8 @@
       "output": "assets/generated/keyframes/v2-s008.png",
       "references": [
         "assets/generated/anchors/chen-yan.png",
-        "assets/generated/anchors/teacher-wang.png"
+        "assets/generated/anchors/teacher-wang.png",
+        "assets/generated/anchors/locations/school-office.png"
       ]
     },
     {
@@ -103,7 +111,8 @@
       "output": "assets/generated/keyframes/v2-s009.png",
       "references": [
         "assets/generated/anchors/chen-yan.png",
-        "assets/generated/anchors/teacher-wang.png"
+        "assets/generated/anchors/teacher-wang.png",
+        "assets/generated/anchors/locations/school-office.png"
       ]
     },
     {
@@ -114,7 +123,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s010.png",
       "references": [
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/school-gate.png"
       ]
     },
     {
@@ -125,7 +135,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s011.png",
       "references": [
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/crossroads.png"
       ]
     },
     {
@@ -136,7 +147,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s012.png",
       "references": [
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/crossroads.png"
       ]
     },
     {
@@ -147,7 +159,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s013.png",
       "references": [
-        "assets/generated/anchors/landlady.png"
+        "assets/generated/anchors/landlady.png",
+        "assets/generated/anchors/locations/street-fence.png"
       ]
     },
     {
@@ -158,7 +171,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s014.png",
       "references": [
-        "assets/generated/anchors/landlady.png"
+        "assets/generated/anchors/landlady.png",
+        "assets/generated/anchors/locations/street-fence.png"
       ]
     },
     {
@@ -169,7 +183,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s015.png",
       "references": [
-        "assets/generated/anchors/landlady.png"
+        "assets/generated/anchors/landlady.png",
+        "assets/generated/anchors/locations/street-fence.png"
       ]
     },
     {
@@ -180,7 +195,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s016.png",
       "references": [
-        "assets/generated/anchors/landlady.png"
+        "assets/generated/anchors/landlady.png",
+        "assets/generated/anchors/locations/street-fence.png"
       ]
     },
     {
@@ -191,7 +207,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s017.png",
       "references": [
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/riverside-road.png"
       ]
     },
     {
@@ -202,7 +219,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s018.png",
       "references": [
-        "assets/generated/anchors/riverside-girl.png"
+        "assets/generated/anchors/riverside-girl.png",
+        "assets/generated/anchors/locations/riverside-railing.png"
       ]
     },
     {
@@ -213,7 +231,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s019.png",
       "references": [
-        "assets/generated/anchors/riverside-girl.png"
+        "assets/generated/anchors/riverside-girl.png",
+        "assets/generated/anchors/locations/riverside-railing.png"
       ]
     },
     {
@@ -224,7 +243,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s020.png",
       "references": [
-        "assets/generated/anchors/riverside-girl.png"
+        "assets/generated/anchors/riverside-girl.png",
+        "assets/generated/anchors/locations/riverside-railing.png"
       ]
     },
     {
@@ -236,7 +256,8 @@
       "output": "assets/generated/keyframes/v2-s021.png",
       "references": [
         "assets/generated/anchors/chen-yan.png",
-        "assets/generated/anchors/riverside-girl.png"
+        "assets/generated/anchors/riverside-girl.png",
+        "assets/generated/anchors/locations/riverside-railing.png"
       ]
     },
     {
@@ -248,7 +269,8 @@
       "output": "assets/generated/keyframes/v2-s022.png",
       "references": [
         "assets/generated/anchors/riverside-girl.png",
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/riverside-railing.png"
       ]
     },
     {
@@ -260,7 +282,8 @@
       "output": "assets/generated/keyframes/v2-s023.png",
       "references": [
         "assets/generated/anchors/chen-yan.png",
-        "assets/generated/anchors/riverside-girl.png"
+        "assets/generated/anchors/riverside-girl.png",
+        "assets/generated/anchors/locations/riverside-railing.png"
       ]
     },
     {
@@ -272,7 +295,8 @@
       "output": "assets/generated/keyframes/v2-s024.png",
       "references": [
         "assets/generated/anchors/chen-yan.png",
-        "assets/generated/anchors/riverside-girl.png"
+        "assets/generated/anchors/riverside-girl.png",
+        "assets/generated/anchors/locations/riverside-railing.png"
       ]
     },
     {
@@ -284,7 +308,8 @@
       "output": "assets/generated/keyframes/v2-s025.png",
       "references": [
         "assets/generated/anchors/chen-yan.png",
-        "assets/generated/anchors/riverside-girl.png"
+        "assets/generated/anchors/riverside-girl.png",
+        "assets/generated/anchors/locations/riverside-railing.png"
       ]
     },
     {
@@ -296,7 +321,8 @@
       "output": "assets/generated/keyframes/v2-s026.png",
       "references": [
         "assets/generated/anchors/riverside-girl.png",
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/riverside-railing.png"
       ]
     },
     {
@@ -307,7 +333,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s027.png",
       "references": [
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/riverside-railing.png"
       ]
     },
     {
@@ -318,7 +345,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s028.png",
       "references": [
-        "assets/generated/anchors/chen-yan.png"
+        "assets/generated/anchors/chen-yan.png",
+        "assets/generated/anchors/locations/riverside-railing.png"
       ]
     },
     {
@@ -329,7 +357,8 @@
       ],
       "output": "assets/generated/keyframes/v2-s029.png",
       "references": [
-        "assets/generated/anchors/riverside-girl.png"
+        "assets/generated/anchors/riverside-girl.png",
+        "assets/generated/anchors/locations/riverside-railing.png"
       ]
     }
   ],

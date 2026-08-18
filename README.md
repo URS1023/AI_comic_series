@@ -19,15 +19,16 @@
 flowchart LR
     A["本地原文 / SCRIPT_SOURCE.md"] --> B["SCRIPT.md + 真实 TTS/VTT"]
     B --> C["STORYBOARD_VIDEO.json\n29 个声画对齐镜头"]
-    C --> D["本地 comicctl\n安全 Jupyter 控制层"]
-    D --> E["AMD ROCm + ComfyUI\nQwen 锚点/关键帧"]
-    E --> F["Wan 2.2 I2V\n真实视频镜头"]
-    F --> G["本地 SHA 校验 / 逐镜 QA"]
+    C --> D["一次 AMD/Jupyter 引导\n随后关闭 Jupyter"]
+    D --> E["Bearer HTTPS 直连代理\n白名单同步/任务/取件"]
+    E --> F["AMD ROCm + ComfyUI\nQwen 多参考锚点/关键帧"]
+    F --> J["Wan 2.2 I2V + FLF2V\n真实视频镜头"]
+    J --> G["本地 SHA 校验 / 逐镜 QA"]
     G --> H["HyperFrames + ASS\n字幕/系统层/音频/转场"]
     H --> I["最终 MP4 + 发布包 + QA 证据"]
 ```
 
-远端不暴露 ComfyUI 公网端口。所有 ComfyUI 请求都由上传到 Jupyter 工作区的无密钥 worker 在 `127.0.0.1` 内部完成；本地通过 Jupyter Contents API 只同步小型控制文件和最终镜头镜像。
+远端不暴露 ComfyUI 公网端口。ComfyUI 只在 `127.0.0.1:18888+` 运行；公网仅有一个回环 control-agent 的临时 HTTPS 隧道，所有路由必须通过进程内 256-bit Bearer，且只允许同步固定目录、启动固定任务、读状态/日志、取回哈希绑定产物及可恢复停机，不提供 shell。Jupyter 只用于首次上传约几十 KiB 的网关并启动它，直连就绪后立即关闭。
 
 ## 快速开始
 
@@ -41,13 +42,54 @@ npm run build
 
 ### 1. 安全连接 AMD 云端
 
-先在浏览器重新登录 AMD 平台。打开实例中的任意 Jupyter API 请求，在开发者工具中复制其完整 `Cookie` 请求头值，然后运行：
+先在浏览器重新登录 AMD 平台。打开实例中的任意只读 Jupyter Contents API 请求，在开发者工具的 Network 面板中选择 **Copy → Copy as cURL**；不要只复制 Cookie。保持完整 cURL 在剪贴板中，然后运行：
 
 ```powershell
 .\scripts\remote.ps1 remote probe
 ```
 
-脚本使用隐藏输入读取 Cookie，只放进子进程环境；不会写入命令历史、配置、日志或 Git。访问令牌到期时，控制器使用 AMD 前端同一 `/api/api/Auth/Refresh` 路径在内存中轮换 Cookie。
+`remote.ps1` 从剪贴板读取完整 cURL，并只通过 Python 子进程的 stdin 导入；不会把它放入参数、环境变量、配置、临时文件、日志或 Git，也不会回显。也可以显式使用标准输入：
+
+```powershell
+Get-Clipboard -Raw | .\scripts\remote.ps1 remote probe
+```
+
+导入器同时验证并提取实例 URL、`Authorization`、完整 Cookie、`X-XSRFToken`、`User-Agent`、`Referer`、`Accept-Language` 和 `Accept`。它只接受官方 AMD HTTPS 主机、合法实例路径、同实例 Referer 和无请求体的 Contents API GET；XSRF header 必须与 Cookie 一致。控制器首先原样重放 cURL 中的 URL 做一次不跟随重定向的 GET 预检，只有 `2xx` 才执行后续动作。访问令牌到期时，控制器使用 AMD 前端同一 `/api/api/Auth/Refresh` 路径在内存中轮换 Cookie，并保留其余浏览器 header。
+
+生产任务优先使用一次引导后完全切走 Jupyter 的直连会话入口：
+
+```powershell
+.\scripts\direct-session.ps1
+```
+
+出现 `"transport":"direct-https"` 与 `"jupyterClosed":true` 后，后续 JSON 命令、代码同步、模型下载、生成状态和成片取回均走 Bearer HTTPS。若只做 AMD 诊断，可使用旧的 Jupyter 长期会话入口：
+
+```powershell
+.\scripts\remote-session.ps1
+```
+
+直连会话使用与下文一一对应的 JSON 动作，例如：
+
+```json
+{"action":"bootstrap","dataRoot":"/ai-comic-series"}
+{"action":"install-models","profile":"wan22-i2v-14b-quality"}
+{"action":"generate","stage":"anchors","maxWorkers":8}
+{"action":"status","job":"generate-anchors"}
+{"action":"fetch","job":"generate-anchors"}
+```
+
+下文的 `remote.ps1` 仍作为可复制的一次性兼容命令；连续生产时应在 `direct-session.ps1` 中发送等价 JSON，避免再次依赖 Jupyter。
+
+等待第一条 JSON 出现 `"session":"ready"` 且 `"preflight":{"status":200}` 后，输入单行命令，例如：
+
+```json
+{"action":"probe"}
+{"action":"sync"}
+{"action":"status","job":"bootstrap"}
+{"action":"quit"}
+```
+
+长期进程只在内存中保存和轮换凭据。它的原生 stdin 协议是：完整多行 cURL、单独一行 `__AI_COMIC_CURL_END__`，其后才是逐行 JSON 控制命令。
 
 ### 2. 初始化大容量盘上的 ROCm 运行时
 
@@ -87,7 +129,7 @@ npm run build
 ### 4. 分阶段生成并下载
 
 ```powershell
-# 四个身份锚点
+# 4 个身份锚点 + 7 个无人物地点锚（共 11 个）
 .\scripts\remote.ps1 remote generate anchors --wait
 .\scripts\remote.ps1 remote fetch generate-anchors
 .\.venv\Scripts\python.exe -m scripts.approve_assets anchors --reviewer "Codex visual QA" --confirm-visual-review
@@ -105,6 +147,11 @@ npm run build:covers
 .\scripts\remote.ps1 remote fetch generate-keyframes
 .\.venv\Scripts\python.exe -m scripts.approve_assets keyframes --reviewer "Codex visual QA" --confirm-visual-review
 
+# 8 个动作关键镜头的审核末帧，用于 Wan FLF2V 首尾帧控制
+.\scripts\remote.ps1 remote generate motion-keyframes --wait
+.\scripts\remote.ps1 remote fetch generate-motion-keyframes
+.\.venv\Scripts\python.exe -m scripts.approve_assets motion-keyframes --reviewer "Codex visual QA" --confirm-visual-review
+
 # 先生成跨角色、手机、暴雨、救援和结尾反应的 10 镜头代表样片
 .\scripts\remote.ps1 remote generate video-sample --wait --timeout 28800
 .\scripts\remote.ps1 remote fetch generate-video-sample
@@ -114,6 +161,8 @@ npm run build:covers
 # 代表样片通过率至少 90% 后，生成/复用全部 29 个 Wan 2.2 I2V 视频镜头
 .\scripts\remote.ps1 remote generate videos --wait --timeout 28800
 .\scripts\remote.ps1 remote fetch generate-videos
+.\.venv\Scripts\python.exe scripts\qa_generated_media.py
+.\.venv\Scripts\python.exe -m scripts.approve_assets full-videos --reviewer "Codex visual QA" --confirm-visual-review
 ```
 
 每个输出都有 `.meta.json`：Comfy prompt ID、工作流 SHA-256、生成类型、尝试次数、输入指纹、输出 SHA-256、大小和视频 probe。无变化重跑会复用；审核文件绑定已看过资产的实际哈希，审核后文件变化会阻止下游生成。代表样片被拒绝的镜头在全量阶段强制重生成，不会错误复用。
@@ -136,8 +185,10 @@ npm run build:covers
 | 原始故事 | `SCRIPT_SOURCE.md`（逐字保留、仅本地） | 先编辑改编稿；`SOURCE_MANIFEST.json` 验证原文身份 |
 | 本集旁白 | `SCRIPT.md` | 重新运行 HBG narration builder |
 | 角色脸、发型、服装、关系 | `CHARACTERS.md` + `production/characters.json` | `node scripts/build-generation-queue.mjs .` |
+| 固定地点几何与镜头映射 | `production/locations.json` | `node scripts/build-generation-queue.mjs .` |
 | 镜头内容、人数、风险 | `STORYBOARD_BASE.json` + `production/scene-overrides.json` | `npm run build:storyboard` |
 | 视频动作 | `STORYBOARD_VIDEO.json` 中的 `motionTarget`（由 overrides 生成） | `npm run build:storyboard` |
+| 高危动作末帧 | `production/motion-endframes.json` | `node scripts/build-generation-queue.mjs .` |
 | 画面色彩、字幕、字体 | `frame.md` + `HBG_STYLE.json` | `npm run build:composition` |
 | 模型或版本 | `config/models.json` | 重新安装相应 profile |
 | 转场连续性 | `ledger.json`（由 production docs builder 生成） | `node scripts/stamp-seams.mjs .` |
@@ -167,10 +218,7 @@ node C:\Users\你的用户名\.codex\skills\hbg-life-simulation\scripts\audit_st
 最终媒体齐全后：
 
 ```powershell
-node scripts/build-composition.mjs . --strict-assets
-node scripts/stamp-seams.mjs .
-npm run check -- --strict --snapshots
-npm run render -- --quality high --output renders/gaokao-rewind-ep01-r001.mp4
+.\scripts\render-final.ps1 -Revision r001
 ```
 
 `npm run check` 必须零错误；最终 MP4 还需逐镜接触表、黑帧、静音、响度、分辨率、帧率、时长、手部/道具高风险点和首尾帧检查。完整门槛见 [docs/QUALITY_GATES.md](docs/QUALITY_GATES.md)。

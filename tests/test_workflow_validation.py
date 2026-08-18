@@ -27,3 +27,17 @@ def test_workflow_validation_rejects_dangling_connection() -> None:
 
     with pytest.raises(ConfigurationError, match="unknown source"):
         validate_api_workflow(document)
+
+
+def test_workflow_validation_treats_two_reference_nodes_as_node_ids() -> None:
+    document = {
+        "kind": "test-flf2v",
+        "bindings": {"referenceNodes": ["1", "2"]},
+        "prompt": {
+            "1": {"class_type": "LoadImage", "inputs": {"image": "START"}},
+            "2": {"class_type": "LoadImage", "inputs": {"image": "END"}},
+            "3": {"class_type": "SaveVideo", "inputs": {"video": ["1", 0]}},
+        },
+    }
+
+    validate_api_workflow(document)

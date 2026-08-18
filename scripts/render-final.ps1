@@ -22,6 +22,8 @@ try {
             throw "Publishing cover is not complete: $($cover.id)"
         }
     }
+    & $python 'scripts\verify_review_gates.py'
+    if ($LASTEXITCODE -ne 0) { throw 'Hash-bound full visual-review gate failed.' }
     & $python 'scripts\qa_generated_media.py'
     if ($LASTEXITCODE -ne 0) { throw 'Generated-media quality gate failed.' }
 

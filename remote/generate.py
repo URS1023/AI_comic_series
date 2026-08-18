@@ -9,6 +9,7 @@ import hashlib
 import json
 import math
 import os
+import queue
 import shutil
 import subprocess
 import sys
@@ -17,12 +18,18 @@ import time
 from pathlib import Path
 from typing import Any
 
+VIDEO_KINDS = frozenset({"wan-i2v", "wan-flf2v"})
+
 try:
     from .comfy_client import ComfyClient
+    from .media_contract import mp4_has_faststart, video_contract_errors
     from .runtime_common import atomic_json
+    from .video_motion import analyze_video_motion
 except ImportError:  # Script execution on the remote node.
     from comfy_client import ComfyClient
+    from media_contract import mp4_has_faststart, video_contract_errors
     from runtime_common import atomic_json
+    from video_motion import analyze_video_motion
 
 
 def parse_args() -> argparse.Namespace:
@@ -31,7 +38,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--queue", required=True)
     parser.add_argument(
         "--stage",
-        choices=["anchors", "cover-drafts", "covers", "keyframes", "video-sample", "videos"],
+        choices=[
+            "anchors",
+            "cover-drafts",
+            "covers",
+            "keyframes",
+            "motion-keyframes",
+            "video-sample",
+            "videos",
+        ],
         required=True,
     )
     parser.add_argument("--max-workers", type=int, default=8)
@@ -62,7 +77,9 @@ def normalize_image(source: Path, target: Path, width: int = 1920, height: int =
         fitted.save(target, format="PNG", optimize=True)
 
 
-def video_probe(path: Path, ffprobe: str) -> dict[str, object]:
+def video_probe(path: Path, ffprobe: str, *, expected_fps: float | None = None) -> dict[str, Any]:
+    """Probe and enforce the normalized H.264/CFR/faststart video contract."""
+
     command = [
         ffprobe,
         "-v",
@@ -70,17 +87,82 @@ def video_probe(path: Path, ffprobe: str) -> dict[str, object]:
         "-select_streams",
         "v:0",
         "-show_entries",
-        "stream=codec_name,width,height,r_frame_rate,nb_frames:format=duration",
+        (
+            "stream=codec_type,codec_name,pix_fmt,width,height,r_frame_rate,avg_frame_rate,nb_frames:"
+            "format=format_name,duration"
+        ),
         "-of",
         "json",
         str(path),
     ]
-    result = subprocess.run(command, capture_output=True, text=True, check=True)
-    data = json.loads(result.stdout)
-    streams = data.get("streams", [])
-    if not streams or float(data.get("format", {}).get("duration", 0)) <= 0:
-        raise RuntimeError(f"Generated video has no valid stream: {path}")
+    result = subprocess.run(command, capture_output=True, text=True, check=False)
+    if result.returncode != 0:
+        detail = (result.stderr or result.stdout)[-2000:]
+        raise RuntimeError(f"FFprobe failed for {path}: {detail}")
+    try:
+        data: dict[str, Any] = json.loads(result.stdout)
+    except json.JSONDecodeError as error:
+        raise RuntimeError(f"FFprobe returned invalid JSON for {path}") from error
+    errors = video_contract_errors(data, expected_fps=expected_fps, faststart=mp4_has_faststart(path))
+    if errors:
+        raise RuntimeError(f"Generated video violates the normalized media contract: {errors}")
     return data
+
+
+def standardize_video(
+    source: Path,
+    target: Path,
+    *,
+    ffmpeg: str,
+    ffprobe: str,
+    fps: float,
+) -> dict[str, Any]:
+    """Always transcode a generated clip to browser-safe H.264/yuv420p CFR MP4."""
+
+    if fps <= 0:
+        raise ValueError(f"fps must be positive, got {fps}")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.unlink(missing_ok=True)
+    fps_text = f"{fps:.6f}".rstrip("0").rstrip(".")
+    command = [
+        ffmpeg,
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-y",
+        "-i",
+        str(source),
+        "-map",
+        "0:v:0",
+        "-an",
+        "-sn",
+        "-dn",
+        "-c:v",
+        "libx264",
+        "-preset",
+        "slow",
+        "-crf",
+        "16",
+        "-pix_fmt",
+        "yuv420p",
+        "-r",
+        fps_text,
+        "-fps_mode",
+        "cfr",
+        "-movflags",
+        "+faststart",
+        str(target),
+    ]
+    result = subprocess.run(command, capture_output=True, text=True, check=False)
+    if result.returncode != 0 or not target.is_file():
+        target.unlink(missing_ok=True)
+        detail = (result.stderr or result.stdout)[-3000:]
+        raise RuntimeError(f"FFmpeg video standardization failed: {detail}")
+    try:
+        return video_probe(target, ffprobe, expected_fps=fps)
+    except Exception:
+        target.unlink(missing_ok=True)
+        raise
 
 
 class GenerationWorker:
@@ -92,9 +174,8 @@ class GenerationWorker:
         self.assets_root = self.data_root / "project-assets"
         self.mirror_root = project_root / "artifacts"
         self.workflow_root = project_root / "workflows" / "comfyui" / "api"
-        self.ffprobe = str(Path(state["ffmpeg"]).with_name("ffprobe"))
-        if not Path(self.ffprobe).exists():
-            self.ffprobe = shutil.which("ffprobe") or "ffprobe"
+        self.ffmpeg = str(state.get("ffmpeg") or shutil.which("ffmpeg") or "ffmpeg")
+        self.ffprobe = str(state.get("ffprobe") or shutil.which("ffprobe") or Path(self.ffmpeg).with_name("ffprobe"))
         self.ports = [int(worker["port"]) for worker in state.get("workers", [])]
         if not self.ports:
             raise RuntimeError("No ready ComfyUI workers are recorded in state.json")
@@ -137,9 +218,40 @@ class GenerationWorker:
             required = {str(path) for job in jobs for path in job.get("references", []) if "/anchors/" in str(path)}
             self._verify_approval_assets(approval, required)
             return
+        if self.stage == "motion-keyframes":
+            anchor_approval = self._approval("anchor-approval.json")
+            anchor_paths = {
+                str(path)
+                for job in jobs
+                for path in job.get("references", [])
+                if "/anchors/" in str(path)
+            }
+            self._verify_approval_assets(anchor_approval, anchor_paths)
+            keyframe_approval = self._approval("keyframe-approval.json")
+            start_paths = {
+                str(path)
+                for job in jobs
+                for path in job.get("references", [])
+                if "/keyframes/" in str(path)
+            }
+            self._verify_approval_assets(keyframe_approval, start_paths)
+            return
         keyframe_approval = self._approval("keyframe-approval.json")
-        keyframes = {str(path) for job in jobs for path in job.get("references", [])}
+        keyframes = {
+            str(path)
+            for job in jobs
+            for path in job.get("references", [])
+            if "/keyframes/" in str(path)
+        }
         self._verify_approval_assets(keyframe_approval, keyframes)
+        endframes = {
+            str(path)
+            for job in jobs
+            for path in job.get("references", [])
+            if "/endframes/" in str(path)
+        }
+        if endframes:
+            self._verify_approval_assets(self._approval("motion-endframe-approval.json"), endframes)
         if self.stage == "videos":
             sample_approval = self._approval("video-sample-approval.json")
             expected_scene_ids = {
@@ -148,6 +260,16 @@ class GenerationWorker:
             if not expected_scene_ids:
                 raise RuntimeError("Full video queue has no representative sample configuration")
             rejected_scene_ids = set(sample_approval.get("rejectedSceneIds", []))
+            high_risk_sample_ids = {
+                str(job["id"]).removeprefix("video-")
+                for job in jobs
+                if job.get("representativeSample") is True and job.get("highRisk") is True
+            }
+            rejected_high_risk = sorted(rejected_scene_ids & high_risk_sample_ids)
+            if rejected_high_risk:
+                raise RuntimeError(
+                    f"Every high-risk representative video must pass visual review: {rejected_high_risk}"
+                )
             approval_ids = {
                 str(entry.get("id")) for entry in sample_approval.get("assets", []) if isinstance(entry, dict)
             }
@@ -187,6 +309,7 @@ class GenerationWorker:
             "qwen-t2i": "qwen_image_2512_t2i.json",
             "qwen-edit": "qwen_image_edit_2511.json",
             "wan-i2v": "wan22_i2v_14b.json",
+            "wan-flf2v": "wan22_flf2v_14b.json",
         }[str(job["kind"])]
         return self.workflow_root / template_name
 
@@ -216,6 +339,12 @@ class GenerationWorker:
             uploaded.append(client.upload_image(path, remote_name))
         if job["kind"] == "wan-i2v":
             prompt[bindings["referenceNode"]]["inputs"]["image"] = uploaded[0]
+        elif job["kind"] == "wan-flf2v":
+            reference_nodes = list(bindings["referenceNodes"])
+            if len(uploaded) != 2 or len(reference_nodes) != 2:
+                raise RuntimeError("Wan FLF2V requires exactly one approved start and one approved end frame")
+            for node, remote_name in zip(reference_nodes, uploaded, strict=True):
+                prompt[node]["inputs"]["image"] = remote_name
         elif job["kind"] == "qwen-edit":
             reference_nodes = list(bindings["referenceNodes"])
             positive = prompt[bindings["positiveNode"]]["inputs"]
@@ -252,7 +381,7 @@ class GenerationWorker:
             prompt[bindings["negativeNode"]]["inputs"]["prompt"] = job["negativePrompt"]
             set_binding(prompt, bindings["seed"], seed)
             set_binding(prompt, bindings["filenamePrefix"], prefix)
-        elif job["kind"] == "wan-i2v":
+        elif job["kind"] in VIDEO_KINDS:
             set_binding(prompt, bindings["positive"], job["prompt"])
             set_binding(prompt, bindings["negative"], job["negativePrompt"])
             set_binding(prompt, bindings["width"], int(job["width"]))
@@ -284,7 +413,36 @@ class GenerationWorker:
             value = json.loads(metadata.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             return False
-        return value.get("fingerprint") == fingerprint and value.get("sha256") == sha256(target)
+        if value.get("fingerprint") != fingerprint or value.get("sha256") != sha256(target):
+            return False
+        if job["kind"] in VIDEO_KINDS:
+            try:
+                media = video_probe(target, self.ffprobe, expected_fps=float(job["fps"]))
+                duration = float(media.get("format", {}).get("duration", 0))
+                evidence = analyze_video_motion(
+                    target,
+                    ffmpeg=self.ffmpeg,
+                    duration_seconds=duration,
+                    trim_fraction=0.08,
+                )
+            except (OSError, RuntimeError, ValueError):
+                return False
+            if evidence.get("status") != "passed":
+                return False
+        return True
+
+    def _archive_existing(self, target: Path) -> None:
+        if not target.is_file():
+            return
+        previous_sha = sha256(target)
+        rejected = self.assets_root / "assets" / "generated" / "rejected"
+        rejected.mkdir(parents=True, exist_ok=True)
+        archived = rejected / f"{target.stem}-{previous_sha[:12]}{target.suffix}"
+        if not archived.exists():
+            shutil.copy2(target, archived)
+            previous_metadata = target.with_suffix(target.suffix + ".meta.json")
+            if previous_metadata.is_file():
+                shutil.copy2(previous_metadata, archived.with_suffix(archived.suffix + ".meta.json"))
 
     def _materialize(
         self,
@@ -296,7 +454,7 @@ class GenerationWorker:
         prompt_id: str,
     ) -> dict[str, object]:
         files = client.output_files(record)
-        wanted = ".mp4" if job["kind"] == "wan-i2v" else ".png"
+        wanted = ".mp4" if job["kind"] in VIDEO_KINDS else ".png"
         descriptor = next((item for item in files if item["filename"].lower().endswith(wanted)), None)
         if descriptor is None:
             descriptor = next(
@@ -310,35 +468,44 @@ class GenerationWorker:
         if descriptor is None:
             raise RuntimeError(f"ComfyUI history contains no supported media output: {files}")
         target = self._asset(str(job["output"]))
-        if target.is_file():
-            previous_sha = sha256(target)
-            rejected = self.assets_root / "assets" / "generated" / "rejected"
-            rejected.mkdir(parents=True, exist_ok=True)
-            archived = rejected / f"{target.stem}-{previous_sha[:12]}{target.suffix}"
-            if not archived.exists():
-                shutil.copy2(target, archived)
-                previous_metadata = target.with_suffix(target.suffix + ".meta.json")
-                if previous_metadata.is_file():
-                    shutil.copy2(
-                        previous_metadata,
-                        archived.with_suffix(archived.suffix + ".meta.json"),
-                    )
         temporary = target.with_suffix(".download" + Path(descriptor["filename"]).suffix)
         client.download(descriptor, temporary)
         target.parent.mkdir(parents=True, exist_ok=True)
-        probe: dict[str, object] | None = None
-        if job["kind"] == "wan-i2v":
-            if temporary.suffix.lower() != ".mp4":
-                ffmpeg = str(Path(self.ffprobe).with_name("ffmpeg"))
-                subprocess.run(
-                    [ffmpeg, "-y", "-i", str(temporary), "-c:v", "libx264", "-pix_fmt", "yuv420p", str(target)],
-                    check=True,
+        probe: dict[str, Any] | None = None
+        motion_evidence: dict[str, object] | None = None
+        if job["kind"] in VIDEO_KINDS:
+            candidate = target.with_suffix(f".attempt-{attempt}.candidate.mp4")
+            try:
+                probe = standardize_video(
+                    temporary,
+                    candidate,
+                    ffmpeg=self.ffmpeg,
+                    ffprobe=self.ffprobe,
+                    fps=float(job["fps"]),
                 )
-                temporary.unlink()
-            else:
-                os.replace(temporary, target)
-            probe = video_probe(target, self.ffprobe)
+            finally:
+                temporary.unlink(missing_ok=True)
+            generated_duration = float(probe.get("format", {}).get("duration", 0))
+            motion_evidence = analyze_video_motion(
+                candidate,
+                ffmpeg=self.ffmpeg,
+                duration_seconds=generated_duration,
+                trim_fraction=0.08,
+            )
+            if motion_evidence.get("status") != "passed":
+                rejected = self.assets_root / "assets" / "generated" / "rejected"
+                rejected.mkdir(parents=True, exist_ok=True)
+                rejected_path = rejected / f"{target.stem}-attempt-{attempt}-{sha256(candidate)[:12]}.mp4"
+                os.replace(candidate, rejected_path)
+                atomic_json(
+                    rejected_path.with_suffix(rejected_path.suffix + ".motion.json"),
+                    motion_evidence,
+                )
+                raise RuntimeError(f"Generated clip failed real-motion gate: {motion_evidence.get('errors', [])}")
+            self._archive_existing(target)
+            os.replace(candidate, target)
         else:
+            self._archive_existing(target)
             normalize_image(
                 temporary,
                 target,
@@ -357,6 +524,7 @@ class GenerationWorker:
             "sha256": digest,
             "bytes": target.stat().st_size,
             "probe": probe,
+            "motionEvidence": motion_evidence,
             "created": time.time(),
         }
         atomic_json(target.with_suffix(target.suffix + ".meta.json"), metadata)
@@ -413,6 +581,19 @@ class GenerationWorker:
         finally:
             client.close()
 
+    def _process_with_available_port(
+        self,
+        job: dict[str, Any],
+        available_ports: queue.Queue[int],
+    ) -> dict[str, object]:
+        """Lease exactly one idle ComfyUI port for the duration of a job."""
+
+        port = available_ports.get()
+        try:
+            return self.process(job, port)
+        finally:
+            available_ports.put(port)
+
     def run(self, jobs: list[dict[str, Any]], max_workers: int) -> int:
         if self.stage == "video-sample":
             selected = [job for job in jobs if job.get("stage") == "videos" and job.get("representativeSample") is True]
@@ -423,10 +604,12 @@ class GenerationWorker:
         self.enforce_review_gates(selected)
         self.write_status("running", "generate", total=len(selected), ports=self.ports)
         workers = max(1, min(max_workers, len(self.ports), len(selected)))
+        available_ports: queue.Queue[int] = queue.Queue()
+        for port in self.ports[:workers]:
+            available_ports.put(port)
         with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
             futures = {
-                executor.submit(self.process, job, self.ports[index % len(self.ports)]): job
-                for index, job in enumerate(selected)
+                executor.submit(self._process_with_available_port, job, available_ports): job for job in selected
             }
             for future in concurrent.futures.as_completed(futures):
                 job = futures[future]

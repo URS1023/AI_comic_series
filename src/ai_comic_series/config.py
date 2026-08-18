@@ -37,6 +37,44 @@ class RemoteCredentials:
     cookie: str = field(repr=False)
     token: str = field(default="amd-oneclick", repr=False)
     xsrf_token: str = field(default="", repr=False)
+    user_agent: str = field(default="ai-comic-series/0.1", repr=False)
+    referer: str = field(default="", repr=False)
+    accept_language: str = field(default="", repr=False)
+    accept: str = field(default="application/json", repr=False)
+
+    def __post_init__(self) -> None:
+        values = {
+            "Cookie": self.cookie,
+            "Authorization token": self.token,
+            "User-Agent": self.user_agent,
+            "Referer": self.referer,
+            "Accept-Language": self.accept_language,
+            "Accept": self.accept,
+            "X-XSRFToken": self.xsrf_token,
+        }
+        for name, value in values.items():
+            if "\r" in value or "\n" in value or "\0" in value:
+                raise ConfigurationError(f"{name} must be one safe HTTP header value")
+        for name in ("Cookie", "Authorization token", "User-Agent", "Accept"):
+            if not values[name].strip():
+                raise ConfigurationError(f"{name} must not be empty")
+
+    def http_headers(self) -> dict[str, str]:
+        """Build the authenticated browser-compatible headers without logging them."""
+
+        headers = {
+            "Accept": self.accept,
+            "Authorization": f"token {self.token}",
+            "Cookie": self.cookie,
+            "User-Agent": self.user_agent,
+        }
+        if self.xsrf_token:
+            headers["X-XSRFToken"] = self.xsrf_token
+        if self.referer:
+            headers["Referer"] = self.referer
+        if self.accept_language:
+            headers["Accept-Language"] = self.accept_language
+        return headers
 
     @classmethod
     def from_environment(cls) -> RemoteCredentials:
@@ -49,7 +87,7 @@ class RemoteCredentials:
         cookie = os.environ.get("AI_COMIC_JUPYTER_COOKIE", "").strip()
         if not cookie:
             raise ConfigurationError(
-                "AI_COMIC_JUPYTER_COOKIE is missing. Use scripts/remote.ps1 so the cookie is read with hidden input."
+                "AI_COMIC_JUPYTER_COOKIE is missing. Use scripts/remote.ps1 to import a complete Copy-as-cURL request."
             )
         if "\n" in cookie or "\r" in cookie:
             raise ConfigurationError("AI_COMIC_JUPYTER_COOKIE must be a single HTTP Cookie header value")
@@ -57,7 +95,15 @@ class RemoteCredentials:
         if not token:
             raise ConfigurationError("AI_COMIC_JUPYTER_TOKEN must not be empty")
         xsrf = os.environ.get("AI_COMIC_JUPYTER_XSRF", "").strip() or _cookie_value(cookie, "_xsrf") or ""
-        return cls(cookie=cookie, token=token, xsrf_token=xsrf)
+        return cls(
+            cookie=cookie,
+            token=token,
+            xsrf_token=xsrf,
+            user_agent=os.environ.get("AI_COMIC_JUPYTER_USER_AGENT", "ai-comic-series/0.1").strip(),
+            referer=os.environ.get("AI_COMIC_JUPYTER_REFERER", "").strip(),
+            accept_language=os.environ.get("AI_COMIC_JUPYTER_ACCEPT_LANGUAGE", "").strip(),
+            accept=os.environ.get("AI_COMIC_JUPYTER_ACCEPT", "application/json").strip(),
+        )
 
 
 @dataclass(frozen=True, slots=True)

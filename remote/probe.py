@@ -32,6 +32,20 @@ def main() -> dict[str, object]:
         for pattern in ("/dev/dri/renderD*", "/dev/dri/card*", "/dev/kfd")
         for path in Path("/").glob(pattern.lstrip("/"))
     )
+    data_root = Path("/ai-comic-series")
+    model_progress = []
+    if data_root.is_dir():
+        for path in sorted((data_root / "models").rglob("*")):
+            if path.is_file():
+                try:
+                    model_progress.append(
+                        {
+                            "path": str(path.relative_to(data_root)),
+                            "bytes": path.stat().st_size,
+                        }
+                    )
+                except OSError:
+                    continue
     result: dict[str, object] = {
         "platform": platform.platform(),
         "python": sys.version,
@@ -61,6 +75,12 @@ def main() -> dict[str, object]:
             "free": shutil.disk_usage("/workspace").free if Path("/workspace").is_dir() else None,
         },
         "local_rocm_wheels": sorted(str(path) for path in Path("/").glob("*rocm*.whl")),
+        "data_root": {
+            "path": str(data_root),
+            "exists": data_root.is_dir(),
+            "free": shutil.disk_usage(data_root).free if data_root.is_dir() else None,
+            "model_files": model_progress[-40:],
+        },
     }
     print("AI_COMIC_PROBE_JSON=" + json.dumps(result, ensure_ascii=False))
     return result

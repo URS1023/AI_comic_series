@@ -34,16 +34,29 @@ def parse_rejections(values: list[str]) -> dict[str, str]:
 
 def image_assets(project_root: Path, stage: str) -> tuple[list[tuple[str, Path]], Path]:
     if stage == "anchors":
-        characters = json.loads((project_root / "production" / "characters.json").read_text(encoding="utf-8"))
+        queue = json.loads(
+            (project_root / "production" / "generation-queue.json").read_text(encoding="utf-8")
+        )
         rows = [
-            (character_id, project_root / profile["output"])
-            for character_id, profile in characters["characters"].items()
+            (str(job["id"]).removeprefix("anchor-"), project_root / str(job["output"]))
+            for job in queue.get("jobs", [])
+            if isinstance(job, dict) and job.get("stage") == "anchors"
         ]
         return rows, project_root / "qa" / "contact-sheets" / "anchors.png"
     if stage == "covers":
         package = json.loads((project_root / "publishing" / "package.json").read_text(encoding="utf-8"))
         rows = [(variant["id"], project_root / variant["artwork"]) for variant in package["covers"]]
         return rows, project_root / "qa" / "contact-sheets" / "cover-art.png"
+    if stage == "motion-keyframes":
+        queue = json.loads(
+            (project_root / "production" / "generation-queue.json").read_text(encoding="utf-8")
+        )
+        rows = [
+            (str(job["motionSceneId"]), project_root / str(job["output"]))
+            for job in queue.get("jobs", [])
+            if isinstance(job, dict) and job.get("stage") == "motion-keyframes"
+        ]
+        return rows, project_root / "qa" / "contact-sheets" / "motion-endframes.png"
     storyboard = json.loads((project_root / "STORYBOARD_VIDEO.json").read_text(encoding="utf-8"))
     rows = [(scene["id"], project_root / scene["sourceImage"]) for scene in storyboard]
     return rows, project_root / "qa" / "contact-sheets" / "keyframes.png"
@@ -75,9 +88,9 @@ def approve(
     reviewer: str,
     rejections: dict[str, str],
 ) -> tuple[Path, dict[str, Any]]:
-    if stage in {"anchors", "keyframes", "covers"}:
+    if stage in {"anchors", "keyframes", "motion-keyframes", "covers"}:
         rows, sheet = image_assets(project_root, stage)
-        contact_sheet(rows, sheet, columns=4 if stage == "anchors" else 5)
+        contact_sheet(rows, sheet, columns=4 if stage in {"anchors", "motion-keyframes"} else 5)
         assets = bind_assets(project_root, rows)
         unknown = sorted(set(rejections) - {name for name, _ in rows})
         if unknown:
@@ -97,22 +110,43 @@ def approve(
         filename = {
             "anchors": "anchor-approval.json",
             "keyframes": "keyframe-approval.json",
+            "motion-keyframes": "motion-endframe-approval.json",
             "covers": "cover-approval.json",
         }[stage]
     else:
-        report = verify(project_root, sample_only=True)
+        sample_only = stage == "video-sample"
+        report = verify(project_root, sample_only=sample_only)
         if report["status"] != "passed":
-            raise RuntimeError("Representative sample fails technical video QA; it cannot be visually approved")
+            label = "Representative sample" if sample_only else "Full video set"
+            raise RuntimeError(f"{label} fails technical video QA; it cannot be visually approved")
         storyboard = json.loads((project_root / "STORYBOARD_VIDEO.json").read_text(encoding="utf-8"))
         profile = json.loads((project_root / "production" / "comfy-model-profile.json").read_text(encoding="utf-8"))
-        sample_ids = set(profile["gates"]["videoSampleIds"])
-        rows = [(scene["id"], project_root / scene["asset"]) for scene in storyboard if scene["id"] in sample_ids]
+        selected_ids = (
+            set(profile["gates"]["videoSampleIds"])
+            if sample_only
+            else {str(scene["id"]) for scene in storyboard}
+        )
+        rows = [
+            (scene["id"], project_root / scene["asset"])
+            for scene in storyboard
+            if scene["id"] in selected_ids
+        ]
         assets = bind_assets(project_root, rows)
-        unknown = sorted(set(rejections) - sample_ids)
+        unknown = sorted(set(rejections) - selected_ids)
         if unknown:
-            raise ValueError(f"Rejected ids are not representative sample scenes: {unknown}")
+            raise ValueError(f"Rejected ids are not in the reviewed {stage} set: {unknown}")
         pass_rate = (len(rows) - len(rejections)) / len(rows)
-        state = "approved" if pass_rate >= float(profile["gates"]["minimumVideoSamplePassRate"]) else "rejected"
+        high_risk_ids = {str(scene["id"]) for scene in storyboard if scene.get("highRisk") is True}
+        rejected_high_risk = sorted(set(rejections) & high_risk_ids)
+        if sample_only:
+            state = (
+                "approved"
+                if pass_rate >= float(profile["gates"]["minimumVideoSamplePassRate"])
+                and not rejected_high_risk
+                else "rejected"
+            )
+        else:
+            state = "approved" if not rejections and len(rows) == len(storyboard) else "rejected"
         document = {
             "version": 1,
             "stage": stage,
@@ -120,15 +154,21 @@ def approve(
             "reviewer": reviewer,
             "reviewedAt": datetime.now(UTC).isoformat(),
             "visualReviewConfirmed": True,
-            "technicalReport": "qa/generated-video-sample-report.json",
+            "technicalReport": (
+                "qa/generated-video-sample-report.json"
+                if sample_only
+                else "qa/generated-media-report.json"
+            ),
             "contactSheet": report["contactSheet"],
             "passRate": pass_rate,
             "minimumPassRate": profile["gates"]["minimumVideoSamplePassRate"],
+            "highRiskMustAllPass": True,
+            "rejectedHighRiskSceneIds": rejected_high_risk,
             "assets": assets,
             "rejectedSceneIds": sorted(rejections),
             "rejections": rejections,
         }
-        filename = "video-sample-approval.json"
+        filename = "video-sample-approval.json" if sample_only else "full-video-approval.json"
     output = project_root / "production" / filename
     output.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return output, document
@@ -136,7 +176,10 @@ def approve(
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=["anchors", "covers", "keyframes", "video-sample"])
+    parser.add_argument(
+        "stage",
+        choices=["anchors", "covers", "keyframes", "motion-keyframes", "video-sample", "full-videos"],
+    )
     parser.add_argument("--reviewer", required=True)
     parser.add_argument("--confirm-visual-review", action="store_true")
     parser.add_argument("--reject", action="append", default=[])

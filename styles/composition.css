@@ -19,6 +19,18 @@
         --accent: #D8000F;
       }
       #stage-ground { position: absolute; inset: 0; background-color: #0F1014; z-index: 0; }
+      #root::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 8;
+        pointer-events: none;
+        opacity: 0.035;
+        mix-blend-mode: soft-light;
+        background-image:
+          repeating-linear-gradient(0deg, rgba(255,255,255,0.24) 0 1px, transparent 1px 4px),
+          repeating-linear-gradient(90deg, rgba(0,0,0,0.2) 0 1px, transparent 1px 5px);
+      }
       .scene-wrapper { position: absolute; inset: 0; overflow: hidden; z-index: 1; transform-origin: 50% 50%; }
       .scene-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background-color: #0F1014; }
       .caption-rail {

@@ -63,16 +63,15 @@ def refresh_amd_credentials(
             raise AuthenticationError("The Cookie header has no AMD SSO refresh token; sign in again and recopy it.")
         return credentials
     url = f"{settings.origin}/api/api/Auth/Refresh"
-    headers = {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Cookie": credentials.cookie,
-        "Origin": settings.origin,
-        "Referer": f"{settings.origin}/",
-        "User-Agent": "ai-comic-series/0.1",
-    }
-    if credentials.xsrf_token:
-        headers["X-XSRFToken"] = credentials.xsrf_token
+    headers = credentials.http_headers()
+    headers.update(
+        {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Origin": settings.origin,
+            "Referer": credentials.referer or f"{settings.origin}/",
+        }
+    )
     try:
         response = httpx.post(url, headers=headers, content=b"{}", timeout=settings.request_timeout_seconds)
     except httpx.HTTPError as error:
@@ -99,4 +98,12 @@ def refresh_amd_credentials(
         raise RemoteProtocolError("AMD SSO refresh succeeded without returning rotated cookies")
     cookie = merge_cookie_header(credentials.cookie, updates)
     xsrf = updates.get("_xsrf", credentials.xsrf_token)
-    return RemoteCredentials(cookie=cookie, token=credentials.token, xsrf_token=xsrf)
+    return RemoteCredentials(
+        cookie=cookie,
+        token=credentials.token,
+        xsrf_token=xsrf,
+        user_agent=credentials.user_agent,
+        referer=credentials.referer,
+        accept_language=credentials.accept_language,
+        accept=credentials.accept,
+    )

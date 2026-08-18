@@ -53,16 +53,19 @@ def validate_api_workflow(document: Mapping[str, Any]) -> None:
     if not any(node.get("class_type") in OUTPUT_CLASSES for node in prompt.values() if isinstance(node, dict)):
         errors.append("workflow has no SaveImage or SaveVideo output")
     for name, binding in bindings.items():
-        if isinstance(binding, list) and len(binding) == 2 and all(isinstance(item, str) for item in binding):
+        if name == "referenceNodes":
+            if not isinstance(binding, list) or not binding or not all(isinstance(node_id, str) for node_id in binding):
+                errors.append("binding referenceNodes: expected a non-empty list of node ids")
+                continue
+            for node_id in binding:
+                if node_id not in prompt or prompt[node_id].get("class_type") != "LoadImage":
+                    errors.append(f"binding referenceNodes: {node_id} is not a LoadImage node")
+        elif isinstance(binding, list) and len(binding) == 2 and all(isinstance(item, str) for item in binding):
             node_id, input_name = binding
             if node_id not in prompt:
                 errors.append(f"binding {name}: unknown node {node_id}")
             elif input_name not in prompt[node_id].get("inputs", {}):
                 errors.append(f"binding {name}: unknown input {node_id}.{input_name}")
-        elif name == "referenceNodes" and isinstance(binding, list):
-            for node_id in binding:
-                if node_id not in prompt or prompt[node_id].get("class_type") != "LoadImage":
-                    errors.append(f"binding referenceNodes: {node_id} is not a LoadImage node")
         elif name in {"referenceNode", "positiveNode", "negativeNode"} and isinstance(binding, str):
             if binding not in prompt:
                 errors.append(f"binding {name}: unknown node {binding}")

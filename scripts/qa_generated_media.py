@@ -8,13 +8,23 @@ import json
 import os
 import re
 import subprocess
-from fractions import Fraction
+import sys
 from pathlib import Path
 from typing import Any
 
 from PIL import Image, ImageChops, ImageDraw, ImageFont, ImageOps, ImageStat
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+VIDEO_WORKFLOWS = {
+    "wan-i2v": "wan22_i2v_14b.json",
+    "wan-flf2v": "wan22_flf2v_14b.json",
+}
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from remote.media_contract import frame_rate as parse_frame_rate  # noqa: E402
+from remote.media_contract import mp4_has_faststart, video_contract_errors  # noqa: E402
+from remote.video_motion import analyze_video_motion  # noqa: E402
 
 
 def sha256(path: Path) -> str:
@@ -22,6 +32,16 @@ def sha256(path: Path) -> str:
     with path.open("rb") as handle:
         for chunk in iter(lambda: handle.read(8 * 1024 * 1024), b""):
             hasher.update(chunk)
+    return hasher.hexdigest()
+
+
+def generation_fingerprint(job: dict[str, Any], workflow: Path, project_root: Path) -> str:
+    """Reproduce the remote worker fingerprint from the immutable source graph."""
+
+    hasher = hashlib.sha256(json.dumps(job, ensure_ascii=False, sort_keys=True).encode("utf-8"))
+    hasher.update(sha256(workflow).encode("ascii"))
+    for relative in job.get("references", []):
+        hasher.update(sha256(project_root / str(relative)).encode("ascii"))
     return hasher.hexdigest()
 
 
@@ -36,11 +56,14 @@ def probe(path: Path) -> dict[str, Any]:
         "json",
         str(path),
     ]
-    return json.loads(subprocess.check_output(command, text=True))
+    data: object = json.loads(subprocess.check_output(command, text=True))
+    if not isinstance(data, dict):
+        raise RuntimeError(f"FFprobe returned a non-object for {path}")
+    return data
 
 
 def frame_rate(value: str) -> float:
-    return float(Fraction(value)) if value and value != "0/0" else 0.0
+    return parse_frame_rate(value)
 
 
 def extract_frame(video: Path, time_seconds: float, target: Path) -> None:
@@ -116,6 +139,12 @@ def contact_sheet(rows: list[tuple[str, Path]], target: Path, *, columns: int = 
 
 def verify(project_root: Path = PROJECT_ROOT, *, sample_only: bool = False) -> dict[str, Any]:
     storyboard = json.loads((project_root / "STORYBOARD_VIDEO.json").read_text(encoding="utf-8"))
+    queue = json.loads((project_root / "production" / "generation-queue.json").read_text(encoding="utf-8"))
+    video_jobs = {
+        str(job["output"]): job
+        for job in queue.get("jobs", [])
+        if isinstance(job, dict) and job.get("stage") == "videos"
+    }
     if sample_only:
         profile = json.loads((project_root / "production" / "comfy-model-profile.json").read_text(encoding="utf-8"))
         sample_ids = set(profile["gates"]["videoSampleIds"])
@@ -133,6 +162,32 @@ def verify(project_root: Path = PROJECT_ROOT, *, sample_only: bool = False) -> d
         keyframe = project_root / scene["sourceImage"]
         metadata_path = video.with_suffix(video.suffix + ".meta.json")
         scene_errors: list[str] = []
+        if video.suffix.lower() != ".mp4":
+            scene_errors.append("storyboard asset is not an MP4")
+        job = video_jobs.get(str(scene["asset"]))
+        workflow: Path | None = None
+        workflow_sha = ""
+        end_keyframe: Path | None = None
+        if not isinstance(job, dict):
+            scene_errors.append("storyboard asset has no matching Wan generation job")
+        else:
+            kind = str(job.get("kind"))
+            workflow_name = VIDEO_WORKFLOWS.get(kind)
+            if workflow_name is None:
+                scene_errors.append("matching generation job is not an approved Wan video kind")
+            else:
+                workflow = project_root / "workflows" / "comfyui" / "api" / workflow_name
+                workflow_sha = sha256(workflow)
+            references = job.get("references")
+            if kind == "wan-i2v" and references != [scene["sourceImage"]]:
+                scene_errors.append("Wan I2V reference does not equal the storyboard source keyframe")
+            elif kind == "wan-flf2v":
+                if not isinstance(references, list) or len(references) != 2 or references[0] != scene["sourceImage"]:
+                    scene_errors.append("Wan FLF2V must bind the storyboard start keyframe and one end frame")
+                else:
+                    end_keyframe = project_root / str(references[1])
+                    if not end_keyframe.is_file():
+                        scene_errors.append("Wan FLF2V approved end keyframe is missing")
         if not video.is_file():
             errors.append(f"{scene_id}: missing video {video}")
             continue
@@ -143,10 +198,20 @@ def verify(project_root: Path = PROJECT_ROOT, *, sample_only: bool = False) -> d
             errors.append(f"{scene_id}: missing generation metadata {metadata_path}")
             continue
         metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-        if metadata.get("kind") != "wan-i2v":
-            scene_errors.append("metadata kind is not wan-i2v")
+        if isinstance(job, dict) and metadata.get("kind") != job.get("kind"):
+            scene_errors.append("metadata kind differs from the locked Wan queue")
+        if isinstance(job, dict) and metadata.get("job") != job.get("id"):
+            scene_errors.append("metadata job id differs from the locked Wan queue")
         if not metadata.get("promptId") or not metadata.get("workflowSha256"):
             scene_errors.append("metadata lacks promptId/workflowSha256")
+        if not workflow_sha or metadata.get("workflowSha256") != workflow_sha:
+            scene_errors.append("metadata workflow SHA-256 differs from the locked Wan graph")
+        if (
+            isinstance(job, dict)
+            and workflow is not None
+            and metadata.get("fingerprint") != generation_fingerprint(job, workflow, project_root)
+        ):
+            scene_errors.append("metadata fingerprint differs from the current job, workflow, or source keyframe")
         actual_sha = sha256(video)
         if metadata.get("sha256") != actual_sha:
             scene_errors.append("video SHA-256 differs from generation metadata")
@@ -158,6 +223,10 @@ def verify(project_root: Path = PROJECT_ROOT, *, sample_only: bool = False) -> d
         stream = streams[0]
         duration = float(media.get("format", {}).get("duration", 0))
         fps = frame_rate(str(stream.get("avg_frame_rate", "0/0")))
+        faststart = mp4_has_faststart(video)
+        expected_fps = float(job["fps"]) if isinstance(job, dict) else None
+        contract_errors = video_contract_errors(media, expected_fps=expected_fps, faststart=faststart)
+        scene_errors.extend(f"normalized media contract: {message}" for message in contract_errors)
         if int(stream.get("width", 0)) < 1200 or int(stream.get("height", 0)) < 675:
             scene_errors.append(f"generation resolution too small: {stream.get('width')}x{stream.get('height')}")
         if fps < 15:
@@ -171,26 +240,47 @@ def verify(project_root: Path = PROJECT_ROOT, *, sample_only: bool = False) -> d
         extract_frame(video, max(0, duration / 2), middle)
         extract_frame(video, max(0, duration - 0.08), last)
         first_match = image_similarity(keyframe, first)
+        last_target_match = image_similarity(end_keyframe, last) if end_keyframe is not None else None
         first_mid = image_similarity(first, middle)
         first_last = image_similarity(first, last)
         if first_match < 0.72:
             scene_errors.append(f"first frame diverges from keyframe: similarity={first_match:.4f}")
+        if last_target_match is not None and last_target_match < 0.72:
+            scene_errors.append(f"last frame diverges from reviewed end frame: similarity={last_target_match:.4f}")
         if first_mid > 0.997 and first_last > 0.997:
             scene_errors.append("clip is visually frozen across first/middle/last samples")
         freezes = freeze_events(video)
         if any(value > 1.25 for value in freezes):
             scene_errors.append(f"encoded frozen interval exceeds 1.25s: {freezes}")
+        try:
+            motion_evidence = analyze_video_motion(
+                video,
+                duration_seconds=duration,
+                trim_fraction=0.08,
+            )
+        except (OSError, RuntimeError, ValueError) as error:
+            motion_evidence = {"status": "failed", "errors": [f"temporal analysis failed: {error}"]}
+        scene_errors.extend(f"temporal motion gate: {message}" for message in motion_evidence.get("errors", []))
         result = {
             "id": scene_id,
             "sha256": actual_sha,
             "duration": duration,
             "fps": fps,
+            "nominalFps": frame_rate(str(stream.get("r_frame_rate", "0/0"))),
             "width": stream.get("width"),
             "height": stream.get("height"),
+            "codec": stream.get("codec_name"),
+            "pixelFormat": stream.get("pix_fmt"),
+            "faststart": faststart,
             "firstFrameSimilarity": round(first_match, 5),
+            "lastFrameTargetSimilarity": (
+                round(last_target_match, 5) if last_target_match is not None else None
+            ),
             "firstMiddleSimilarity": round(first_mid, 5),
             "firstLastSimilarity": round(first_last, 5),
             "freezeDurations": freezes,
+            "motionEvidence": motion_evidence,
+            "workflowSha256": workflow_sha,
             "highRisk": scene["highRisk"],
             "errors": scene_errors,
         }

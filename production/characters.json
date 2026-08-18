@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "style": "polished Chinese webtoon, grounded seinen manga, bold clean black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, subtle halftone and paper texture, premium serialized-comic production quality",
+  "style": "polished Chinese webtoon, grounded seinen manga, bold clean stable black ink contours, realistic anatomy, refined restrained cel shading, detailed lived-in environment, clean low-frequency surfaces without baked paper grain or halftone, premium serialized-comic production quality",
   "negativePrompt": "childlike chibi proportions, wrong age, identity drift, wardrobe drift, extra person, duplicate body, extra limbs, fused fingers, detached hands, malformed anatomy, readable letters, Chinese characters, numbers, signs, logo, watermark, captions, speech bubbles, decorative red circles, target marks, guides, UI overlays, oversaturated neon, waxy skin, sexualized student",
   "characters": {
     "chen-yan": {
@@ -25,4 +25,3 @@
     }
   }
 }
-

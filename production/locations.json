@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "style": "clean polished Chinese webtoon environment concept art, grounded architecture, bold stable linework, restrained cel shading, cinematic 16:9, no people and no readable text",
+  "negativePrompt": "person, human, silhouette, crowd, readable letters, Chinese characters, numbers, signs, logo, watermark, caption, speech bubble, multi-panel, fisheye distortion, impossible architecture, duplicate railing, floating furniture, oversaturated neon",
+  "locations": {
+    "rental-room": {
+      "seed": 411001,
+      "output": "assets/generated/anchors/locations/rental-room.png",
+      "prompt": "A cramped but lived-in southern-Chinese rental bedroom at night. Fixed geometry: narrow single bed along the left wall, worn wood study desk and blank dark computer monitor on the right, rain-streaked metal-frame window behind the desk, one warm desk lamp, cream wall with no posters or writing, a few blank loose papers. Eye-level wide establishing view from the doorway."
+    },
+    "school-office": {
+      "seed": 411002,
+      "output": "assets/generated/anchors/locations/school-office.png",
+      "prompt": "An old southern-Chinese public high-school teacher office at night. Fixed geometry: deep dark-wood teacher desk centered slightly left, green metal filing cabinet against the rear cream wall, dark-green metal window on the left, office door on the right, cool fluorescent ceiling light with warm desk bounce, all papers and badge areas blank. Eye-level wide establishing view."
+    },
+    "school-gate": {
+      "seed": 411003,
+      "output": "assets/generated/anchors/locations/school-gate.png",
+      "prompt": "A modest old public-high-school gate in southern China at humid night. Fixed geometry: cream concrete gateposts, closed dark-green side gate and open pedestrian exit, wet pavement, two warm sodium streetlamps, leafy trees beyond, no readable school name or signs. Wide frontal establishing view."
+    },
+    "crossroads": {
+      "seed": 411004,
+      "output": "assets/generated/anchors/locations/crossroads.png",
+      "prompt": "A quiet wet four-way neighborhood crossroads at night in southern China. Fixed geography: the brighter familiar shortcut bends left under warm shop spill with every sign blank; the darker riverside road descends right beneath sparse lamps; a small triangular wet-pavement island in the center; distant vehicle bokeh only, no nearby traffic. High wide establishing view."
+    },
+    "street-fence": {
+      "seed": 411005,
+      "output": "assets/generated/anchors/locations/street-fence.png",
+      "prompt": "A quiet roadside corner near the crossroads at night. Fixed geometry: one warm sodium streetlamp left of center, waist-high dark metal fence running into the right background, dense tree shadow behind it, wet pavement reflecting amber light, the riverside turn visible in the distance, no readable signs. Eye-level medium-wide view."
+    },
+    "riverside-road": {
+      "seed": 411006,
+      "output": "assets/generated/anchors/locations/riverside-road.png",
+      "prompt": "A rain-soaked riverside access road at night. Fixed geometry: road curves gently from lower left toward the river on the right, evenly spaced orange lamps, dark trees and drainage curb on the inland side, first section of metal river railing visible ahead, heavy rain streaks illuminated by lamps, no signs or vehicles nearby. Wide tracking-compatible view."
+    },
+    "riverside-railing": {
+      "seed": 411007,
+      "output": "assets/generated/anchors/locations/riverside-railing.png",
+      "prompt": "A safe rain-soaked riverside walkway at night. Fixed geometry: continuous waist-high dark metal railing parallel to the river, a low broad concrete maintenance step entirely on the walkway side, wet flat pavement extending toward the street, dark river beyond the railing, orange lamps at regular intervals, one simple awning farther left. Side-on wide view that clearly separates safe pavement, railing and water."
+    }
+  },
+  "sceneLocations": {
+    "v2-s001": "rental-room",
+    "v2-s002": "rental-room",
+    "v2-s003": "school-office",
+    "v2-s004": "school-office",
+    "v2-s005": "school-office",
+    "v2-s006": "school-office",
+    "v2-s007": "school-office",
+    "v2-s008": "school-office",
+    "v2-s009": "school-office",
+    "v2-s010": "school-gate",
+    "v2-s011": "crossroads",
+    "v2-s012": "crossroads",
+    "v2-s013": "street-fence",
+    "v2-s014": "street-fence",
+    "v2-s015": "street-fence",
+    "v2-s016": "street-fence",
+    "v2-s017": "riverside-road",
+    "v2-s018": "riverside-railing",
+    "v2-s019": "riverside-railing",
+    "v2-s020": "riverside-railing",
+    "v2-s021": "riverside-railing",
+    "v2-s022": "riverside-railing",
+    "v2-s023": "riverside-railing",
+    "v2-s024": "riverside-railing",
+    "v2-s025": "riverside-railing",
+    "v2-s026": "riverside-railing",
+    "v2-s027": "riverside-railing",
+    "v2-s028": "riverside-railing",
+    "v2-s029": "riverside-railing"
+  }
+}

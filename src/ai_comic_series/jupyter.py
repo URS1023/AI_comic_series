@@ -42,17 +42,9 @@ class JupyterClient:
     def __init__(self, settings: RemoteSettings, credentials: RemoteCredentials) -> None:
         self._settings = settings
         self._credentials = credentials
-        headers = {
-            "Accept": "application/json",
-            "Authorization": f"token {credentials.token}",
-            "Cookie": credentials.cookie,
-            "User-Agent": "ai-comic-series/0.1",
-        }
-        if credentials.xsrf_token:
-            headers["X-XSRFToken"] = credentials.xsrf_token
         self._http = httpx.Client(
             base_url=settings.base_url,
-            headers=headers,
+            headers=credentials.http_headers(),
             follow_redirects=True,
             timeout=settings.request_timeout_seconds,
         )
@@ -60,10 +52,7 @@ class JupyterClient:
     def _refresh_credentials(self) -> None:
         refreshed = refresh_amd_credentials(self._settings, self._credentials, required=True)
         self._credentials = refreshed
-        self._http.headers["Authorization"] = f"token {refreshed.token}"
-        self._http.headers["Cookie"] = refreshed.cookie
-        if refreshed.xsrf_token:
-            self._http.headers["X-XSRFToken"] = refreshed.xsrf_token
+        self._http.headers.update(refreshed.http_headers())
 
     def __enter__(self) -> JupyterClient:
         return self
@@ -76,16 +65,55 @@ class JupyterClient:
 
         self._http.close()
 
+    def preflight_exact_get(
+        self,
+        request_url: str,
+        extra_headers: tuple[tuple[str, str], ...] = (),
+    ) -> dict[str, object]:
+        """Replay the validated Copy-as-cURL URL as a body-free, non-redirecting GET."""
+
+        try:
+            response = self._request("GET", request_url, headers=dict(extra_headers), follow_redirects=False)
+        except AuthenticationError:
+            raise
+        except (RemoteProtocolError, RemoteTimeoutError):
+            raise RemoteProtocolError("Copy-as-cURL preflight GET failed before receiving an HTTP response") from None
+        if not 200 <= response.status_code < 300:
+            raise RemoteProtocolError(f"Copy-as-cURL preflight GET returned HTTP {response.status_code}")
+        return {
+            "status": response.status_code,
+            "contentType": response.headers.get("content-type", "").partition(";")[0],
+        }
+
     def _request(self, method: str, path: str, **kwargs: Any) -> httpx.Response:
         response = self._send(method, path, **kwargs)
-        if response.status_code in {401, 403}:
+        if self._is_auth_failure(response):
             self._refresh_credentials()
             response = self._send(method, path, **kwargs)
-        if response.status_code in {401, 403}:
+        if self._is_auth_failure(response):
             raise AuthenticationError(
                 "AMD/Jupyter still returned an authorization failure after refreshing. Sign in again and recopy Cookie."
             )
         return response
+
+    @staticmethod
+    def _is_auth_failure(response: httpx.Response) -> bool:
+        """Recognize both ordinary auth errors and AMD's masked expired-instance reply.
+
+        The AMD gateway returns ``404 {"detail":"Instance not found"}`` when
+        the short-lived SSO access token expires.  A normal missing notebook
+        path is also a 404, so only this exact gateway detail is refreshable.
+        """
+
+        if response.status_code in {401, 403}:
+            return True
+        if response.status_code != 404:
+            return False
+        try:
+            payload = response.json()
+        except json.JSONDecodeError:
+            return False
+        return isinstance(payload, dict) and payload.get("detail") == "Instance not found"
 
     def _send(self, method: str, path: str, **kwargs: Any) -> httpx.Response:
         try:
@@ -159,14 +187,8 @@ class JupyterClient:
         message = self.build_execute_message(code, session_id, message_id)
         websocket_base = self._settings.base_url.replace("https://", "wss://", 1)
         websocket_url = f"{websocket_base}/api/kernels/{quote(kernel_id)}/channels?session_id={session_id}"
-        headers = {
-            "Authorization": f"token {self._credentials.token}",
-            "Cookie": self._credentials.cookie,
-            "Origin": self._settings.origin,
-            "User-Agent": "ai-comic-series/0.1",
-        }
-        if self._credentials.xsrf_token:
-            headers["X-XSRFToken"] = self._credentials.xsrf_token
+        headers = self._credentials.http_headers()
+        headers["Origin"] = self._settings.origin
         deadline = time.monotonic() + (timeout_seconds or self._settings.execution_timeout_seconds)
         stdout: list[str] = []
         stderr: list[str] = []

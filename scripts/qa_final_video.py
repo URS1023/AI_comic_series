@@ -8,6 +8,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
@@ -15,6 +16,10 @@ from typing import Any
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from remote.video_motion import analyze_video_motion  # noqa: E402
 
 
 def command(arguments: list[str]) -> subprocess.CompletedProcess[str]:
@@ -30,12 +35,15 @@ def sha256(path: Path) -> str:
 
 
 def probe(path: Path) -> dict[str, Any]:
-    return json.loads(
+    data: object = json.loads(
         subprocess.check_output(
             ["ffprobe", "-v", "error", "-show_streams", "-show_format", "-of", "json", str(path)],
             text=True,
         )
     )
+    if not isinstance(data, dict):
+        raise RuntimeError(f"FFprobe returned a non-object for {path}")
+    return data
 
 
 def extract(path: Path, time_seconds: float, output: Path) -> None:
@@ -80,8 +88,35 @@ def contact_sheet(rows: list[tuple[str, Path]], target: Path, columns: int = 5) 
 def verify(video: Path, project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     audio_meta = json.loads((project_root / "audio_meta.json").read_text(encoding="utf-8"))
     storyboard = json.loads((project_root / "STORYBOARD_VIDEO.json").read_text(encoding="utf-8"))
+    generated_report_path = project_root / "qa" / "generated-media-report.json"
     media = probe(video)
     errors: list[str] = []
+    generated_report: dict[str, Any] = {}
+    if not generated_report_path.is_file():
+        errors.append("generated-media QA report is missing")
+    else:
+        generated_report = json.loads(generated_report_path.read_text(encoding="utf-8"))
+        if generated_report.get("status") != "passed":
+            errors.append("generated-media QA report is not passed")
+    generated_by_id = {
+        str(item.get("id")): item
+        for item in generated_report.get("scenes", [])
+        if isinstance(item, dict) and item.get("id")
+    }
+    source_graph: list[dict[str, str]] = []
+    for scene in storyboard:
+        source = project_root / scene["asset"]
+        item = generated_by_id.get(str(scene["id"]))
+        if not source.is_file():
+            errors.append(f"{scene['id']}: source video is missing during final QA")
+            continue
+        digest = sha256(source)
+        source_graph.append({"id": str(scene["id"]), "path": str(scene["asset"]), "sha256": digest})
+        if not isinstance(item, dict) or item.get("sha256") != digest or item.get("errors"):
+            errors.append(f"{scene['id']}: source video differs from its passed generated-media evidence")
+    source_graph_sha = hashlib.sha256(
+        json.dumps(source_graph, ensure_ascii=False, sort_keys=True).encode("utf-8")
+    ).hexdigest()
     video_streams = [stream for stream in media.get("streams", []) if stream.get("codec_type") == "video"]
     audio_streams = [stream for stream in media.get("streams", []) if stream.get("codec_type") == "audio"]
     if len(video_streams) != 1:
@@ -168,6 +203,25 @@ def verify(video: Path, project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     if true_peak is None or true_peak > -3.0:
         errors.append(f"true peak lacks 3 dB headroom: {true_peak}")
 
+    timeline_motion: list[dict[str, Any]] = []
+    for scene in storyboard:
+        try:
+            evidence = analyze_video_motion(
+                video,
+                start_seconds=float(scene["start"]),
+                duration_seconds=float(scene["duration"]),
+                sample_count=9,
+                trim_fraction=0.18,
+                crop_bottom_fraction=0.28,
+            )
+        except (OSError, RuntimeError, ValueError) as error:
+            evidence = {"status": "failed", "errors": [f"temporal analysis failed: {error}"]}
+        evidence["id"] = scene["id"]
+        timeline_motion.append(evidence)
+        errors.extend(
+            f"{scene['id']}: final timeline temporal motion gate: {message}" for message in evidence.get("errors", [])
+        )
+
     frame_dir = project_root / "qa" / "frames" / "final"
     proof_times = [("opening-lead", 0.5), ("opening-flash", 3.6), ("opening-title", 6.2)]
     proof_times.extend((scene["id"], (float(scene["start"]) + float(scene["end"])) / 2) for scene in storyboard)
@@ -194,6 +248,9 @@ def verify(video: Path, project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
         "truePeakDbfs": true_peak,
         "blackEvents": black_events,
         "silenceDurations": silence_durations,
+        "sourceGraphSha256": source_graph_sha,
+        "sourceGraph": source_graph,
+        "timelineMotion": timeline_motion,
         "contactSheet": str(contact.relative_to(project_root)).replace("\\", "/"),
         "errors": errors,
     }
