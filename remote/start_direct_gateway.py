@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import hashlib
 import json
 import os
@@ -287,10 +288,8 @@ def main(argv: list[str] | None = None) -> int:
                         continue
             finally:
                 if not url_collected.is_set():
-                    try:
+                    with contextlib.suppress(queue.Full):
                         lines.put(None, timeout=0.25)
-                    except queue.Full:
-                        pass
 
         reader = threading.Thread(target=read_tunnel_output, name="cloudflared-url-reader", daemon=True)
         reader.start()

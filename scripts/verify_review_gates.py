@@ -88,13 +88,33 @@ def verify_review_gates(project_root: Path = PROJECT_ROOT) -> list[Path]:
     cover_art = {str(cover["id"]): str(cover["artwork"]) for cover in covers}
     full_videos = {str(scene["id"]): str(scene["asset"]) for scene in storyboard}
 
-    return [
+    gates = [
         _verify_gate(project_root, "anchor-approval.json", anchors),
         _verify_gate(project_root, "keyframe-approval.json", keyframes),
         _verify_gate(project_root, "motion-endframe-approval.json", motion_endframes),
         _verify_gate(project_root, "cover-approval.json", cover_art),
         _verify_gate(project_root, "full-video-approval.json", full_videos),
     ]
+    opening_plan_path = project_root / "production" / "opening-plan.json"
+    if opening_plan_path.is_file():
+        opening_plan = _load(opening_plan_path)
+        opening_gate_path = project_root / "production" / "opening-approval.json"
+        if not opening_gate_path.is_file():
+            raise FileNotFoundError(f"Required visual review gate is missing: {opening_gate_path}")
+        opening_gate = _load(opening_gate_path)
+        approved_relative = str(opening_plan.get("approvedPath", ""))
+        approved = project_root / approved_relative
+        if (
+            opening_gate.get("state") != "approved"
+            or opening_gate.get("visualReviewConfirmed") is not True
+            or opening_gate.get("path") != approved_relative
+            or not approved.is_file()
+            or opening_gate.get("sha256") != sha256(approved)
+            or opening_gate.get("bytes") != approved.stat().st_size
+        ):
+            raise RuntimeError("Opening approval is missing, stale, or not bound to the approved MP4")
+        gates.append(opening_gate_path)
+    return gates
 
 
 def main() -> int:

@@ -163,6 +163,10 @@ npm run build:covers
 .\scripts\remote.ps1 remote fetch generate-videos
 .\.venv\Scripts\python.exe scripts\qa_generated_media.py
 .\.venv\Scripts\python.exe -m scripts.approve_assets full-videos --reviewer "Codex visual QA" --confirm-visual-review
+
+# 用已批准的真实视频镜头组装 8.145 秒开场；完整观看后再提升为正式开场
+npm run build:opening
+.\.venv\Scripts\python.exe -m scripts.approve_opening --reviewer "Codex visual QA" --confirm-visual-review
 ```
 
 每个输出都有 `.meta.json`：Comfy prompt ID、工作流 SHA-256、生成类型、尝试次数、输入指纹、输出 SHA-256、大小和视频 probe。无变化重跑会复用；审核文件绑定已看过资产的实际哈希，审核后文件变化会阻止下游生成。代表样片被拒绝的镜头在全量阶段强制重生成，不会错误复用。
