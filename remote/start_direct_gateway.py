@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+import gzip
 import hashlib
 import json
 import os
@@ -12,17 +13,22 @@ import re
 import shutil
 import signal
 import socket
+import ssl
 import subprocess
 import sys
 import tempfile
 import threading
 import time
+import urllib.error
 import urllib.request
 from collections.abc import Mapping
 from pathlib import Path, PurePosixPath
 
 TOKEN_ENV = "AI_COMIC_DIRECT_TOKEN"
-PUBLIC_URL_PATTERN = re.compile(r"https://[a-z0-9-]+\.trycloudflare\.com", re.IGNORECASE)
+PUBLIC_URL_PATTERN = re.compile(
+    r"https://(?:[a-z0-9-]+\.trycloudflare\.com|(?!console\.)[a-z0-9-]+\.serveo\.net|[a-z0-9-]+\.tunnelmole\.(?:com|net))",
+    re.IGNORECASE,
+)
 SECRET_ENV_PREFIXES = ("AI_COMIC_JUPYTER_",)
 SECRET_ENV_NAMES = frozenset({TOKEN_ENV})
 CLOUDFLARED_VERSION = "2026.8.2"
@@ -31,6 +37,11 @@ CLOUDFLARED_URL = (
 )
 CLOUDFLARED_SIZE = 39_799_316
 CLOUDFLARED_SHA256 = "fcfb02b575a52ca1af2e3267af4e1517bcdeb30ac48c834c69abaed3c0576ad2"
+TUNNELMOLE_URL = "https://tunnelmole.com/downloads/tmole-linux.gz"
+TUNNELMOLE_GZIP_SIZE = 18_290_556
+TUNNELMOLE_GZIP_SHA256 = "d8d2a6f25ecee80b785d56e326d8ffb3a419fa0cdcdaff6a67c879f49595f83d"
+TUNNELMOLE_BINARY_SIZE = 47_858_324
+TUNNELMOLE_BINARY_SHA256 = "be2a5f2d607032c2f9b0377a28b47ce606b482b1efce4da0cf942bb0871f8a95"
 
 __all__ = [
     "child_environments",
@@ -38,6 +49,8 @@ __all__ = [
     "gateway_command",
     "install_cloudflared",
     "main",
+    "serveo_command",
+    "tunnelmole_command",
 ]
 
 
@@ -64,6 +77,32 @@ def cloudflared_command(cloudflared: Path, port: int) -> list[str]:
         "--url",
         f"http://127.0.0.1:{port}",
     ]
+
+
+def serveo_command(ssh: Path, port: int) -> list[str]:
+    """Build a non-interactive reverse tunnel with no credential arguments."""
+
+    return [
+        str(ssh.resolve()),
+        "-T",
+        "-o",
+        "StrictHostKeyChecking=accept-new",
+        "-o",
+        "ExitOnForwardFailure=yes",
+        "-o",
+        "ServerAliveInterval=30",
+        "-o",
+        "ServerAliveCountMax=3",
+        "-R",
+        f"80:127.0.0.1:{port}",
+        "serveo.net",
+    ]
+
+
+def tunnelmole_command(tmole: Path, port: int) -> list[str]:
+    """Build the token-free Tunnelmole command line."""
+
+    return [str(tmole.resolve()), str(port)]
 
 
 def child_environments(environment: Mapping[str, str] | None = None) -> tuple[dict[str, str], dict[str, str]]:
@@ -122,6 +161,26 @@ def _file_digest(path: Path) -> tuple[int, str]:
     return size, hasher.hexdigest()
 
 
+def _open_pinned_download(request: urllib.request.Request):
+    """Open the pinned binary, tolerating a self-signed compute-node proxy.
+
+    The normal verified TLS path is always attempted first. Some AMD images
+    transparently proxy GitHub with an untrusted local CA. Only that exact
+    certificate-verification failure retries without PKI; the mandatory fixed
+    byte count and SHA-256 below remain the authenticity boundary.
+    """
+
+    try:
+        return urllib.request.urlopen(request, timeout=120)
+    except urllib.error.URLError as error:
+        if not isinstance(error.reason, ssl.SSLCertVerificationError):
+            raise
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        context.check_hostname = False
+        context.verify_mode = ssl.CERT_NONE
+        return urllib.request.urlopen(request, timeout=120, context=context)
+
+
 def install_cloudflared(data_root: Path) -> Path:
     """Install the exact verified cloudflared build on the large data volume."""
 
@@ -136,7 +195,7 @@ def install_cloudflared(data_root: Path) -> Path:
         hasher = hashlib.sha256()
         size = 0
         request = urllib.request.Request(CLOUDFLARED_URL, headers={"User-Agent": "ai-comic-series/0.1"})
-        with os.fdopen(descriptor, "wb") as output, urllib.request.urlopen(request, timeout=120) as response:
+        with os.fdopen(descriptor, "wb") as output, _open_pinned_download(request) as response:
             while True:
                 chunk = response.read(1024 * 1024)
                 if not chunk:
@@ -158,6 +217,66 @@ def install_cloudflared(data_root: Path) -> Path:
         return binary
     finally:
         temporary.unlink(missing_ok=True)
+
+
+def install_tunnelmole(data_root: Path) -> Path:
+    """Install one double-hash-pinned Tunnelmole build on the data volume."""
+
+    binary = (data_root / "bin" / "tmole").resolve()
+    binary.parent.mkdir(parents=True, exist_ok=True)
+    if binary.is_file() and _file_digest(binary) == (TUNNELMOLE_BINARY_SIZE, TUNNELMOLE_BINARY_SHA256):
+        binary.chmod(0o755)
+        return binary
+    gzip_descriptor, gzip_name = tempfile.mkstemp(prefix=".tmole-", suffix=".gz.download", dir=binary.parent)
+    binary_descriptor, binary_name = tempfile.mkstemp(
+        prefix=".tmole-", suffix=".binary.download", dir=binary.parent
+    )
+    gzip_path = Path(gzip_name)
+    binary_temporary = Path(binary_name)
+    try:
+        gzip_hasher = hashlib.sha256()
+        gzip_size = 0
+        request = urllib.request.Request(TUNNELMOLE_URL, headers={"User-Agent": "ai-comic-series/0.1"})
+        with os.fdopen(gzip_descriptor, "wb") as output, _open_pinned_download(request) as response:
+            while True:
+                chunk = response.read(1024 * 1024)
+                if not chunk:
+                    break
+                gzip_size += len(chunk)
+                if gzip_size > TUNNELMOLE_GZIP_SIZE:
+                    raise RuntimeError("Tunnelmole archive exceeds its pinned size")
+                output.write(chunk)
+                gzip_hasher.update(chunk)
+            output.flush()
+            os.fsync(output.fileno())
+        if gzip_size != TUNNELMOLE_GZIP_SIZE or gzip_hasher.hexdigest() != TUNNELMOLE_GZIP_SHA256:
+            raise RuntimeError("Tunnelmole archive differs from the pinned size or SHA-256")
+        binary_hasher = hashlib.sha256()
+        binary_size = 0
+        with gzip.open(gzip_path, "rb") as source, os.fdopen(binary_descriptor, "wb") as output:
+            while True:
+                chunk = source.read(1024 * 1024)
+                if not chunk:
+                    break
+                binary_size += len(chunk)
+                if binary_size > TUNNELMOLE_BINARY_SIZE:
+                    raise RuntimeError("Tunnelmole binary exceeds its pinned size")
+                output.write(chunk)
+                binary_hasher.update(chunk)
+            output.flush()
+            os.fsync(output.fileno())
+        if binary_size != TUNNELMOLE_BINARY_SIZE or binary_hasher.hexdigest() != TUNNELMOLE_BINARY_SHA256:
+            raise RuntimeError("Tunnelmole binary differs from the pinned size or SHA-256")
+        binary_temporary.chmod(0o755)
+        binary_temporary.replace(binary)
+        return binary
+    finally:
+        with contextlib.suppress(OSError):
+            os.close(gzip_descriptor)
+        with contextlib.suppress(OSError):
+            os.close(binary_descriptor)
+        gzip_path.unlink(missing_ok=True)
+        binary_temporary.unlink(missing_ok=True)
 
 
 def _data_root(root: Path) -> Path:
@@ -209,6 +328,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--status", default="status/direct-gateway.json")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--cloudflared", default=os.environ.get("AI_COMIC_CLOUDFLARED", "cloudflared"))
+    parser.add_argument("--provider", choices=["cloudflare", "serveo", "tunnelmole"], default="cloudflare")
     parser.add_argument("--startup-timeout", type=float, default=60.0)
     return parser
 
@@ -221,8 +341,16 @@ def main(argv: list[str] | None = None) -> int:
     if not root.is_dir() or not 1 <= args.port <= 65535 or args.startup_timeout <= 0:
         raise ValueError("Gateway root, port, or startup timeout is invalid")
     status_path = _status_path(root, args.status)
-    gateway_environment, cloudflared_environment = child_environments()
-    cloudflared = _cloudflared(args.cloudflared, root)
+    gateway_environment, tunnel_environment = child_environments()
+    if args.provider == "cloudflare":
+        tunnel_command = cloudflared_command(_cloudflared(args.cloudflared, root), args.port)
+    elif args.provider == "serveo":
+        ssh = shutil.which("ssh")
+        if not ssh:
+            raise FileNotFoundError("OpenSSH client is required for the Serveo tunnel provider")
+        tunnel_command = serveo_command(Path(ssh), args.port)
+    else:
+        tunnel_command = tunnelmole_command(install_tunnelmole(_data_root(root)), args.port)
     gateway_script = root / "remote" / "direct_gateway.py"
     if not gateway_script.is_file():
         raise FileNotFoundError(f"Direct gateway script is missing: {gateway_script}")
@@ -260,12 +388,12 @@ def main(argv: list[str] | None = None) -> int:
             time.sleep(0.1)
 
         tunnel = subprocess.Popen(
-            cloudflared_command(cloudflared, args.port),
+            tunnel_command,
             cwd=root,
-            env=cloudflared_environment,
+            env=tunnel_environment,
             stdin=subprocess.DEVNULL,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
             text=True,
             encoding="utf-8",
             errors="replace",
@@ -277,9 +405,9 @@ def main(argv: list[str] | None = None) -> int:
         url_collected = threading.Event()
 
         def read_tunnel_output() -> None:
-            assert tunnel is not None and tunnel.stderr is not None
+            assert tunnel is not None and tunnel.stdout is not None
             try:
-                for line in tunnel.stderr:
+                for line in tunnel.stdout:
                     if url_collected.is_set():
                         continue
                     try:
@@ -291,11 +419,11 @@ def main(argv: list[str] | None = None) -> int:
                     with contextlib.suppress(queue.Full):
                         lines.put(None, timeout=0.25)
 
-        reader = threading.Thread(target=read_tunnel_output, name="cloudflared-url-reader", daemon=True)
+        reader = threading.Thread(target=read_tunnel_output, name="direct-tunnel-url-reader", daemon=True)
         reader.start()
         while time.monotonic() < deadline and not public_url:
             if tunnel.poll() is not None:
-                raise RuntimeError("Cloudflared exited before publishing a Quick Tunnel URL")
+                raise RuntimeError("Reverse tunnel exited before publishing an HTTPS URL")
             try:
                 line = lines.get(timeout=0.25)
             except queue.Empty:
@@ -307,14 +435,15 @@ def main(argv: list[str] | None = None) -> int:
                 public_url = match.group(0).lower()
                 url_collected.set()
         if not public_url:
-            raise TimeoutError("Cloudflared did not publish a Quick Tunnel URL in time")
+            raise TimeoutError("Reverse tunnel did not publish an HTTPS URL in time")
 
         public_status = {
             "state": "running",
             "publicUrl": public_url,
             "launcherPid": os.getpid(),
             "gatewayPid": gateway.pid,
-            "cloudflaredPid": tunnel.pid,
+            "tunnelPid": tunnel.pid,
+            "tunnelProvider": args.provider,
             "updated": time.time(),
         }
         _atomic_json(status_path, public_status)
@@ -333,7 +462,8 @@ def main(argv: list[str] | None = None) -> int:
                 "publicUrl": public_url,
                 "launcherPid": os.getpid(),
                 "gatewayPid": gateway.pid if gateway is not None else None,
-                "cloudflaredPid": tunnel.pid if tunnel is not None else None,
+                "tunnelPid": tunnel.pid if tunnel is not None else None,
+                "tunnelProvider": args.provider,
                 "updated": time.time(),
             },
         )

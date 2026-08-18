@@ -5,12 +5,20 @@ from __future__ import annotations
 import hashlib
 import io
 import os
+import ssl
+import urllib.error
 from pathlib import Path
 
 import pytest
 
 from remote import start_direct_gateway
-from remote.start_direct_gateway import child_environments, cloudflared_command, gateway_command
+from remote.start_direct_gateway import (
+    child_environments,
+    cloudflared_command,
+    gateway_command,
+    serveo_command,
+    tunnelmole_command,
+)
 
 
 def test_supervisor_keeps_bearer_out_of_both_command_lines_and_cloudflared_environment(tmp_path: Path) -> None:
@@ -38,6 +46,10 @@ def test_supervisor_keeps_bearer_out_of_both_command_lines_and_cloudflared_envir
     assert token not in " ".join(tunnel)
     assert "--token" not in tunnel
     assert tunnel[-1] == "http://127.0.0.1:8765"
+    serveo = serveo_command(tmp_path / "ssh", 8765)
+    assert serveo[-3:] == ["-R", "80:127.0.0.1:8765", "serveo.net"]
+    assert token not in " ".join(serveo)
+    assert tunnelmole_command(tmp_path / "tmole", 8765)[-1] == "8765"
 
 
 def test_supervisor_rejects_short_or_header_unsafe_token() -> None:
@@ -66,3 +78,25 @@ def test_pinned_cloudflared_download_is_verified_and_atomically_published(
     if os.name == "posix":
         assert binary.stat().st_mode & 0o111
     assert list(binary.parent.glob("*.download")) == []
+
+
+def test_pinned_download_allows_only_certificate_failure_fallback(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    calls: list[object] = []
+
+    def fake_urlopen(_request, **kwargs):  # type: ignore[no-untyped-def]
+        calls.append(kwargs.get("context"))
+        if len(calls) == 1:
+            raise urllib.error.URLError(ssl.SSLCertVerificationError("self-signed proxy"))
+        return io.BytesIO(b"verified-later-by-pinned-sha")
+
+    monkeypatch.setattr(start_direct_gateway.urllib.request, "urlopen", fake_urlopen)
+
+    response = start_direct_gateway._open_pinned_download(  # noqa: SLF001
+        start_direct_gateway.urllib.request.Request(start_direct_gateway.CLOUDFLARED_URL)
+    )
+
+    assert response.read() == b"verified-later-by-pinned-sha"
+    assert calls[0] is None
+    assert isinstance(calls[1], ssl.SSLContext)

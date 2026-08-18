@@ -20,6 +20,8 @@ from ai_comic_series.exceptions import RemoteExecutionError, RemoteProtocolError
 
 TOKEN = "handoff-token-0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 TUNNEL = "https://silent-handoff-test.trycloudflare.com"
+SERVEO_TUNNEL = "https://silent-handoff-test.serveo.net"
+TUNNELMOLE_TUNNEL = "https://silent-handoff-test.tunnelmole.com"
 
 
 def settings(root: Path) -> ProjectSettings:
@@ -56,9 +58,17 @@ class FakeJupyter:
         self.uploads.append((path, content))
 
     def execute_python(self, code: str, timeout_seconds: float) -> FakeExecution:
-        assert timeout_seconds == 360
+        assert timeout_seconds == 30
         self.codes.append(code)
-        return FakeExecution(DIRECT_MARKER + json.dumps({"pid": 1234, "publicUrl": TUNNEL}) + "\n")
+        return FakeExecution(DIRECT_MARKER + json.dumps({"pid": 1234}) + "\n")
+
+    def exists(self, path: str) -> bool:
+        assert path == "ai-comic-series/status/direct-gateway.json"
+        return True
+
+    def download_bytes(self, path: str) -> bytes:
+        assert path == "ai-comic-series/status/direct-gateway.json"
+        return json.dumps({"state": "running", "publicUrl": TUNNEL}).encode()
 
 
 class FakeDirectTransport:
@@ -134,11 +144,17 @@ def test_bootstrap_uploads_only_gateway_files_and_never_prints_url_or_token(
         "https://bad.trycloudflare.com/path",
         "https://bad.trycloudflare.com?token=leak",
         "https://bad.trycloudflare.com:443",
+        "https://console.serveo.net",
     ],
 )
 def test_tunnel_endpoint_validation_rejects_exfiltration_targets(value: str) -> None:
     with pytest.raises(RemoteProtocolError, match="invalid Quick Tunnel endpoint"):
         _validated_tunnel_url(value)
+
+
+def test_tunnel_endpoint_validation_accepts_pinned_serveo_shape() -> None:
+    assert _validated_tunnel_url(SERVEO_TUNNEL) == SERVEO_TUNNEL
+    assert _validated_tunnel_url(TUNNELMOLE_TUNNEL) == TUNNELMOLE_TUNNEL
 
 
 def test_direct_transport_network_error_and_repr_do_not_reveal_endpoint_or_token() -> None:

@@ -27,7 +27,9 @@ DIRECT_REMOTE_FILES = (
     "remote/start_direct_gateway.py",
 )
 DIRECT_MARKER = "AI_COMIC_DIRECT_JSON="
-TUNNEL_HOST_PATTERN = re.compile(r"^[a-z0-9-]+\.trycloudflare\.com$")
+TUNNEL_HOST_PATTERN = re.compile(
+    r"^[a-z0-9-]+\.(?:trycloudflare\.com|serveo\.net|tunnelmole\.(?:com|net))$"
+)
 
 
 def _validated_tunnel_url(value: object) -> str:
@@ -42,6 +44,7 @@ def _validated_tunnel_url(value: object) -> str:
         parsed.scheme != "https"
         or not parsed.hostname
         or not TUNNEL_HOST_PATTERN.fullmatch(parsed.hostname)
+        or parsed.hostname == "console.serveo.net"
         or port is not None
         or parsed.username
         or parsed.password
@@ -63,6 +66,20 @@ status = root / 'status' / 'direct-gateway.json'
 log_path = root / 'logs' / 'direct-gateway-bootstrap.log'
 status.parent.mkdir(parents=True, exist_ok=True)
 log_path.parent.mkdir(parents=True, exist_ok=True)
+if status.is_file():
+    try:
+        previous = json.loads(status.read_text(encoding='utf-8'))
+        previous_pid = int(previous.get('launcherPid', 0)) if isinstance(previous, dict) else 0
+        command_line = pathlib.Path(f'/proc/{{previous_pid}}/cmdline')
+        command = command_line.read_bytes().replace(b'\\0', b' ') if previous_pid > 1 else b''
+        if b'start_direct_gateway.py' in command and str(root).encode() in command:
+            os.kill(previous_pid, 15)
+            for _ in range(30):
+                if not pathlib.Path(f'/proc/{{previous_pid}}').exists():
+                    break
+                time.sleep(0.1)
+    except (OSError, ValueError, json.JSONDecodeError):
+        pass
 status.unlink(missing_ok=True)
 environment = os.environ.copy()
 environment['AI_COMIC_DIRECT_TOKEN'] = {token!r}
@@ -72,7 +89,7 @@ for name in list(environment):
 script = root / 'remote' / 'start_direct_gateway.py'
 with log_path.open('ab', buffering=0) as log:
     process = subprocess.Popen(
-        [sys.executable, str(script), '--root', str(root), '--status', 'status/direct-gateway.json'],
+        [sys.executable, str(script), '--root', str(root), '--status', 'status/direct-gateway.json', '--provider', 'tunnelmole', '--port', '18765'],
         cwd=str(root),
         env=environment,
         stdin=subprocess.DEVNULL,
@@ -82,24 +99,7 @@ with log_path.open('ab', buffering=0) as log:
         close_fds=True,
     )
 environment.pop('AI_COMIC_DIRECT_TOKEN', None)
-deadline = time.monotonic() + 330
-last = None
-while time.monotonic() < deadline:
-    if status.is_file():
-        try:
-            last = json.loads(status.read_text(encoding='utf-8'))
-        except (OSError, json.JSONDecodeError):
-            last = None
-        if isinstance(last, dict) and last.get('state') == 'running' and last.get('publicUrl'):
-            print({DIRECT_MARKER!r} + json.dumps({{'pid': process.pid, 'publicUrl': last['publicUrl']}}))
-            break
-        if isinstance(last, dict) and last.get('state') == 'failed':
-            raise RuntimeError('Direct gateway launcher reported failure; inspect its public log path')
-    if process.poll() is not None:
-        raise RuntimeError('Direct gateway launcher exited before publishing readiness')
-    time.sleep(0.25)
-else:
-    raise TimeoutError('Direct gateway did not publish readiness before the bounded deadline')
+print({DIRECT_MARKER!r} + json.dumps({{'pid': process.pid}}))
 """
 
 
@@ -117,7 +117,7 @@ def bootstrap_direct_manager(
     token = secrets.token_urlsafe(48)
     execution = client.execute_python(
         _launcher_code(settings.remote.remote_root, token),
-        timeout_seconds=360,
+        timeout_seconds=30,
     )
     position = execution.stdout.rfind(DIRECT_MARKER)
     if position < 0:
@@ -126,10 +126,27 @@ def bootstrap_direct_manager(
         value: object = json.loads(execution.stdout[position + len(DIRECT_MARKER) :].strip())
     except json.JSONDecodeError as error:
         raise RemoteProtocolError("Direct gateway bootstrap returned malformed readiness JSON") from error
-    if not isinstance(value, dict) or not isinstance(value.get("publicUrl"), str):
-        raise RemoteProtocolError("Direct gateway readiness did not contain a public URL")
+    if not isinstance(value, dict) or not isinstance(value.get("pid"), int):
+        raise RemoteProtocolError("Direct gateway bootstrap did not return a launcher PID")
+    status_relative = f"{settings.remote.remote_root}/status/direct-gateway.json"
+    public_url = ""
+    status_deadline = time.monotonic() + 330
+    while time.monotonic() < status_deadline:
+        if client.exists(status_relative):
+            try:
+                status_value: object = json.loads(client.download_bytes(status_relative).decode("utf-8"))
+            except (UnicodeDecodeError, json.JSONDecodeError) as error:
+                raise RemoteProtocolError("Direct gateway status is malformed") from error
+            if isinstance(status_value, dict) and status_value.get("state") == "running":
+                public_url = _validated_tunnel_url(status_value.get("publicUrl"))
+                break
+            if isinstance(status_value, dict) and status_value.get("state") == "failed":
+                raise RemoteExecutionError("Direct gateway launcher reported failure")
+        time.sleep(0.5)
+    if not public_url:
+        raise RemoteExecutionError("Direct gateway did not publish readiness before the bounded deadline")
     transport = DirectTransport(
-        _validated_tunnel_url(value["publicUrl"]),
+        public_url,
         DirectCredentials(token=token),
         timeout_seconds=settings.remote.request_timeout_seconds,
     )
